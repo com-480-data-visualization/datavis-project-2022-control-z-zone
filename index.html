@@ -6,44 +6,55 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<title>VIZ</title>
+	<title>Control+Z Zone</title>
 	<meta name="author" content="test">
 
 	<link rel="stylesheet" href="css/style.css">
 </head>
+
+
 <body>
 
+	 <section id="usa_map">
+		<h1 id="title">Control+Z Zone Milestone 2</h1>
+		<p> Simple visualization for milestone 2.</p>
+		<div id="map_div" >
+			<svg id="map-plot" viewBox="0 0 960 500" width="60%">
+				<style>
 
-<svg id="map-plot" viewBox="0 0 1000 550" width="1000" height="550">
-	<style>
-		.county {
-			stroke: rgb(25, 25, 25);
-			stroke-width: 1px;
-		}
+					.county {
+						stroke: rgb(25, 25, 25);
+						stroke-width: 1px;
+						fill: white
+					}
 
-		.state {
-			stroke: rgb(25, 25, 25);
-			stroke-width: 2px;
-		}
+					.county:hover {
+						fill: blue
+					}
 
-		.states :hover {
-			fill: red;
-		  }
-		  
-		.state-borders {
-			fill: none;
-			stroke: #fff;
-			stroke-width: 0.5px;
-			stroke-linejoin: round;
-			stroke-linecap: round;
-			pointer-events: none;
-		  }
-	</style>
-</svg>
+					.county_name {
+						fill: rgba(0, 0, 0, 0);
+						font-size: 15px;
+					}
+
+					.tooltip {
+						background-color: black;
+						border: none;
+						border-radius: 5px;
+						padding: 15px;
+						min-width: 400px;
+						text-align: left;
+						color: white;
+						}
+
+				</style>
+			</svg>
+		</div>
+	</section>
 
 
-<script src="lib/d3.min.js"></script>
-<script src="lib/topojson.min.js"></script>
-<script src="js/main.js"></script>
+	<script src="lib/d3.min.js"></script>
+	<script src="lib/topojson.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 </html>

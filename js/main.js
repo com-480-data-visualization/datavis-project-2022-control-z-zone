@@ -13,7 +13,7 @@ class MapPlot {
 		const projection_ca = d3.geoMercator()
 			.rotate([0, 0])
 			.center([-120, 37])
-			.scale(1600)
+			.scale(1400)
 			.translate([this.svg_width / 4, this.svg_height / 2]) // SVG space
 			.precision(.1);
 
@@ -30,7 +30,7 @@ class MapPlot {
 		const projection_tx = d3.geoMercator()
 			.rotate([0, 0])
 			.center([-99, 31])
-			.scale(1600)
+			.scale(1400)
 			.translate([this.svg_width / 2 + this.svg_width / 4, this.svg_height / 2]) // SVG space
 			.precision(.1);
 
@@ -57,9 +57,38 @@ class MapPlot {
 
 		const map_promise_usa = d3.json("https://gist.githubusercontent.com/chrispolley/49740980c7d3bdc0b641fe9cb7fa5f01/raw/ef21b721a3bb92c70adee5a2802a63d91826de79/USAdrop1.json").then((topojson_raw) => {
 			const states_paths = topojson.feature(topojson_raw, topojson_raw.objects.USAdrop1);
-			console.log(states_paths)
+			console.log(states_paths.features)
 			return states_paths.features;
 		});
+
+
+		var tooltip = d3.select("#map_div")
+							.append("div")
+							.attr('id', 'tooltip')
+							.attr("class", "county_name")
+							.style("position", "absolute")
+							.style("visibility", "visible")
+							.style("background-color", "white")
+							.style("border", "solid")
+							.style("border-width", "1px")
+							.style("border-radius", "5px")
+							.style("padding", "10px");
+		
+		var mouseover = function(d) {
+			d3.select(this).style('opacity', 0.6)
+			d3.select('#tooltip').style('opacity', 1).text(d.properties.NAME)
+		}
+
+		var mousemove = function(d) {
+			d3.select('#tooltip')
+				.style('left', d3.event.pageX + 10 + 'px')
+				.style('top', d3.event.pageY - 55 + 'px')
+		  }
+
+		var mouseout = function(d) {
+			d3.select(this).style('opacity', 1)
+			d3.select('#tooltip').style('opacity', 0)
+		}
 
 		Promise.all([map_promise_ca, map_promise_tx, map_promise_usa]).then((results) => {
 			let map_data_ca = results[0];
@@ -70,6 +99,7 @@ class MapPlot {
 			//this.map_container_usa = this.svg.append('g');
 			this.map_container_ca = this.svg.append('g');
 			this.map_container_tx = this.svg.append('g');
+
 		
 			// this.map_container_usa.selectAll(".state")
 			// 	.data(map_data_usa)
@@ -89,17 +119,22 @@ class MapPlot {
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_ca)
-				.style("stroke", "black")
-				.style("fill", "blue");
+				.style("fill", "blue")
+				.on("mouseover", mouseover)
+				.on('mousemove', mousemove)
+				.on("mouseout", mouseout);			
+			
 			
 			this.map_container_tx.selectAll(".county")
-			.data(map_data_tx)
-			.enter()
-			.append("path")
-			.classed("county", true)
-			.attr("d", path_generator_tx)
-			.style("stroke", "black")
-			.style("fill", "red");
+				.data(map_data_tx)
+				.enter()
+				.append("path")
+				.classed("county", true)
+				.attr("d", path_generator_tx)
+				.style("fill", "red")
+				.on("mouseover", mouseover)
+				.on('mousemove', mousemove)
+				.on("mouseout", mouseout);
 		});
 	}
 }
