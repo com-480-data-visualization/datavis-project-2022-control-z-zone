@@ -15,46 +15,68 @@
 
 <body>
 
-	 <section id="usa_map">
-		<h1 id="title">Control+Z Zone Milestone 2</h1>
-		<p> Simple visualization for milestone 2.</p>
-		<div id="map_div" >
-			<svg id="map-plot" viewBox="0 0 960 500" width="60%">
-				<style>
+	<header class="title-row">
+		<h1> My Visualization Project </h1>
+	</header>
 
-					.county {
-						stroke: rgb(25, 25, 25);
-						stroke-width: 1px;
-						fill: white
-					}
+	<main class="width-limited">
+		<h3>Introduction</h3>
+		<p>
+			In this project, we want to investigate a potential variation in racial bias in police stops from 2009 to
+			2016. We also want to explore, in case such variations exist, if those are constant across
+			different states of America. To simplify our investigation, we will focus our research on
+			California (mostly Democrat) and Texas (mostly Republican).
+		</p>
 
-					.county:hover {
-						fill: blue
-					}
+		<div class="box">
+			
+		</div>
+	</main>
 
-					.county_name {
-						fill: rgba(0, 0, 0, 0);
-						font-size: 15px;
-					}
+	<div class="box">
+		<h4>Map view ethnicity</h4>
+			<p>
+				In this first view it will be possible to visualize the respective number of police arrest of Black, White and Hispanic persons in the different counties of California and Texas. With the help of a cursor it will be possible to observe the evolution of the number of arrests between 2009 and 2016.
+			</p>
+		<section class="usa_map">
+			<div id ="map_div" >
+				<svg id="map-plot" viewBox="0 0 960 500" width="60%">
+					<style>
 
-					.tooltip {
-						background-color: black;
-						border: none;
-						border-radius: 5px;
-						padding: 15px;
-						min-width: 400px;
-						text-align: left;
-						color: white;
+						.county {
+							stroke: rgb(25, 25, 25);
+							stroke-width: 1px;
+							fill: white
 						}
 
-				</style>
-			</svg>
-		</div>
-	</section>
+						.county:hover {
+							fill: blue
+						}
+
+						.county_name {
+							fill: rgba(0, 0, 0, 0);
+							font-size: 15px;
+						}
+
+						.tooltip {
+							background-color: black;
+							border: none;
+							border-radius: 5px;
+							padding: 15px;
+							min-width: 400px;
+							text-align: left;
+							color: white;
+							}
+
+					</style>
+				</svg>
+			</div>
+		</section>
+	</div>
 
 
-	<script src="lib/d3.min.js"></script>
-	<script src="lib/topojson.min.js"></script>
-	<script src="js/main.js"></script>
+<script src="lib/d3.min.js"></script>
+<script src="lib/topojson.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
