@@ -27,16 +27,57 @@
 			different states of America. To simplify our investigation, we will focus our research on
 			California (mostly Democrat) and Texas (mostly Republican).
 		</p>
-
-		<div class="box">
-			
-		</div>
 	</main>
 
 	<div class="box">
 		<h4>Map view ethnicity</h4>
 			<p>
-				In this first view it will be possible to visualize the respective number of police arrest of Black, White and Hispanic persons in the different counties of California and Texas. With the help of a cursor it will be possible to observe the evolution of the number of arrests between 2009 and 2016.
+				It will be possible to visualize the respective number of police arrest of Black, White and Hispanic persons in the different counties of California and Texas. With the help of a cursor it will be possible to observe the evolution of the number of arrests between 2009 and 2016.
+			</p>
+		<section class="usa_map">
+			<div id ="map_div" >
+				<svg id="map-plot" viewBox="0 0 960 500" width="60%">
+					<style>
+
+						.county {
+							stroke: rgb(25, 25, 25);
+							stroke-width: 1px;
+							fill: white
+						}
+
+						.county:hover {
+							fill: blue
+						}
+
+						.county_name {
+							fill: rgba(0, 0, 0, 0);
+							font-size: 15px;
+						}
+
+						.tooltip {
+							background-color: black;
+							border: none;
+							border-radius: 5px;
+							padding: 15px;
+							min-width: 400px;
+							text-align: left;
+							color: white;
+							}
+
+					</style>
+				</svg>
+			</div>
+		</section>
+
+		<p>
+			Here will be some analysis of the arrest map.
+		</p>
+	</div>
+
+	<div class="box">
+		<h4>Map view gender</h4>
+			<p>
+				It will also be possible to similarly visualize the numbers of arrests considering the gender of the person arrested. This could showcase a potential evolution of the percentage of women apprehended across time. We might also observe a difference in the ratio of arrested women between the democratic state of California and the republican state of Texas that we will represent with a color gradient.
 			</p>
 		<section class="usa_map">
 			<div id ="map_div" >

@@ -73,6 +73,9 @@ body {
 
 p {
 	text-align: justify;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .box {
@@ -83,10 +86,11 @@ p {
 	margin-right: auto;
 
 	max-width: 70rem;
-	background-color: rgba(0, 122, 50, 0.1);
+	background-color: rgba(114, 165, 227, 0.1);
 
 	border: 2px solid var(--theme-color-dark);
 	border-radius: 2rem;
+	
 }
 
 svg {
