@@ -158,7 +158,9 @@ class ScatterPlot {
 		this.plot_area.append('rect')
 			.classed('plot-background', true)
 			.attr('width', 200)
-			.attr('height', 100);
+			.attr('height', 100)
+			.attr("fill", 'transparent');
+		
 
 		const x_value_range = [d3.min(data, d => d.x), d3.max(data, d => d.x)];
 
