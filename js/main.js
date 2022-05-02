@@ -150,5 +150,6 @@ function whenDocumentLoaded(action) {
 
 whenDocumentLoaded(() => {
 	plot_object = new MapPlot('map-plot');
+	plot_object = new MapPlot('map-plot2');
 	// plot object is global, you can inspect it in the dev-console
 });

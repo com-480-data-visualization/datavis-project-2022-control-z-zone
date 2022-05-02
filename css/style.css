@@ -52,15 +52,25 @@ body {
 	width: 100%;
 
 	/* Space above and below the title */
-	padding-top: 3rem;
+	padding-top: 6rem;
 	padding-bottom: 3rem;
 
-	background-color: var(--theme-color-dark);
-	background: linear-gradient(45deg, rgb(250, 210, 0), var(--theme-color-dark));
-	/* Center the title using flexbox */
+
+	background-image:
+      url("../US-Police-Dodge-Charger.webp");
+	/*background: linear-gradient(45deg, rgb(19, 68, 204), rgb(223, 16, 16));
+	 Center the title using flexbox */
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.title-row h1 {
+	font-size: 2.5rem;
+	color: rgb(255, 255, 255);
+	font-variant: small-caps;
+
+	text-shadow: black 0 0 2rem;
 }
 
 .width-limited {
@@ -109,7 +119,7 @@ h4 {
 }
 
 .usa_map {
-	width : 60%;
+	width : 80%;
 	margin-left: auto;
 	margin-right: auto;
 	/*background-color: rgb(216, 215, 219)*/
