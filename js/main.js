@@ -142,8 +142,8 @@ class MapPlot {
 /*For the moment we use data from serie 4 to do the scatter plot but then
 it will be the hit rate */
 
-const TEST_TEMPERATURES = [13, 18, 21, 19, 26, 25, 16];
-const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const TEST_TEMPERATURES = [20, 10, 40, 25, 30, 35, 27, 20];
+const DAYS = ['2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'];
 class ScatterPlot {
 	constructor(svg_element_id, data) {
 		this.data = data;
