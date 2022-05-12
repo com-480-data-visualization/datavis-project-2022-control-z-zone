@@ -1,8 +1,10 @@
 
 class MapPlot {
 
-	constructor(svg_element_id) {
+	constructor(svg_element_id, map_viz) {
+
 		this.svg = d3.select('#' + svg_element_id);
+		this.viz = map_viz
 
 		// may be useful for calculating scales
 		const svg_viewbox = this.svg.node().viewBox.animVal;
@@ -43,31 +45,12 @@ class MapPlot {
 			return counties_paths.features;
 		});
 
-		// USA
-		const projection_usa = d3.geoMercator()
-			.rotate([0, 0])
-			.center([-97, 39])
-			.scale(700)
-			.translate([this.svg_width / 2, this.svg_height / 2]) // SVG space
-			.precision(.1);
-
-		// path generator to convert JSON to SVG paths
-		const path_generator_usa = d3.geoPath()
-			.projection(projection_usa);
-
-		const map_promise_usa = d3.json("https://gist.githubusercontent.com/chrispolley/49740980c7d3bdc0b641fe9cb7fa5f01/raw/ef21b721a3bb92c70adee5a2802a63d91826de79/USAdrop1.json").then((topojson_raw) => {
-			const states_paths = topojson.feature(topojson_raw, topojson_raw.objects.USAdrop1);
-			console.log(states_paths.features)
-			return states_paths.features;
-		});
-
-
 		var tooltip = d3.select("#map_div")
 							.append("div")
 							.attr('id', 'tooltip')
 							.attr("class", "county_name")
 							.style("position", "absolute")
-							.style("visibility", "visible")
+							.style("visibility", "hidden")
 							.style("background-color", "white")
 							.style("border", "solid")
 							.style("border-width", "1px")
@@ -76,7 +59,10 @@ class MapPlot {
 		
 		var mouseover = function(d) {
 			d3.select(this).style('opacity', 0.6)
-			d3.select('#tooltip').style('opacity', 1).text(d.properties.NAME)
+			d3.select('#tooltip')
+				.style('opacity', 1)
+				.style("visibility", "visible")
+				.text(d.properties.NAME)
 		}
 
 		var mousemove = function(d) {
@@ -87,31 +73,42 @@ class MapPlot {
 
 		var mouseout = function(d) {
 			d3.select(this).style('opacity', 1)
-			d3.select('#tooltip').style('opacity', 0)
+			d3.select('#tooltip')
+				.style("visibility", "hidden")
 		}
+		
+		// Selection button
 
-		Promise.all([map_promise_ca, map_promise_tx, map_promise_usa]).then((results) => {
+		const selectBtn = (this.viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
+
+		// Either hardcode choices for race and sex or fetch from data
+		const choices = (this.viz == "race") ? ["White", "Black", "Asian", "Hispanic"] : ["Male", "Female"]
+
+		var selectionButton = d3.select(selectBtn)
+				.selectAll('myOptions')
+		    	.data(choices)
+				.enter()
+		  		.append('option')
+				.classed("button", true)
+				.text(function (d) { return d; })
+				.attr("value", function (d) {return d; })
+
+		Promise.all([map_promise_ca, map_promise_tx]).then((results) => {
+
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
-			let map_data_usa = results[2];
 
 			// Order of creating groups decides what is on top
 			//this.map_container_usa = this.svg.append('g');
 			this.map_container_ca = this.svg.append('g');
 			this.map_container_tx = this.svg.append('g');
 
-		
-			// this.map_container_usa.selectAll(".state")
-			// 	.data(map_data_usa)
-			// 	.enter()
-			// 	.append("path")
-			// 	.classed("state", true)
-			// 	.attr("d", path_generator_usa)
-			// 	.style("fill", (d) => {
-			// 		if (d.properties.iso_3166_2 == "TX") return "red"
-			// 		else if (d.properties.iso_3166_2 == "CA") return "blue"
-			// 		else return "white"
-			// 	});
+			var buttonChange = function(d) {
+				var selectedOption = d3.select(this).property("value")
+				console.log(selectedOption)
+			}
+			
+			d3.select(selectBtn).on("change", buttonChange)
 				
 			this.map_container_ca.selectAll(".county")
 				.data(map_data_ca)
@@ -137,6 +134,9 @@ class MapPlot {
 				.on("mouseout", mouseout);
 		});
 	}
+
+
+
 }
 
 /*For the moment we use data from serie 4 to do the scatter plot but then
@@ -148,8 +148,6 @@ class ScatterPlot {
 	constructor(svg_element_id, data) {
 		this.data = data;
 		this.svg = d3.select('#' + svg_element_id);
-
-		console.log(this.svg);
 
 		this.plot_area = this.svg.append('g')
 			.attr('x', 10)
@@ -217,8 +215,8 @@ function whenDocumentLoaded(action) {
 }
 
 whenDocumentLoaded(() => {
-	plot_object = new MapPlot('map-plot');
-	plot_object = new MapPlot('map-plot2');
+	plot_object = new MapPlot('map-plot', "race");
+	plot_object = new MapPlot('map-plot2', "gender");
 	// plot object is global, you can inspect it in the dev-console
 	let data = TEST_TEMPERATURES.map((value, index) => {
 		return {'x': index, 'y': value, 'name': DAYS[index]};
