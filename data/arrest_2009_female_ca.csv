@@ -1,0 +1,58 @@
+,year,county_name,subject_sex,date
+0,2009,Alameda,female,34786
+2,2009,Alpine,female,1895
+4,2009,Amador,female,2239
+6,2009,Butte,female,6795
+8,2009,Calaveras,female,3282
+10,2009,Colusa,female,2400
+12,2009,Contra Costa,female,9552
+14,2009,Del Norte,female,1861
+16,2009,El Dorado,female,4201
+18,2009,Frenso,female,5197
+22,2009,Glenn,female,3224
+24,2009,Humboldt,female,4675
+26,2009,Imperial,female,9110
+28,2009,Inyo,female,2557
+30,2009,Kern,female,28031
+32,2009,Kings,female,4087
+34,2009,Lake,female,2639
+36,2009,Lassen,female,2904
+38,2009,Los Angeles,female,144806
+40,2009,Madera,female,6013
+42,2009,Marin,female,11294
+44,2009,Mariposa,female,1030
+46,2009,Mendocino,female,7015
+48,2009,Merced,female,9777
+50,2009,Modoc,female,1192
+52,2009,Mono,female,1495
+54,2009,Monterey,female,13475
+56,2009,Napa,female,3701
+58,2009,Nevada,female,4467
+60,2009,Orange,female,37309
+62,2009,Placer,female,6744
+64,2009,Plumas,female,2579
+66,2009,Riverside,female,7692
+68,2009,Riverside,female,23722
+70,2009,Sacramento,female,38461
+72,2009,San Benito,female,5970
+74,2009,San Bernardino,female,48922
+76,2009,San Diego,female,55671
+78,2009,San Francisco,female,8690
+80,2009,San Joaquin,female,16473
+82,2009,San Luis Obispo,female,8749
+84,2009,San Mateo,female,10857
+86,2009,Santa Barbera,female,31167
+88,2009,Santa Clara,female,17077
+90,2009,Santa Cruz,female,7634
+92,2009,Shasta,female,6275
+94,2009,Sierra,female,4400
+96,2009,Siskyou,female,4936
+98,2009,Solano,female,10930
+100,2009,Sonoma,female,10952
+102,2009,Stanislaus,female,8900
+104,2009,Sutter,female,3787
+106,2009,Tehama,female,3228
+108,2009,Trinity,female,1607
+110,2009,Tulare,female,9995
+112,2009,Tuolumne,female,2582
+114,2009,Yolo,female,3393

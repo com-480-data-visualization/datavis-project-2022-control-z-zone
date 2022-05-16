@@ -1,7 +1,70 @@
 
 class MapPlot {
+	
+	makeColorbar(svg, color_scale, top_left, colorbar_size, scaleClass=d3.scaleLog) {
+
+		const value_to_svg = scaleClass()
+			.domain(color_scale.domain())
+			.range([colorbar_size[1], 0]);
+
+		const range01_to_color = d3.scaleLinear()
+			.domain([0, 1])
+			.range(color_scale.range())
+			.interpolate(color_scale.interpolate());
+
+		// Axis numbers
+		const colorbar_axis = d3.axisLeft(value_to_svg)
+			.tickFormat(d3.format(".0f"))
+
+		const colorbar_g = this.svg.append("g")
+			.attr("id", "colorbar")
+			.attr("transform", "translate(" + top_left[0] + ', ' + top_left[1] + ")")
+			.call(colorbar_axis);
+
+		// Create the gradient
+		function range01(steps) {
+			return Array.from(Array(steps), (elem, index) => index / (steps-1));
+		}
+
+		const svg_defs = this.svg.append("defs");
+
+		const gradient = svg_defs.append('linearGradient')
+			.attr('id', 'colorbar-gradient')
+			.attr('x1', '0%') // bottom
+			.attr('y1', '100%')
+			.attr('x2', '0%') // to top
+			.attr('y2', '0%')
+			.attr('spreadMethod', 'pad');
+
+		gradient.selectAll('stop')
+			.data(range01(5))
+			.enter()
+			.append('stop')
+				.attr('offset', d => Math.round(100*d) + '%')
+				.attr('stop-color', d => range01_to_color(d))
+				.attr('stop-opacity', 1);
+
+		// create the colorful rect
+		colorbar_g.append('rect')
+			.attr('id', 'colorbar-area')
+			.attr('width', colorbar_size[0])
+			.attr('height', colorbar_size[1])
+			.style('fill', 'url(#colorbar-gradient)')
+			.style('stroke', 'black')
+			.style('stroke-width', '1px')
+
+	}
 
 	constructor(svg_element_id, map_viz) {
+
+		const population_promise = d3.csv("../data/arrest_2009_female_ca.csv").then((data) => {
+			let cantonId_to_population = {};
+			data.forEach((row) => {
+				cantonId_to_population[row.county_name] =  parseFloat(row.date);
+			});
+			return cantonId_to_population;
+		});
+	
 
 		this.svg = d3.select('#' + svg_element_id);
 		this.viz = map_viz
@@ -10,6 +73,10 @@ class MapPlot {
 		const svg_viewbox = this.svg.node().viewBox.animVal;
 		this.svg_width = svg_viewbox.width;
 		this.svg_height = svg_viewbox.height;
+
+		const color_scale = d3.scaleLog()
+			.range(["hsl(10,60%,60%)", "hsl(100,50%,50%)"])
+			.interpolate(d3.interpolateHcl);
 
 		// California
 		const projection_ca = d3.geoMercator()
@@ -93,15 +160,27 @@ class MapPlot {
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
 
-		Promise.all([map_promise_ca, map_promise_tx]).then((results) => {
+		Promise.all([map_promise_ca, map_promise_tx, population_promise]).then((results) => {
 
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
+			let pop = results[2];
+			//console.log(pop['Alameda'])
+
 
 			// Order of creating groups decides what is on top
 			//this.map_container_usa = this.svg.append('g');
 			this.map_container_ca = this.svg.append('g');
 			this.map_container_tx = this.svg.append('g');
+
+			//add the data as a property of the county
+			map_data_ca.forEach(county => {
+				console.log(county.properties.NAME)
+
+				county.properties.density = pop[county.properties.NAME];
+				console.log(county.properties.density)
+			});
+
 
 			var buttonChange = function(d) {
 				var selectedOption = d3.select(this).property("value")
@@ -109,6 +188,7 @@ class MapPlot {
 			}
 			
 			d3.select(selectBtn).on("change", buttonChange)
+
 				
 			this.map_container_ca.selectAll(".county")
 				.data(map_data_ca)
@@ -116,7 +196,7 @@ class MapPlot {
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_ca)
-				.style("fill", "blue")
+				.style("fill", (d) => color_scale(d.properties.density)) //"blue")
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);			
@@ -132,7 +212,11 @@ class MapPlot {
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);
+			
+			
+			this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
 		});
+		
 	}
 
 
