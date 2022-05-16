@@ -1,5 +1,229 @@
 
-class MapPlot {
+class MapPlot_ethnicity {
+	
+	makeColorbar(svg, color_scale, top_left, colorbar_size, scaleClass=d3.scaleLog) {
+
+		const value_to_svg = scaleClass()
+			.domain(color_scale.domain())
+			.range([colorbar_size[1], 0]);
+
+		const range01_to_color = d3.scaleLinear()
+			.domain([0, 1])
+			.range(color_scale.range())
+			.interpolate(color_scale.interpolate());
+
+		// Axis numbers
+		const colorbar_axis = d3.axisLeft(value_to_svg)
+			.tickFormat(d3.format(".0f"))
+
+		const colorbar_g = this.svg.append("g")
+			.attr("id", "colorbar")
+			.attr("transform", "translate(" + top_left[0] + ', ' + top_left[1] + ")")
+			.call(colorbar_axis);
+
+		// Create the gradient
+		function range01(steps) {
+			return Array.from(Array(steps), (elem, index) => index / (steps-1));
+		}
+
+		const svg_defs = this.svg.append("defs");
+
+		const gradient = svg_defs.append('linearGradient')
+			.attr('id', 'colorbar-gradient')
+			.attr('x1', '0%') // bottom
+			.attr('y1', '100%')
+			.attr('x2', '0%') // to top
+			.attr('y2', '0%')
+			.attr('spreadMethod', 'pad');
+
+		gradient.selectAll('stop')
+			.data(range01(5))
+			.enter()
+			.append('stop')
+				.attr('offset', d => Math.round(100*d) + '%')
+				.attr('stop-color', d => range01_to_color(d))
+				.attr('stop-opacity', 1);
+
+		// create the colorful rect
+		colorbar_g.append('rect')
+			.attr('id', 'colorbar-area')
+			.attr('width', colorbar_size[0])
+			.attr('height', colorbar_size[1])
+			.style('fill', 'url(#colorbar-gradient)')
+			.style('stroke', 'black')
+			.style('stroke-width', '1px')
+
+	}
+
+	constructor(svg_element_id, map_viz) {
+
+		const population_promise = d3.csv("../data/arrest_2009_female_ca.csv").then((data) => {
+			let cantonId_to_population = {};
+			data.forEach((row) => {
+				cantonId_to_population[row.county_name] =  parseFloat(row.date);
+			});
+			return cantonId_to_population;
+		});
+	
+
+		this.svg = d3.select('#' + svg_element_id);
+		this.viz = map_viz
+
+		// may be useful for calculating scales
+		const svg_viewbox = this.svg.node().viewBox.animVal;
+		this.svg_width = svg_viewbox.width;
+		this.svg_height = svg_viewbox.height;
+
+		const color_scale = d3.scaleLog()
+			.range(["hsl(10,60%,60%)", "hsl(100,50%,50%)"])
+			.interpolate(d3.interpolateHcl);
+
+		// California
+		const projection_ca = d3.geoMercator()
+			.rotate([0, 0])
+			.center([-120, 37])
+			.scale(1400)
+			.translate([this.svg_width / 4, this.svg_height / 2]) // SVG space
+			.precision(.1);
+
+		// path generator to convert JSON to SVG paths
+		const path_generator_ca = d3.geoPath()
+			.projection(projection_ca);
+
+		const map_promise_ca = d3.json("https://raw.githubusercontent.com/deldersveld/topojson/master/countries/us-states/CA-06-california-counties.json").then((topojson_raw) => {
+			const counties_paths = topojson.feature(topojson_raw, topojson_raw.objects.cb_2015_california_county_20m);
+			return counties_paths.features;
+		});
+
+		// Texas
+		const projection_tx = d3.geoMercator()
+			.rotate([0, 0])
+			.center([-99, 31])
+			.scale(1400)
+			.translate([this.svg_width / 2 + this.svg_width / 4, this.svg_height / 2]) // SVG space
+			.precision(.1);
+
+		// path generator to convert JSON to SVG paths
+		const path_generator_tx = d3.geoPath()
+			.projection(projection_tx);
+
+		const map_promise_tx = d3.json("https://raw.githubusercontent.com/deldersveld/topojson/master/countries/us-states/TX-48-texas-counties.json").then((topojson_raw) => {
+			const counties_paths = topojson.feature(topojson_raw, topojson_raw.objects.cb_2015_texas_county_20m);
+			return counties_paths.features;
+		});
+
+		var tooltip = d3.select("#map_div")
+							.append("div")
+							.attr('id', 'tooltip')
+							.attr("class", "county_name")
+							.style("position", "absolute")
+							.style("visibility", "hidden")
+							.style("background-color", "white")
+							.style("border", "solid")
+							.style("border-width", "1px")
+							.style("border-radius", "5px")
+							.style("padding", "10px");
+		
+		var mouseover = function(d) {
+			d3.select(this).style('opacity', 0.6)
+			d3.select('#tooltip')
+				.style('opacity', 1)
+				.style("visibility", "visible")
+				.text(d.properties.NAME)
+		}
+
+		var mousemove = function(d) {
+			d3.select('#tooltip')
+				.style('left', d3.event.pageX + 10 + 'px')
+				.style('top', d3.event.pageY - 55 + 'px')
+		  }
+
+		var mouseout = function(d) {
+			d3.select(this).style('opacity', 1)
+			d3.select('#tooltip')
+				.style("visibility", "hidden")
+		}
+		
+		// Selection button
+
+		const selectBtn = (this.viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
+
+		// Either hardcode choices for race and sex or fetch from data
+		const choices = (this.viz == "race") ? ["White", "Black", "Asian", "Hispanic"] : ["Male", "Female"]
+
+		var selectionButton = d3.select(selectBtn)
+				.selectAll('myOptions')
+		    	.data(choices)
+				.enter()
+		  		.append('option')
+				.classed("button", true)
+				.text(function (d) { return d; })
+				.attr("value", function (d) {return d; })
+
+		Promise.all([map_promise_ca, map_promise_tx, population_promise]).then((results) => {
+
+			let map_data_ca = results[0];
+			let map_data_tx = results[1];
+			let pop = results[2];
+			//console.log(pop['Alameda'])
+
+
+			// Order of creating groups decides what is on top
+			//this.map_container_usa = this.svg.append('g');
+			this.map_container_ca = this.svg.append('g');
+			this.map_container_tx = this.svg.append('g');
+
+			//add the data as a property of the county
+			map_data_ca.forEach(county => {
+				console.log(county.properties.NAME)
+
+				county.properties.density = pop[county.properties.NAME];
+				console.log(county.properties.density)
+			});
+
+
+			var buttonChange = function(d) {
+				var selectedOption = d3.select(this).property("value")
+				console.log(selectedOption)
+			}
+			
+			d3.select(selectBtn).on("change", buttonChange)
+
+				
+			this.map_container_ca.selectAll(".county")
+				.data(map_data_ca)
+				.enter()
+				.append("path")
+				.classed("county", true)
+				.attr("d", path_generator_ca)
+				.style("fill", "blue")
+				.on("mouseover", mouseover)
+				.on('mousemove', mousemove)
+				.on("mouseout", mouseout);			
+			
+			
+			this.map_container_tx.selectAll(".county")
+				.data(map_data_tx)
+				.enter()
+				.append("path")
+				.classed("county", true)
+				.attr("d", path_generator_tx)
+				.style("fill", "red")
+				.on("mouseover", mouseover)
+				.on('mousemove', mousemove)
+				.on("mouseout", mouseout);
+			
+			
+			//this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
+		});
+		
+	}
+
+
+
+}
+
+class MapPlot_gender {
 	
 	makeColorbar(svg, color_scale, top_left, colorbar_size, scaleClass=d3.scaleLog) {
 
@@ -299,8 +523,8 @@ function whenDocumentLoaded(action) {
 }
 
 whenDocumentLoaded(() => {
-	plot_object = new MapPlot('map-plot', "race");
-	plot_object = new MapPlot('map-plot2', "gender");
+	plot_object = new MapPlot_ethnicity('map-plot', "race");
+	plot_object = new MapPlot_gender('map-plot2', "gender");
 	// plot object is global, you can inspect it in the dev-console
 	let data = TEST_TEMPERATURES.map((value, index) => {
 		return {'x': index, 'y': value, 'name': DAYS[index]};
