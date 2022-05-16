@@ -1,0 +1,465 @@
+,year,county_name,subject_race,date
+4,2009,Alameda,white,40816
+9,2009,Alpine,white,5630
+14,2009,Amador,white,5532
+19,2009,Butte,white,14518
+24,2009,alaveras,white,8413
+29,2009,lusa,white,5397
+34,2009,ra Costa,white,12804
+39,2009,Del Norte,white,4821
+44,2009,El Dorad,white,10713
+49,2009,Frens,white,7989
+54,2009,Fres,white,18098
+59,2009,Gle,white,7129
+64,2009,Humbold,white,10717
+69,2009,Imperial,white,11434
+74,2009,I,white,7761
+79,2009,Ker,white,48333
+84,2009,Kings,white,5355
+89,2009,Lake,white,6164
+94,2009,Lasse,white,8820
+99,2009,Los Angeles,white,124789
+104,2009,Madera,white,9526
+109,2009,Mari,white,21434
+114,2009,Mariposa,white,2879
+119,2009,Mendoci,white,17530
+124,2009,Merced,white,16964
+129,2009,Modoc,white,3898
+134,2009,M,white,4888
+139,2009,Montere,white,18849
+144,2009,Napa,white,7505
+149,2009,Nevada,white,13210
+154,2009,Orange,white,54552
+159,2009,Placer,white,15365
+164,2009,Plumas,white,6998
+169,2009,Riverside Couj,white,16794
+174,2009,Riverside,white,33756
+179,2009,Sacrame,white,61442
+184,2009,San Beni,white,11854
+189,2009,San Bernardi,white,77786
+194,2009,San Dieg,white,88689
+199,2009,San Francisc,white,12437
+204,2009,San Joaqui,white,24060
+209,2009,San Luis Obisp,white,18280
+214,2009,San Mate,white,16442
+219,2009,Santa Barbera,white,55487
+224,2009,Santa Clara,white,20071
+229,2009,Santa Cruz,white,14289
+234,2009,Shasta,white,21512
+239,2009,Sierra,white,14408
+244,2009,Sisk,white,16142
+249,2009,Sola,white,20868
+254,2009,Sonoma,white,23154
+259,2009,Stanislaus,white,13151
+264,2009,Sutter,white,7200
+269,2009,Tehama,white,12697
+274,2009,Trini,white,4946
+279,2009,Tulare,white,11271
+284,2009,Tuolumne,white,6741
+289,2009,Yol,white,5709
+294,2010,Alameda,white,88777
+299,2010,Alpine,white,10341
+304,2010,Amador,white,11780
+309,2010,Butte,white,31645
+314,2010,alaveras,white,16593
+319,2010,lusa,white,12071
+324,2010,ra Costa,white,31126
+329,2010,Del Norte,white,8695
+334,2010,El Dorad,white,19602
+339,2010,Frens,white,16745
+344,2010,Fres,white,37861
+349,2010,Gle,white,14579
+354,2010,Humbold,white,19216
+359,2010,Imperial,white,21791
+364,2010,I,white,15946
+369,2010,Ker,white,99300
+374,2010,Kings,white,12094
+379,2010,Lake,white,13009
+384,2010,Lasse,white,18987
+389,2010,Los Angeles,white,263623
+394,2010,Madera,white,17440
+399,2010,Mari,white,40212
+404,2010,Mariposa,white,6716
+409,2010,Mendoci,white,34013
+414,2010,Merced,white,33051
+419,2010,Modoc,white,6545
+424,2010,M,white,11599
+429,2010,Montere,white,38762
+434,2010,Napa,white,17576
+439,2010,Nevada,white,27005
+444,2010,Orange,white,111481
+449,2010,Placer,white,23374
+454,2010,Plumas,white,11660
+459,2010,Riverside Couj,white,34832
+464,2010,Riverside,white,67396
+469,2010,Sacrame,white,125263
+474,2010,San Beni,white,25748
+479,2010,San Bernardi,white,144802
+484,2010,San Dieg,white,177161
+489,2010,San Francisc,white,27867
+494,2010,San Joaqui,white,42463
+499,2010,San Luis Obisp,white,33545
+504,2010,San Mate,white,33009
+509,2010,Santa Barbera,white,105856
+514,2010,Santa Clara,white,37780
+519,2010,Santa Cruz,white,31287
+524,2010,Shasta,white,46323
+529,2010,Sierra,white,24722
+534,2010,Sisk,white,32708
+539,2010,Sola,white,41966
+544,2010,Sonoma,white,51256
+549,2010,Stanislaus,white,26312
+554,2010,Sutter,white,15843
+559,2010,Tehama,white,23966
+564,2010,Trini,white,8025
+569,2010,Tulare,white,23122
+574,2010,Tuolumne,white,14806
+579,2010,Yol,white,9980
+584,2011,Alameda,white,99736
+589,2011,Alpine,white,11879
+594,2011,Amador,white,12982
+599,2011,Butte,white,28885
+604,2011,alaveras,white,15077
+609,2011,lusa,white,11935
+614,2011,ra Costa,white,31412
+619,2011,Del Norte,white,9481
+624,2011,El Dorad,white,20182
+629,2011,Frens,white,15597
+634,2011,Fres,white,36710
+639,2011,Gle,white,11588
+644,2011,Humbold,white,18378
+649,2011,Imperial,white,20755
+654,2011,I,white,15153
+659,2011,Ker,white,96572
+664,2011,Kings,white,11441
+669,2011,Lake,white,10647
+674,2011,Lasse,white,17306
+679,2011,Los Angeles,white,264001
+684,2011,Madera,white,14903
+689,2011,Mari,white,38930
+694,2011,Mariposa,white,5137
+699,2011,Mendoci,white,30622
+704,2011,Merced,white,27243
+709,2011,Modoc,white,4682
+714,2011,M,white,11969
+719,2011,Montere,white,34969
+724,2011,Napa,white,16712
+729,2011,Nevada,white,21749
+734,2011,Orange,white,120917
+739,2011,Placer,white,20164
+744,2011,Plumas,white,11035
+749,2011,Riverside Couj,white,32122
+754,2011,Riverside,white,68051
+759,2011,Sacrame,white,112226
+764,2011,San Beni,white,26979
+769,2011,San Bernardi,white,145117
+774,2011,San Dieg,white,176884
+779,2011,San Francisc,white,28964
+784,2011,San Joaqui,white,37995
+789,2011,San Luis Obisp,white,31651
+794,2011,San Mate,white,36440
+799,2011,Santa Barbera,white,107048
+804,2011,Santa Clara,white,42801
+809,2011,Santa Cruz,white,30998
+814,2011,Shasta,white,41325
+819,2011,Sierra,white,21570
+824,2011,Sisk,white,29227
+829,2011,Sola,white,42376
+834,2011,Sonoma,white,49431
+839,2011,Stanislaus,white,23904
+844,2011,Sutter,white,15368
+849,2011,Tehama,white,22978
+854,2011,Trini,white,7531
+859,2011,Tulare,white,22219
+864,2011,Tuolumne,white,13569
+869,2011,Yol,white,10442
+874,2012,Alameda,white,85170
+879,2012,Alpine,white,10521
+884,2012,Amador,white,9158
+889,2012,Butte,white,25740
+894,2012,alaveras,white,12655
+899,2012,lusa,white,10670
+904,2012,ra Costa,white,27297
+909,2012,Del Norte,white,7974
+914,2012,El Dorad,white,20824
+919,2012,Frens,white,12798
+924,2012,Fres,white,35980
+929,2012,Gle,white,10568
+934,2012,Humbold,white,14793
+939,2012,Imperial,white,18015
+944,2012,I,white,11734
+949,2012,Ker,white,84140
+954,2012,Kings,white,10547
+959,2012,Lake,white,8164
+964,2012,Lasse,white,14222
+969,2012,Los Angeles,white,239339
+974,2012,Madera,white,13538
+979,2012,Mari,white,38406
+984,2012,Mariposa,white,5532
+989,2012,Mendoci,white,30225
+994,2012,Merced,white,24543
+999,2012,Modoc,white,4940
+1004,2012,M,white,10708
+1009,2012,Montere,white,34524
+1014,2012,Napa,white,14222
+1019,2012,Nevada,white,17503
+1024,2012,Orange,white,105252
+1029,2012,Placer,white,21537
+1034,2012,Plumas,white,8526
+1039,2012,Riverside Couj,white,27359
+1044,2012,Riverside,white,63214
+1049,2012,Sacrame,white,92133
+1054,2012,San Beni,white,26005
+1059,2012,San Bernardi,white,124745
+1064,2012,San Dieg,white,156557
+1069,2012,San Francisc,white,25496
+1074,2012,San Joaqui,white,32591
+1079,2012,San Luis Obisp,white,31980
+1084,2012,San Mate,white,31878
+1089,2012,Santa Barbera,white,98984
+1094,2012,Santa Clara,white,40899
+1099,2012,Santa Cruz,white,29783
+1104,2012,Shasta,white,40945
+1109,2012,Sierra,white,20357
+1114,2012,Sisk,white,23654
+1119,2012,Sola,white,38012
+1124,2012,Sonoma,white,40646
+1129,2012,Stanislaus,white,20137
+1134,2012,Sutter,white,14356
+1139,2012,Tehama,white,19465
+1144,2012,Trini,white,5811
+1149,2012,Tulare,white,21689
+1154,2012,Tuolumne,white,13002
+1159,2012,Yol,white,11041
+1164,2013,Alameda,white,86386
+1169,2013,Alpine,white,10211
+1174,2013,Amador,white,9406
+1179,2013,Butte,white,25563
+1184,2013,alaveras,white,9861
+1189,2013,lusa,white,7448
+1194,2013,ra Costa,white,26230
+1199,2013,Del Norte,white,7734
+1204,2013,El Dorad,white,22172
+1209,2013,Frens,white,12977
+1214,2013,Fres,white,30282
+1219,2013,Gle,white,10909
+1224,2013,Humbold,white,13346
+1229,2013,Imperial,white,18763
+1234,2013,I,white,11608
+1239,2013,Ker,white,78257
+1244,2013,Kings,white,10241
+1249,2013,Lake,white,8644
+1254,2013,Lasse,white,14812
+1259,2013,Los Angeles,white,229182
+1264,2013,Madera,white,11299
+1269,2013,Mari,white,39590
+1274,2013,Mariposa,white,4798
+1279,2013,Mendoci,white,30290
+1284,2013,Merced,white,24597
+1289,2013,Modoc,white,5810
+1294,2013,M,white,8899
+1299,2013,Montere,white,28251
+1304,2013,Napa,white,16188
+1309,2013,Nevada,white,21703
+1314,2013,Orange,white,89708
+1319,2013,Placer,white,19172
+1324,2013,Plumas,white,7359
+1329,2013,Riverside Couj,white,26034
+1334,2013,Riverside,white,58496
+1339,2013,Sacrame,white,83508
+1344,2013,San Beni,white,22766
+1349,2013,San Bernardi,white,113221
+1354,2013,San Dieg,white,152651
+1359,2013,San Francisc,white,25854
+1364,2013,San Joaqui,white,32077
+1369,2013,San Luis Obisp,white,26430
+1374,2013,San Mate,white,31853
+1379,2013,Santa Barbera,white,92394
+1384,2013,Santa Clara,white,33535
+1389,2013,Santa Cruz,white,28647
+1394,2013,Shasta,white,35025
+1399,2013,Sierra,white,19388
+1404,2013,Sisk,white,26250
+1409,2013,Sola,white,37169
+1414,2013,Sonoma,white,34706
+1419,2013,Stanislaus,white,19532
+1424,2013,Sutter,white,15426
+1429,2013,Tehama,white,17828
+1434,2013,Trini,white,5694
+1439,2013,Tulare,white,19958
+1444,2013,Tuolumne,white,13819
+1449,2013,Yol,white,12741
+1454,2014,Alameda,white,76349
+1459,2014,Alpine,white,9739
+1464,2014,Amador,white,8755
+1469,2014,Butte,white,22063
+1474,2014,alaveras,white,8201
+1479,2014,lusa,white,7275
+1484,2014,ra Costa,white,21053
+1489,2014,Del Norte,white,8083
+1494,2014,El Dorad,white,18487
+1499,2014,Frens,white,11340
+1504,2014,Fres,white,23804
+1509,2014,Gle,white,9903
+1514,2014,Humbold,white,14233
+1519,2014,Imperial,white,20764
+1524,2014,I,white,10650
+1529,2014,Ker,white,69906
+1534,2014,Kings,white,8520
+1539,2014,Lake,white,9335
+1544,2014,Lasse,white,12029
+1549,2014,Los Angeles,white,209702
+1554,2014,Madera,white,11005
+1559,2014,Mari,white,28030
+1564,2014,Mariposa,white,4532
+1569,2014,Mendoci,white,26474
+1574,2014,Merced,white,20032
+1579,2014,Modoc,white,5390
+1584,2014,M,white,9416
+1589,2014,Montere,white,25483
+1594,2014,Napa,white,14885
+1599,2014,Nevada,white,20627
+1604,2014,Orange,white,87588
+1609,2014,Placer,white,17654
+1614,2014,Plumas,white,7501
+1619,2014,Riverside Couj,white,21740
+1624,2014,Riverside,white,55990
+1629,2014,Sacrame,white,71302
+1634,2014,San Beni,white,18355
+1639,2014,San Bernardi,white,100171
+1644,2014,San Dieg,white,148178
+1649,2014,San Francisc,white,23011
+1654,2014,San Joaqui,white,29780
+1659,2014,San Luis Obisp,white,25463
+1664,2014,San Mate,white,28718
+1669,2014,Santa Barbera,white,89287
+1674,2014,Santa Clara,white,30338
+1679,2014,Santa Cruz,white,23949
+1684,2014,Shasta,white,34324
+1689,2014,Sierra,white,20326
+1694,2014,Sisk,white,23009
+1699,2014,Sola,white,30629
+1704,2014,Sonoma,white,35172
+1709,2014,Stanislaus,white,17631
+1714,2014,Sutter,white,17111
+1719,2014,Tehama,white,18442
+1724,2014,Trini,white,5443
+1729,2014,Tulare,white,17571
+1734,2014,Tuolumne,white,12277
+1739,2014,Yol,white,11681
+1744,2015,Alameda,white,74545
+1749,2015,Alpine,white,9356
+1754,2015,Amador,white,7303
+1759,2015,Butte,white,22498
+1764,2015,alaveras,white,9045
+1769,2015,lusa,white,10271
+1774,2015,ra Costa,white,18310
+1779,2015,Del Norte,white,9234
+1784,2015,El Dorad,white,15751
+1789,2015,Frens,white,10853
+1794,2015,Fres,white,24209
+1799,2015,Gle,white,9236
+1804,2015,Humbold,white,15186
+1809,2015,Imperial,white,21937
+1814,2015,I,white,11587
+1819,2015,Ker,white,63263
+1824,2015,Kings,white,6847
+1829,2015,Lake,white,8040
+1834,2015,Lasse,white,14358
+1839,2015,Los Angeles,white,183679
+1844,2015,Madera,white,13223
+1849,2015,Mari,white,27640
+1854,2015,Mariposa,white,4355
+1859,2015,Mendoci,white,27536
+1864,2015,Merced,white,18955
+1869,2015,Modoc,white,4231
+1874,2015,M,white,10257
+1879,2015,Montere,white,24478
+1884,2015,Napa,white,15944
+1889,2015,Nevada,white,21115
+1894,2015,Orange,white,80246
+1899,2015,Placer,white,16518
+1904,2015,Plumas,white,7405
+1909,2015,Riverside Couj,white,20223
+1914,2015,Riverside,white,49984
+1919,2015,Sacrame,white,76006
+1924,2015,San Beni,white,18344
+1929,2015,San Bernardi,white,93073
+1934,2015,San Dieg,white,133651
+1939,2015,San Francisc,white,22405
+1944,2015,San Joaqui,white,29141
+1949,2015,San Luis Obisp,white,29115
+1954,2015,San Mate,white,22817
+1959,2015,Santa Barbera,white,82357
+1964,2015,Santa Clara,white,26874
+1969,2015,Santa Cruz,white,24129
+1974,2015,Shasta,white,35845
+1979,2015,Sierra,white,17892
+1984,2015,Sisk,white,21452
+1989,2015,Sola,white,31795
+1994,2015,Sonoma,white,34635
+1999,2015,Stanislaus,white,16246
+2004,2015,Sutter,white,15137
+2009,2015,Tehama,white,16542
+2014,2015,Trini,white,5219
+2019,2015,Tulare,white,16143
+2024,2015,Tuolumne,white,12305
+2029,2015,Yol,white,10449
+2034,2016,Alameda,white,32809
+2039,2016,Alpine,white,4294
+2044,2016,Amador,white,4595
+2049,2016,Butte,white,10740
+2054,2016,alaveras,white,4025
+2059,2016,lusa,white,5322
+2064,2016,ra Costa,white,7419
+2069,2016,Del Norte,white,4255
+2074,2016,El Dorad,white,7335
+2079,2016,Frens,white,4553
+2084,2016,Fres,white,12758
+2089,2016,Gle,white,3578
+2094,2016,Humbold,white,8384
+2099,2016,Imperial,white,8875
+2104,2016,I,white,7262
+2109,2016,Ker,white,30734
+2114,2016,Kings,white,2779
+2119,2016,Lake,white,4292
+2124,2016,Lasse,white,7495
+2129,2016,Los Angeles,white,80923
+2134,2016,Madera,white,6262
+2139,2016,Mari,white,13165
+2144,2016,Mariposa,white,1828
+2149,2016,Mendoci,white,13023
+2154,2016,Merced,white,8245
+2159,2016,Modoc,white,2213
+2164,2016,M,white,5323
+2169,2016,Montere,white,10694
+2174,2016,Napa,white,7083
+2179,2016,Nevada,white,9908
+2184,2016,Orange,white,36820
+2189,2016,Placer,white,7814
+2194,2016,Plumas,white,4502
+2199,2016,Riverside Couj,white,9450
+2204,2016,Riverside,white,24681
+2209,2016,Sacrame,white,32639
+2214,2016,San Beni,white,8638
+2219,2016,San Bernardi,white,48362
+2224,2016,San Dieg,white,57717
+2229,2016,San Francisc,white,8061
+2234,2016,San Joaqui,white,14337
+2239,2016,San Luis Obisp,white,14178
+2244,2016,San Mate,white,9775
+2249,2016,Santa Barbera,white,39002
+2254,2016,Santa Clara,white,13507
+2259,2016,Santa Cruz,white,10437
+2264,2016,Shasta,white,16985
+2269,2016,Sierra,white,6514
+2274,2016,Sisk,white,9396
+2279,2016,Sola,white,15367
+2284,2016,Sonoma,white,16079
+2289,2016,Stanislaus,white,7642
+2294,2016,Sutter,white,5321
+2299,2016,Tehama,white,7270
+2304,2016,Trini,white,2565
+2309,2016,Tulare,white,7664
+2314,2016,Tuolumne,white,6082
+2319,2016,Yol,white,5114

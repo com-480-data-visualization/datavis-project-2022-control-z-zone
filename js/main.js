@@ -57,7 +57,7 @@ class MapPlot_ethnicity {
 
 	constructor(svg_element_id, map_viz) {
 
-		const female_ca = d3.csv("../data/arrest_2009_female_ca.csv").then((data) => {
+		const female_ca = d3.csv("../data/arrest_white.csv").then((data) => {
 			let countiesID_to_arrest = {};
 			data.forEach((row) => {
 				countiesID_to_arrest[row.county_name] =  parseFloat(row.date);
@@ -196,7 +196,7 @@ class MapPlot_ethnicity {
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_ca)
-				.style("fill", "blue")
+				.style("fill",(d) => color_scale(d.properties.density))
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);			
@@ -214,7 +214,7 @@ class MapPlot_ethnicity {
 				.on("mouseout", mouseout);
 			
 			
-			//this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
+			this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
 		});
 		
 	}
