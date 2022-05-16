@@ -57,12 +57,12 @@ class MapPlot_ethnicity {
 
 	constructor(svg_element_id, map_viz) {
 
-		const population_promise = d3.csv("../data/arrest_2009_female_ca.csv").then((data) => {
-			let cantonId_to_population = {};
+		const female_ca = d3.csv("../data/arrest_2009_female_ca.csv").then((data) => {
+			let countiesID_to_arrest = {};
 			data.forEach((row) => {
-				cantonId_to_population[row.county_name] =  parseFloat(row.date);
+				countiesID_to_arrest[row.county_name] =  parseFloat(row.date);
 			});
-			return cantonId_to_population;
+			return countiesID_to_arrest;
 		});
 	
 
@@ -160,7 +160,7 @@ class MapPlot_ethnicity {
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
 
-		Promise.all([map_promise_ca, map_promise_tx, population_promise]).then((results) => {
+		Promise.all([map_promise_ca, map_promise_tx, female_ca]).then((results) => {
 
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
@@ -281,12 +281,12 @@ class MapPlot_gender {
 
 	constructor(svg_element_id, map_viz) {
 
-		const population_promise = d3.csv("../data/arrest_2009_female_ca.csv").then((data) => {
-			let cantonId_to_population = {};
+		const female_ca = d3.csv("../data/arrest_2009_female_ca.csv").then((data) => {
+			let countiesID_to_arrest = {};
 			data.forEach((row) => {
-				cantonId_to_population[row.county_name] =  parseFloat(row.date);
+				countiesID_to_arrest[row.county_name] =  parseFloat(row.date);
 			});
-			return cantonId_to_population;
+			return countiesID_to_arrest;
 		});
 	
 
@@ -384,7 +384,7 @@ class MapPlot_gender {
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
 
-		Promise.all([map_promise_ca, map_promise_tx, population_promise]).then((results) => {
+		Promise.all([map_promise_ca, map_promise_tx, female_ca]).then((results) => {
 
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
