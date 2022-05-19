@@ -57,15 +57,6 @@ class MapPlot_ethnicity {
 
 	constructor(svg_element_id, map_viz) {
 
-		const female_ca = d3.csv("../data/arrest_white.csv").then((data) => {
-			let countiesID_to_arrest = {};
-			data.forEach((row) => {
-				countiesID_to_arrest[row.county_name] =  parseFloat(row.date);
-			});
-			return countiesID_to_arrest;
-		});
-	
-
 		this.svg = d3.select('#' + svg_element_id);
 		this.viz = map_viz
 
@@ -159,13 +150,30 @@ class MapPlot_ethnicity {
 				.classed("button", true)
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
+		
 
-		Promise.all([map_promise_ca, map_promise_tx, female_ca]).then((results) => {
+		//console.log(selectionButton)
+		
+		//Load the data of test, it's arrest of white, find by county the number of arrest
+		const white_ca = d3.csv("../data/arrest_white.csv").then((data) => {
+			let countiesID_to_arrest = {};
+			data.forEach((row) => {
+				if(row.year == 2009){ // peut etre faire l update de la date avec le slider ?
+					countiesID_to_arrest[row.county_name] = (parseFloat(row.date));	
+				}			
+			});
+			return countiesID_to_arrest;
+		})
+		console.log(white_ca)
+				
+
+		Promise.all([map_promise_ca, map_promise_tx, white_ca]).then((results) => {
 
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
-			let pop = results[2];
-			//console.log(pop['Alameda'])
+			let nb_arrrest_ethny = results[2];
+			console.log(nb_arrrest_ethny)
+			//console.log(nb_arrrest_ethny['Alameda'])
 
 
 			// Order of creating groups decides what is on top
@@ -175,10 +183,7 @@ class MapPlot_ethnicity {
 
 			//add the data as a property of the county
 			map_data_ca.forEach(county => {
-				console.log(county.properties.NAME)
-
-				county.properties.density = pop[county.properties.NAME];
-				console.log(county.properties.density)
+				county.properties.density = nb_arrrest_ethny[county.properties.NAME];
 			});
 
 
@@ -190,16 +195,7 @@ class MapPlot_ethnicity {
 			d3.select(selectBtn).on("change", buttonChange)
 
 				
-			this.map_container_ca.selectAll(".county")
-				.data(map_data_ca)
-				.enter()
-				.append("path")
-				.classed("county", true)
-				.attr("d", path_generator_ca)
-				.style("fill",(d) => color_scale(d.properties.density))
-				.on("mouseover", mouseover)
-				.on('mousemove', mousemove)
-				.on("mouseout", mouseout);			
+					
 			
 			
 			this.map_container_tx.selectAll(".county")
@@ -212,8 +208,123 @@ class MapPlot_ethnicity {
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);
+
+			//---------- SLIDER ----------//
 			
+
+
+			var dates = [2009,2010,2011,2012,2013,2014,2015,2016]; //get all dates
+			var startDate = dates[0];
+			var endDate =dates[dates.length - 1];
+
+
+			console.log(startDate)
+			var slider_margin = {top:0, right:50, bottom:0, left:50};
+			var slider_svg = d3.select('#slider');
+
+			const svg_slider_viewbox = slider_svg.node().viewBox.animVal;
+			const svg_slider_width = svg_slider_viewbox.width - slider_margin.left - slider_margin.right;
+			const svg_slider_height = svg_slider_viewbox.height  - slider_margin.top - slider_margin.bottom;
+
+			var moving_b = false; //if slider is moving
+			var currentValue = 0; //slider value
+			var targetValue = svg_slider_width;
+			var timer = 0;
+
+
+			var x = d3.scaleLinear()
+					.domain([startDate, endDate])
+					.range([0, svg_slider_width])
+					.clamp(true);
+		
+			var slider = slider_svg.append("g")
+					.attr("class", "slider")
+					.attr("transform", "translate(" + slider_margin.left + "," + svg_slider_height/2 + ")");
+
+			// slider line
+			slider.append("line")
+				.attr("class", "track")
+				.attr("x1", x.range()[0])
+				.attr("x2", x.range()[1])
+				.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+				.attr("class", "track-inset")
+				.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+				.attr("class", "track-overlay")
+				.call(d3.drag()
+					.on("start.interrupt", function() { slider.interrupt(); })
+					.on("start drag", function() {
+						currentValue = d3.event.x;
+						update(x.invert(currentValue))
+					})
+				);
+
+			slider.insert("g", ".track-overlay")
+				.attr("class", "ticks")
+				.attr("transform", "translate(0," + 18 + ")")
+				.selectAll("text")
+				.data(x.ticks(10))
+				.enter()
+				.append("text")
+				.attr("fill", "CurrentColor")
+				.attr("x", x)
+				.attr("y", 10)
+				.attr("text-anchor", "middle")
+				.text(function(d) { return d; });
+
+			//text slider
+			var label = slider.append("text")
+				.attr("class", "label")
+				.attr("text-anchor", "middle")
+				.text(startDate)
+				.attr("fill", "CurrentColor")
+				.attr("transform", "translate(0," + (-25) + ")")
+
+			//circle slider
+			var handle = slider.insert("circle", ".track-overlay")
+				.attr("class", "handle")
+				.attr("r", 9);
 			
+			function update(pos) {
+				//move circle
+				handle.attr("cx", x(pos));
+
+				//update the slider text
+				label
+					.attr("x", x(pos))
+					.text(pos);
+				var date = Math.round(pos); //get date from slider pos
+				console.log(date)
+				
+				const white_ca = d3.csv("../data/arrest_white.csv").then((data) => {
+					let countiesID_to_arrest = {};
+					data.forEach((row) => {
+						if(row.year == date){ // peut etre faire l update de la date avec le slider ?
+							countiesID_to_arrest[row.county_name] = (parseFloat(row.date));	
+						}			
+					});
+					return countiesID_to_arrest;
+				})
+
+				Promise.all([white_ca]).then((results) => {
+
+					let nb_arrrest_ethny = results[0];
+					map_data_ca.forEach(county => {
+						county.properties.density = nb_arrrest_ethny[county.properties.NAME];
+					});
+					counties.style("fill",(d) => color_scale(d.properties.density));
+				});
+			}
+
+			var counties = this.map_container_ca.selectAll(".county")
+				.data(map_data_ca)
+				.enter()
+				.append("path")
+				.classed("county", true)
+				.attr("d", path_generator_ca)
+				.style("fill",(d) => color_scale(d.properties.density))
+				.on("mouseover", mouseover)
+				.on('mousemove', mousemove)
+				.on("mouseout", mouseout);	
 			this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
 		});
 		
@@ -399,10 +510,10 @@ class MapPlot_gender {
 
 			//add the data as a property of the county
 			map_data_ca.forEach(county => {
-				console.log(county.properties.NAME)
+				//console.log(county.properties.NAME)
 
 				county.properties.density = pop[county.properties.NAME];
-				console.log(county.properties.density)
+				//console.log(county.properties.density)
 			});
 
 
