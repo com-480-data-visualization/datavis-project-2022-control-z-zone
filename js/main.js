@@ -153,7 +153,7 @@ class MapPlot_ethnicity {
 		
 		
 		//Load the data of test, it's arrest of white, find by county the number of arrest
-		const white_ca = d3.csv("../data/arrest_white.csv").then((data) => {
+		const white_ca = d3.csv("../data/arrest_white_ca.csv").then((data) => {
 			let countiesID_to_arrest = {};
 			data.forEach((row) => {
 				if(row.year == 2009){ // peut etre faire l update de la date avec le slider ?
@@ -287,7 +287,7 @@ class MapPlot_ethnicity {
 
 				var date = Math.round(pos); //get date from slider pos
 				
-				const white_ca = d3.csv("../data/arrest_white.csv").then((data) => {
+				const white_ca = d3.csv("../data/arrest_white_ca.csv").then((data) => {
 					let countiesID_to_arrest = {};
 					data.forEach((row) => {
 						if(row.year == date){ // peut etre faire l update de la date avec le slider ?

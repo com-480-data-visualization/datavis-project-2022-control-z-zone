@@ -1,0 +1,465 @@
+,year,county_name,subject_race,date
+1,2009,Alameda,black,20976
+6,2009,Alpine,black,125
+11,2009,Amador,black,184
+16,2009,Butte,black,487
+21,2009,alaveras,black,148
+26,2009,lusa,black,278
+31,2009,ra Costa,black,4992
+36,2009,Del Norte,black,35
+41,2009,El Dorad,black,215
+46,2009,Frens,black,1059
+51,2009,Fres,black,2609
+56,2009,Gle,black,276
+61,2009,Humbold,black,238
+66,2009,Imperial,black,1308
+71,2009,I,black,194
+76,2009,Ker,black,6798
+81,2009,Kings,black,611
+86,2009,Lake,black,220
+91,2009,Lasse,black,214
+96,2009,Los Angeles,black,59504
+101,2009,Madera,black,695
+106,2009,Mari,black,1692
+111,2009,Mariposa,black,44
+116,2009,Mendoci,black,433
+121,2009,Merced,black,2144
+126,2009,Modoc,black,48
+131,2009,M,black,121
+136,2009,Montere,black,1401
+141,2009,Napa,black,375
+146,2009,Nevada,black,479
+151,2009,Orange,black,5485
+156,2009,Placer,black,629
+161,2009,Plumas,black,172
+166,2009,Riverside Couj,black,2215
+171,2009,Riverside,black,8017
+176,2009,Sacrame,black,14485
+181,2009,San Beni,black,1248
+186,2009,San Bernardi,black,16588
+191,2009,San Dieg,black,12184
+196,2009,San Francisc,black,3505
+201,2009,San Joaqui,black,4997
+206,2009,San Luis Obisp,black,564
+211,2009,San Mate,black,2081
+216,2009,Santa Barbera,black,3335
+221,2009,Santa Clara,black,2605
+226,2009,Santa Cruz,black,356
+231,2009,Shasta,black,441
+236,2009,Sierra,black,665
+241,2009,Sisk,black,744
+246,2009,Sola,black,6343
+251,2009,Sonoma,black,1016
+256,2009,Stanislaus,black,1270
+261,2009,Sutter,black,505
+266,2009,Tehama,black,706
+271,2009,Trini,black,33
+276,2009,Tulare,black,821
+281,2009,Tuolumne,black,78
+286,2009,Yol,black,855
+291,2010,Alameda,black,45665
+296,2010,Alpine,black,215
+301,2010,Amador,black,353
+306,2010,Butte,black,1022
+311,2010,alaveras,black,262
+316,2010,lusa,black,625
+321,2010,ra Costa,black,12084
+326,2010,Del Norte,black,81
+331,2010,El Dorad,black,433
+336,2010,Frens,black,2203
+341,2010,Fres,black,5573
+346,2010,Gle,black,639
+351,2010,Humbold,black,459
+356,2010,Imperial,black,2600
+361,2010,I,black,378
+366,2010,Ker,black,14974
+371,2010,Kings,black,1519
+376,2010,Lake,black,463
+381,2010,Lasse,black,444
+386,2010,Los Angeles,black,116998
+391,2010,Madera,black,1273
+396,2010,Mari,black,3150
+401,2010,Mariposa,black,92
+406,2010,Mendoci,black,802
+411,2010,Merced,black,4622
+416,2010,Modoc,black,81
+421,2010,M,black,279
+426,2010,Montere,black,2836
+431,2010,Napa,black,843
+436,2010,Nevada,black,1030
+441,2010,Orange,black,11494
+446,2010,Placer,black,940
+451,2010,Plumas,black,264
+456,2010,Riverside Couj,black,4368
+461,2010,Riverside,black,16324
+466,2010,Sacrame,black,30698
+471,2010,San Beni,black,2665
+476,2010,San Bernardi,black,32206
+481,2010,San Dieg,black,26150
+486,2010,San Francisc,black,7968
+491,2010,San Joaqui,black,9232
+496,2010,San Luis Obisp,black,1072
+501,2010,San Mate,black,3903
+506,2010,Santa Barbera,black,6469
+511,2010,Santa Clara,black,4762
+516,2010,Santa Cruz,black,857
+521,2010,Shasta,black,926
+526,2010,Sierra,black,1157
+531,2010,Sisk,black,1675
+536,2010,Sola,black,12797
+541,2010,Sonoma,black,2306
+546,2010,Stanislaus,black,2488
+551,2010,Sutter,black,1163
+556,2010,Tehama,black,1212
+561,2010,Trini,black,69
+566,2010,Tulare,black,1687
+571,2010,Tuolumne,black,208
+576,2010,Yol,black,1440
+581,2011,Alameda,black,50774
+586,2011,Alpine,black,278
+591,2011,Amador,black,405
+596,2011,Butte,black,919
+601,2011,alaveras,black,246
+606,2011,lusa,black,677
+611,2011,ra Costa,black,12992
+616,2011,Del Norte,black,82
+621,2011,El Dorad,black,506
+626,2011,Frens,black,2206
+631,2011,Fres,black,5302
+636,2011,Gle,black,501
+641,2011,Humbold,black,472
+646,2011,Imperial,black,2617
+651,2011,I,black,363
+656,2011,Ker,black,15478
+661,2011,Kings,black,1483
+666,2011,Lake,black,373
+671,2011,Lasse,black,435
+676,2011,Los Angeles,black,113903
+681,2011,Madera,black,999
+686,2011,Mari,black,2903
+691,2011,Mariposa,black,61
+696,2011,Mendoci,black,807
+701,2011,Merced,black,3997
+706,2011,Modoc,black,74
+711,2011,M,black,287
+716,2011,Montere,black,2645
+721,2011,Napa,black,679
+726,2011,Nevada,black,781
+731,2011,Orange,black,12382
+736,2011,Placer,black,750
+741,2011,Plumas,black,269
+746,2011,Riverside Couj,black,4268
+751,2011,Riverside,black,16913
+756,2011,Sacrame,black,28318
+761,2011,San Beni,black,2780
+766,2011,San Bernardi,black,32334
+771,2011,San Dieg,black,26449
+776,2011,San Francisc,black,8569
+781,2011,San Joaqui,black,8747
+786,2011,San Luis Obisp,black,1016
+791,2011,San Mate,black,4171
+796,2011,Santa Barbera,black,6633
+801,2011,Santa Clara,black,5365
+806,2011,Santa Cruz,black,906
+811,2011,Shasta,black,814
+816,2011,Sierra,black,1064
+821,2011,Sisk,black,1483
+826,2011,Sola,black,12927
+831,2011,Sonoma,black,2129
+836,2011,Stanislaus,black,2439
+841,2011,Sutter,black,1114
+846,2011,Tehama,black,1334
+851,2011,Trini,black,77
+856,2011,Tulare,black,1593
+861,2011,Tuolumne,black,184
+866,2011,Yol,black,1566
+871,2012,Alameda,black,42798
+876,2012,Alpine,black,219
+881,2012,Amador,black,273
+886,2012,Butte,black,881
+891,2012,alaveras,black,224
+896,2012,lusa,black,603
+901,2012,ra Costa,black,11274
+906,2012,Del Norte,black,91
+911,2012,El Dorad,black,450
+916,2012,Frens,black,1988
+921,2012,Fres,black,5436
+926,2012,Gle,black,487
+931,2012,Humbold,black,396
+936,2012,Imperial,black,2328
+941,2012,I,black,345
+946,2012,Ker,black,14257
+951,2012,Kings,black,1273
+956,2012,Lake,black,290
+961,2012,Lasse,black,339
+966,2012,Los Angeles,black,104419
+971,2012,Madera,black,997
+976,2012,Mari,black,2685
+981,2012,Mariposa,black,71
+986,2012,Mendoci,black,863
+991,2012,Merced,black,3431
+996,2012,Modoc,black,68
+1001,2012,M,black,243
+1006,2012,Montere,black,2710
+1011,2012,Napa,black,666
+1016,2012,Nevada,black,679
+1021,2012,Orange,black,10881
+1026,2012,Placer,black,899
+1031,2012,Plumas,black,217
+1036,2012,Riverside Couj,black,3832
+1041,2012,Riverside,black,16402
+1046,2012,Sacrame,black,23401
+1051,2012,San Beni,black,2771
+1056,2012,San Bernardi,black,29056
+1061,2012,San Dieg,black,23761
+1066,2012,San Francisc,black,7909
+1071,2012,San Joaqui,black,8038
+1076,2012,San Luis Obisp,black,1114
+1081,2012,San Mate,black,3714
+1086,2012,Santa Barbera,black,6367
+1091,2012,Santa Clara,black,5169
+1096,2012,Santa Cruz,black,862
+1101,2012,Shasta,black,968
+1106,2012,Sierra,black,997
+1111,2012,Sisk,black,1288
+1116,2012,Sola,black,11713
+1121,2012,Sonoma,black,1865
+1126,2012,Stanislaus,black,2118
+1131,2012,Sutter,black,1141
+1136,2012,Tehama,black,1192
+1141,2012,Trini,black,94
+1146,2012,Tulare,black,1491
+1151,2012,Tuolumne,black,170
+1156,2012,Yol,black,1548
+1161,2013,Alameda,black,44100
+1166,2013,Alpine,black,257
+1171,2013,Amador,black,249
+1176,2013,Butte,black,906
+1181,2013,alaveras,black,176
+1186,2013,lusa,black,508
+1191,2013,ra Costa,black,11489
+1196,2013,Del Norte,black,79
+1201,2013,El Dorad,black,547
+1206,2013,Frens,black,1853
+1211,2013,Fres,black,4511
+1216,2013,Gle,black,545
+1221,2013,Humbold,black,402
+1226,2013,Imperial,black,2532
+1231,2013,I,black,377
+1236,2013,Ker,black,13404
+1241,2013,Kings,black,1363
+1246,2013,Lake,black,301
+1251,2013,Lasse,black,388
+1256,2013,Los Angeles,black,101935
+1261,2013,Madera,black,831
+1266,2013,Mari,black,2915
+1271,2013,Mariposa,black,72
+1276,2013,Mendoci,black,861
+1281,2013,Merced,black,3526
+1286,2013,Modoc,black,81
+1291,2013,M,black,268
+1296,2013,Montere,black,2235
+1301,2013,Napa,black,849
+1306,2013,Nevada,black,901
+1311,2013,Orange,black,10236
+1316,2013,Placer,black,860
+1321,2013,Plumas,black,169
+1326,2013,Riverside Couj,black,4001
+1331,2013,Riverside,black,15255
+1336,2013,Sacrame,black,22426
+1341,2013,San Beni,black,2718
+1346,2013,San Bernardi,black,27003
+1351,2013,San Dieg,black,24086
+1356,2013,San Francisc,black,7629
+1361,2013,San Joaqui,black,8092
+1366,2013,San Luis Obisp,black,949
+1371,2013,San Mate,black,3670
+1376,2013,Santa Barbera,black,5958
+1381,2013,Santa Clara,black,4445
+1386,2013,Santa Cruz,black,905
+1391,2013,Shasta,black,894
+1396,2013,Sierra,black,1182
+1401,2013,Sisk,black,1516
+1406,2013,Sola,black,12333
+1411,2013,Sonoma,black,1816
+1416,2013,Stanislaus,black,2150
+1421,2013,Sutter,black,1177
+1426,2013,Tehama,black,1144
+1431,2013,Trini,black,95
+1436,2013,Tulare,black,1531
+1441,2013,Tuolumne,black,181
+1446,2013,Yol,black,1915
+1451,2014,Alameda,black,39020
+1456,2014,Alpine,black,235
+1461,2014,Amador,black,272
+1466,2014,Butte,black,909
+1471,2014,alaveras,black,151
+1476,2014,lusa,black,529
+1481,2014,ra Costa,black,9603
+1486,2014,Del Norte,black,105
+1491,2014,El Dorad,black,561
+1496,2014,Frens,black,1766
+1501,2014,Fres,black,3694
+1506,2014,Gle,black,469
+1511,2014,Humbold,black,444
+1516,2014,Imperial,black,2911
+1521,2014,I,black,390
+1526,2014,Ker,black,12729
+1531,2014,Kings,black,1174
+1536,2014,Lake,black,344
+1541,2014,Lasse,black,364
+1546,2014,Los Angeles,black,98216
+1551,2014,Madera,black,718
+1556,2014,Mari,black,2317
+1561,2014,Mariposa,black,77
+1566,2014,Mendoci,black,916
+1571,2014,Merced,black,2945
+1576,2014,Modoc,black,99
+1581,2014,M,black,274
+1586,2014,Montere,black,2182
+1591,2014,Napa,black,873
+1596,2014,Nevada,black,1039
+1601,2014,Orange,black,10071
+1606,2014,Placer,black,897
+1611,2014,Plumas,black,193
+1616,2014,Riverside Couj,black,3646
+1621,2014,Riverside,black,15770
+1626,2014,Sacrame,black,20156
+1631,2014,San Beni,black,2174
+1636,2014,San Bernardi,black,26006
+1641,2014,San Dieg,black,24332
+1646,2014,San Francisc,black,7331
+1651,2014,San Joaqui,black,7208
+1656,2014,San Luis Obisp,black,920
+1661,2014,San Mate,black,3369
+1666,2014,Santa Barbera,black,6224
+1671,2014,Santa Clara,black,4479
+1676,2014,Santa Cruz,black,825
+1681,2014,Shasta,black,903
+1686,2014,Sierra,black,1363
+1691,2014,Sisk,black,1416
+1696,2014,Sola,black,10549
+1701,2014,Sonoma,black,1803
+1706,2014,Stanislaus,black,2020
+1711,2014,Sutter,black,1439
+1716,2014,Tehama,black,1291
+1721,2014,Trini,black,80
+1726,2014,Tulare,black,1323
+1731,2014,Tuolumne,black,187
+1736,2014,Yol,black,1888
+1741,2015,Alameda,black,37098
+1746,2015,Alpine,black,256
+1751,2015,Amador,black,319
+1756,2015,Butte,black,1037
+1761,2015,alaveras,black,186
+1766,2015,lusa,black,687
+1771,2015,ra Costa,black,8957
+1776,2015,Del Norte,black,151
+1781,2015,El Dorad,black,481
+1786,2015,Frens,black,1872
+1791,2015,Fres,black,4217
+1796,2015,Gle,black,512
+1801,2015,Humbold,black,557
+1806,2015,Imperial,black,3461
+1811,2015,I,black,397
+1816,2015,Ker,black,12937
+1821,2015,Kings,black,1134
+1826,2015,Lake,black,334
+1831,2015,Lasse,black,402
+1836,2015,Los Angeles,black,91963
+1841,2015,Madera,black,873
+1846,2015,Mari,black,2475
+1851,2015,Mariposa,black,100
+1856,2015,Mendoci,black,1104
+1861,2015,Merced,black,3259
+1866,2015,Modoc,black,65
+1871,2015,M,black,334
+1876,2015,Montere,black,2152
+1881,2015,Napa,black,972
+1886,2015,Nevada,black,1158
+1891,2015,Orange,black,10141
+1896,2015,Placer,black,950
+1901,2015,Plumas,black,235
+1906,2015,Riverside Couj,black,3599
+1911,2015,Riverside,black,15318
+1916,2015,Sacrame,black,21717
+1921,2015,San Beni,black,2364
+1926,2015,San Bernardi,black,26970
+1931,2015,San Dieg,black,24041
+1936,2015,San Francisc,black,8328
+1941,2015,San Joaqui,black,7996
+1946,2015,San Luis Obisp,black,1244
+1951,2015,San Mate,black,3111
+1956,2015,Santa Barbera,black,6324
+1961,2015,Santa Clara,black,4169
+1966,2015,Santa Cruz,black,939
+1971,2015,Shasta,black,1025
+1976,2015,Sierra,black,1441
+1981,2015,Sisk,black,1590
+1986,2015,Sola,black,11078
+1991,2015,Sonoma,black,1941
+1996,2015,Stanislaus,black,1864
+2001,2015,Sutter,black,1426
+2006,2015,Tehama,black,1236
+2011,2015,Trini,black,87
+2016,2015,Tulare,black,1357
+2021,2015,Tuolumne,black,210
+2026,2015,Yol,black,1924
+2031,2016,Alameda,black,17706
+2036,2016,Alpine,black,120
+2041,2016,Amador,black,195
+2046,2016,Butte,black,542
+2051,2016,alaveras,black,73
+2056,2016,lusa,black,369
+2061,2016,ra Costa,black,3892
+2066,2016,Del Norte,black,76
+2071,2016,El Dorad,black,228
+2076,2016,Frens,black,933
+2081,2016,Fres,black,2443
+2086,2016,Gle,black,251
+2091,2016,Humbold,black,338
+2096,2016,Imperial,black,1352
+2101,2016,I,black,293
+2106,2016,Ker,black,6889
+2111,2016,Kings,black,506
+2116,2016,Lake,black,176
+2121,2016,Lasse,black,270
+2126,2016,Los Angeles,black,43380
+2131,2016,Madera,black,538
+2136,2016,Mari,black,1423
+2141,2016,Mariposa,black,43
+2146,2016,Mendoci,black,536
+2151,2016,Merced,black,1501
+2156,2016,Modoc,black,32
+2161,2016,M,black,190
+2166,2016,Montere,black,1099
+2171,2016,Napa,black,568
+2176,2016,Nevada,black,539
+2181,2016,Orange,black,5079
+2186,2016,Placer,black,460
+2191,2016,Plumas,black,145
+2196,2016,Riverside Couj,black,1833
+2201,2016,Riverside,black,7731
+2206,2016,Sacrame,black,9749
+2211,2016,San Beni,black,1143
+2216,2016,San Bernardi,black,14319
+2221,2016,San Dieg,black,10858
+2226,2016,San Francisc,black,3445
+2231,2016,San Joaqui,black,4055
+2236,2016,San Luis Obisp,black,631
+2241,2016,San Mate,black,1438
+2246,2016,Santa Barbera,black,3161
+2251,2016,Santa Clara,black,2154
+2256,2016,Santa Cruz,black,430
+2261,2016,Shasta,black,489
+2266,2016,Sierra,black,595
+2271,2016,Sisk,black,736
+2276,2016,Sola,black,6081
+2281,2016,Sonoma,black,932
+2286,2016,Stanislaus,black,1028
+2291,2016,Sutter,black,554
+2296,2016,Tehama,black,582
+2301,2016,Trini,black,40
+2306,2016,Tulare,black,685
+2311,2016,Tuolumne,black,125
+2316,2016,Yol,black,982
