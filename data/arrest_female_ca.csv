@@ -1,0 +1,465 @@
+,year,county_name,subject_sex,date
+0,2009,Alameda,female,34786
+2,2009,Alpine,female,1895
+4,2009,Amador,female,2239
+6,2009,Butte,female,6795
+8,2009,alaveras,female,3282
+10,2009,lusa,female,2400
+12,2009,ra Costa,female,9552
+14,2009,Del Norte,female,1861
+16,2009,El Dorad,female,4201
+18,2009,Frens,female,5197
+20,2009,Fres,female,14788
+22,2009,Gle,female,3224
+24,2009,Humbold,female,4675
+26,2009,Imperial,female,9110
+28,2009,I,female,2557
+30,2009,Kern,female,28031
+32,2009,Kings,female,4087
+34,2009,Lake,female,2639
+36,2009,Lasse,female,2904
+38,2009,Los Angeles,female,144806
+40,2009,Madera,female,6013
+42,2009,Mari,female,11294
+44,2009,Mariposa,female,1030
+46,2009,Mendoci,female,7015
+48,2009,Merced,female,9777
+50,2009,Modoc,female,1192
+52,2009,M,female,1495
+54,2009,Monterey,female,13475
+56,2009,Napa,female,3701
+58,2009,Nevada,female,4467
+60,2009,Orange,female,37309
+62,2009,Placer,female,6744
+64,2009,Plumas,female,2579
+66,2009,Riverside Couj,female,7692
+68,2009,Riverside,female,23722
+70,2009,Sacrame,female,38461
+72,2009,San Beni,female,5970
+74,2009,San Bernardino,female,48922
+76,2009,San Diego,female,55671
+78,2009,San Francisc,female,8690
+80,2009,San Joaqui,female,16473
+82,2009,San Luis Obisp,female,8749
+84,2009,San Mate,female,10857
+86,2009,Santa Barbera,female,31167
+88,2009,Santa Clara,female,17077
+90,2009,Santa Cruz,female,7634
+92,2009,Shasta,female,6275
+94,2009,Sierra,female,4400
+96,2009,Sisk,female,4936
+98,2009,Sola,female,10930
+100,2009,Sonoma,female,10952
+102,2009,Stanislaus,female,8900
+104,2009,Sutter,female,3787
+106,2009,Tehama,female,3228
+108,2009,Trini,female,1607
+110,2009,Tulare,female,9995
+112,2009,Tuolumne,female,2582
+114,2009,Yol,female,3393
+116,2010,Alameda,female,76046
+118,2010,Alpine,female,3465
+120,2010,Amador,female,4773
+122,2010,Butte,female,14787
+124,2010,alaveras,female,6259
+126,2010,lusa,female,5375
+128,2010,ra Costa,female,24124
+130,2010,Del Norte,female,3462
+132,2010,El Dorad,female,8003
+134,2010,Frens,female,10631
+136,2010,Fres,female,31753
+138,2010,Gle,female,6610
+140,2010,Humbold,female,8362
+142,2010,Imperial,female,18661
+144,2010,I,female,5408
+146,2010,Kern,female,60014
+148,2010,Kings,female,9278
+150,2010,Lake,female,5890
+152,2010,Lasse,female,6660
+154,2010,Los Angeles,female,305855
+156,2010,Madera,female,11368
+158,2010,Mari,female,21409
+160,2010,Mariposa,female,2617
+162,2010,Mendoci,female,13836
+164,2010,Merced,female,19307
+166,2010,Modoc,female,2038
+168,2010,M,female,3666
+170,2010,Monterey,female,27894
+172,2010,Napa,female,8663
+174,2010,Nevada,female,9246
+176,2010,Orange,female,78806
+178,2010,Placer,female,10430
+180,2010,Plumas,female,4288
+182,2010,Riverside Couj,female,15490
+184,2010,Riverside,female,47450
+186,2010,Sacrame,female,79706
+188,2010,San Beni,female,13134
+190,2010,San Bernardino,female,94051
+192,2010,San Diego,female,113438
+194,2010,San Francisc,female,20217
+196,2010,San Joaqui,female,29443
+198,2010,San Luis Obisp,female,16543
+200,2010,San Mate,female,22550
+202,2010,Santa Barbera,female,61009
+204,2010,Santa Clara,female,33366
+206,2010,Santa Cruz,female,17169
+208,2010,Shasta,female,13057
+210,2010,Sierra,female,7457
+212,2010,Sisk,female,10217
+214,2010,Sola,female,23391
+216,2010,Sonoma,female,25131
+218,2010,Stanislaus,female,17730
+220,2010,Sutter,female,8428
+222,2010,Tehama,female,6141
+224,2010,Trini,female,2714
+226,2010,Tulare,female,19840
+228,2010,Tuolumne,female,5842
+230,2010,Yol,female,5878
+232,2011,Alameda,female,87530
+234,2011,Alpine,female,4241
+236,2011,Amador,female,5100
+238,2011,Butte,female,13213
+240,2011,alaveras,female,5668
+242,2011,lusa,female,5220
+244,2011,ra Costa,female,25296
+246,2011,Del Norte,female,3908
+248,2011,El Dorad,female,8252
+250,2011,Frens,female,10316
+252,2011,Fres,female,30017
+254,2011,Gle,female,5373
+256,2011,Humbold,female,7786
+258,2011,Imperial,female,18461
+260,2011,I,female,5396
+262,2011,Kern,female,59526
+264,2011,Kings,female,8865
+266,2011,Lake,female,4818
+268,2011,Lasse,female,5782
+270,2011,Los Angeles,female,315453
+272,2011,Madera,female,9539
+274,2011,Mari,female,20481
+276,2011,Mariposa,female,2001
+278,2011,Mendoci,female,12624
+280,2011,Merced,female,17122
+282,2011,Modoc,female,1525
+284,2011,M,female,3711
+286,2011,Monterey,female,25165
+288,2011,Napa,female,8460
+290,2011,Nevada,female,7703
+292,2011,Orange,female,85432
+294,2011,Placer,female,8884
+296,2011,Plumas,female,3965
+298,2011,Riverside Couj,female,15909
+300,2011,Riverside,female,50772
+302,2011,Sacrame,female,71386
+304,2011,San Beni,female,13718
+306,2011,San Bernardino,female,95793
+308,2011,San Diego,female,112873
+310,2011,San Francisc,female,21374
+312,2011,San Joaqui,female,26573
+314,2011,San Luis Obisp,female,15418
+316,2011,San Mate,female,25115
+318,2011,Santa Barbera,female,62624
+320,2011,Santa Clara,female,38515
+322,2011,Santa Cruz,female,17322
+324,2011,Shasta,female,11485
+326,2011,Sierra,female,6314
+328,2011,Sisk,female,9598
+330,2011,Sola,female,22401
+332,2011,Sonoma,female,24465
+334,2011,Stanislaus,female,16557
+336,2011,Sutter,female,7876
+338,2011,Tehama,female,6315
+340,2011,Trini,female,2392
+342,2011,Tulare,female,20284
+344,2011,Tuolumne,female,5306
+346,2011,Yol,female,6502
+348,2012,Alameda,female,74437
+350,2012,Alpine,female,3389
+352,2012,Amador,female,3638
+354,2012,Butte,female,11938
+356,2012,alaveras,female,4693
+358,2012,lusa,female,4759
+360,2012,ra Costa,female,22360
+362,2012,Del Norte,female,3316
+364,2012,El Dorad,female,8765
+366,2012,Frens,female,8479
+368,2012,Fres,female,28820
+370,2012,Gle,female,5089
+372,2012,Humbold,female,6241
+374,2012,Imperial,female,17099
+376,2012,I,female,4444
+378,2012,Kern,female,53159
+380,2012,Kings,female,8465
+382,2012,Lake,female,3661
+384,2012,Lasse,female,4999
+386,2012,Los Angeles,female,291142
+388,2012,Madera,female,8972
+390,2012,Mari,female,20572
+392,2012,Mariposa,female,2223
+394,2012,Mendoci,female,12363
+396,2012,Merced,female,15996
+398,2012,Modoc,female,1645
+400,2012,M,female,3444
+402,2012,Monterey,female,25533
+404,2012,Napa,female,7598
+406,2012,Nevada,female,5994
+408,2012,Orange,female,75087
+410,2012,Placer,female,9859
+412,2012,Plumas,female,3116
+414,2012,Riverside Couj,female,14280
+416,2012,Riverside,female,46651
+418,2012,Sacrame,female,60306
+420,2012,San Beni,female,13606
+422,2012,San Bernardino,female,83978
+424,2012,San Diego,female,103379
+426,2012,San Francisc,female,19360
+428,2012,San Joaqui,female,23775
+430,2012,San Luis Obisp,female,15470
+432,2012,San Mate,female,22481
+434,2012,Santa Barbera,female,58418
+436,2012,Santa Clara,female,37118
+438,2012,Santa Cruz,female,16696
+440,2012,Shasta,female,11379
+442,2012,Sierra,female,5885
+444,2012,Sisk,female,7640
+446,2012,Sola,female,20056
+448,2012,Sonoma,female,20572
+450,2012,Stanislaus,female,14151
+452,2012,Sutter,female,7694
+454,2012,Tehama,female,5507
+456,2012,Trini,female,1868
+458,2012,Tulare,female,20956
+460,2012,Tuolumne,female,5055
+462,2012,Yol,female,7150
+464,2013,Alameda,female,76476
+466,2013,Alpine,female,3534
+468,2013,Amador,female,3865
+470,2013,Butte,female,11857
+472,2013,alaveras,female,3811
+474,2013,lusa,female,3606
+476,2013,ra Costa,female,21355
+478,2013,Del Norte,female,3169
+480,2013,El Dorad,female,9513
+482,2013,Frens,female,8524
+484,2013,Fres,female,24893
+486,2013,Gle,female,5116
+488,2013,Humbold,female,5952
+490,2013,Imperial,female,19672
+492,2013,I,female,4092
+494,2013,Kern,female,50283
+496,2013,Kings,female,8787
+498,2013,Lake,female,3703
+500,2013,Lasse,female,5267
+502,2013,Los Angeles,female,282079
+504,2013,Madera,female,7382
+506,2013,Mari,female,22007
+508,2013,Mariposa,female,1864
+510,2013,Mendoci,female,12678
+512,2013,Merced,female,17190
+514,2013,Modoc,female,1761
+516,2013,M,female,2770
+518,2013,Monterey,female,21004
+520,2013,Napa,female,8619
+522,2013,Nevada,female,7671
+524,2013,Orange,female,66562
+526,2013,Placer,female,8688
+528,2013,Plumas,female,2698
+530,2013,Riverside Couj,female,14827
+532,2013,Riverside,female,42526
+534,2013,Sacrame,female,56014
+536,2013,San Beni,female,11379
+538,2013,San Bernardino,female,75386
+540,2013,San Diego,female,103567
+542,2013,San Francisc,female,19522
+544,2013,San Joaqui,female,23645
+546,2013,San Luis Obisp,female,13041
+548,2013,San Mate,female,22498
+550,2013,Santa Barbera,female,54803
+552,2013,Santa Clara,female,31067
+554,2013,Santa Cruz,female,16304
+556,2013,Shasta,female,10014
+558,2013,Sierra,female,5762
+560,2013,Sisk,female,8883
+562,2013,Sola,female,20288
+564,2013,Sonoma,female,17500
+566,2013,Stanislaus,female,13443
+568,2013,Sutter,female,8261
+570,2013,Tehama,female,4718
+572,2013,Trini,female,1927
+574,2013,Tulare,female,19862
+576,2013,Tuolumne,female,5571
+578,2013,Yol,female,8325
+580,2014,Alameda,female,69083
+582,2014,Alpine,female,3213
+584,2014,Amador,female,3611
+586,2014,Butte,female,10205
+588,2014,alaveras,female,3367
+590,2014,lusa,female,3510
+592,2014,ra Costa,female,17786
+594,2014,Del Norte,female,3403
+596,2014,El Dorad,female,7907
+598,2014,Frens,female,7653
+600,2014,Fres,female,20044
+602,2014,Gle,female,4729
+604,2014,Humbold,female,6245
+606,2014,Imperial,female,21235
+608,2014,I,female,4025
+610,2014,Kern,female,46519
+612,2014,Kings,female,7438
+614,2014,Lake,female,4180
+616,2014,Lasse,female,4187
+618,2014,Los Angeles,female,258383
+620,2014,Madera,female,6934
+622,2014,Mari,female,15223
+624,2014,Mariposa,female,1895
+626,2014,Mendoci,female,11348
+628,2014,Merced,female,14899
+630,2014,Modoc,female,1761
+632,2014,M,female,3104
+634,2014,Monterey,female,19953
+636,2014,Napa,female,8195
+638,2014,Nevada,female,7476
+640,2014,Orange,female,65285
+642,2014,Placer,female,8118
+644,2014,Plumas,female,2817
+646,2014,Riverside Couj,female,12841
+648,2014,Riverside,female,42250
+650,2014,Sacrame,female,48386
+652,2014,San Beni,female,9148
+654,2014,San Bernardino,female,67758
+656,2014,San Diego,female,102376
+658,2014,San Francisc,female,17282
+660,2014,San Joaqui,female,22038
+662,2014,San Luis Obisp,female,13138
+664,2014,San Mate,female,21166
+666,2014,Santa Barbera,female,54552
+668,2014,Santa Clara,female,28539
+670,2014,Santa Cruz,female,13657
+672,2014,Shasta,female,10050
+674,2014,Sierra,female,6229
+676,2014,Sisk,female,7836
+678,2014,Sola,female,16479
+680,2014,Sonoma,female,17867
+682,2014,Stanislaus,female,12434
+684,2014,Sutter,female,9531
+686,2014,Tehama,female,5228
+688,2014,Trini,female,1860
+690,2014,Tulare,female,17799
+692,2014,Tuolumne,female,5067
+694,2014,Yol,female,7270
+696,2015,Alameda,female,67701
+698,2015,Alpine,female,3267
+700,2015,Amador,female,3014
+702,2015,Butte,female,10468
+704,2015,alaveras,female,3637
+706,2015,lusa,female,4936
+708,2015,ra Costa,female,15682
+710,2015,Del Norte,female,3967
+712,2015,El Dorad,female,6983
+714,2015,Frens,female,7849
+716,2015,Fres,female,21447
+718,2015,Gle,female,4534
+720,2015,Humbold,female,6788
+722,2015,Imperial,female,22426
+724,2015,I,female,4726
+726,2015,Kern,female,45219
+728,2015,Kings,female,6061
+730,2015,Lake,female,3519
+732,2015,Lasse,female,5252
+734,2015,Los Angeles,female,229038
+736,2015,Madera,female,8189
+738,2015,Mari,female,15861
+740,2015,Mariposa,female,1999
+742,2015,Mendoci,female,12037
+744,2015,Merced,female,14258
+746,2015,Modoc,female,1378
+748,2015,M,female,3512
+750,2015,Monterey,female,20056
+752,2015,Napa,female,8718
+754,2015,Nevada,female,7898
+756,2015,Orange,female,62130
+758,2015,Placer,female,7791
+760,2015,Plumas,female,2764
+762,2015,Riverside Couj,female,12551
+764,2015,Riverside,female,38099
+766,2015,Sacrame,female,50775
+768,2015,San Beni,female,9655
+770,2015,San Bernardino,female,66211
+772,2015,San Diego,female,94726
+774,2015,San Francisc,female,17238
+776,2015,San Joaqui,female,23069
+778,2015,San Luis Obisp,female,15856
+780,2015,San Mate,female,17355
+782,2015,Santa Barbera,female,52365
+784,2015,Santa Clara,female,26203
+786,2015,Santa Cruz,female,13908
+788,2015,Shasta,female,10269
+790,2015,Sierra,female,6022
+792,2015,Sisk,female,7587
+794,2015,Sola,female,17653
+796,2015,Sonoma,female,18068
+798,2015,Stanislaus,female,11789
+800,2015,Sutter,female,8731
+802,2015,Tehama,female,5354
+804,2015,Trini,female,1887
+806,2015,Tulare,female,17285
+808,2015,Tuolumne,female,5214
+810,2015,Yol,female,6691
+812,2016,Alameda,female,30140
+814,2016,Alpine,female,1394
+816,2016,Amador,female,1957
+818,2016,Butte,female,5062
+820,2016,alaveras,female,1575
+822,2016,lusa,female,2702
+824,2016,ra Costa,female,6652
+826,2016,Del Norte,female,1759
+828,2016,El Dorad,female,3297
+830,2016,Frens,female,3589
+832,2016,Fres,female,11597
+834,2016,Gle,female,1743
+836,2016,Humbold,female,3955
+838,2016,Imperial,female,9545
+840,2016,I,female,3092
+842,2016,Kern,female,22680
+844,2016,Kings,female,2514
+846,2016,Lake,female,2024
+848,2016,Lasse,female,2704
+850,2016,Los Angeles,female,105820
+852,2016,Madera,female,4503
+854,2016,Mari,female,7724
+856,2016,Mariposa,female,756
+858,2016,Mendoci,female,5786
+860,2016,Merced,female,6620
+862,2016,Modoc,female,738
+864,2016,M,female,1862
+866,2016,Monterey,female,8896
+868,2016,Napa,female,3942
+870,2016,Nevada,female,3932
+872,2016,Orange,female,28772
+874,2016,Placer,female,3710
+876,2016,Plumas,female,1781
+878,2016,Riverside Couj,female,6172
+880,2016,Riverside,female,19167
+882,2016,Sacrame,female,21762
+884,2016,San Beni,female,4551
+886,2016,San Bernardino,female,34056
+888,2016,San Diego,female,40741
+890,2016,San Francisc,female,6360
+892,2016,San Joaqui,female,11091
+894,2016,San Luis Obisp,female,7788
+896,2016,San Mate,female,7650
+898,2016,Santa Barbera,female,25401
+900,2016,Santa Clara,female,13713
+902,2016,Santa Cruz,female,6126
+904,2016,Shasta,female,4809
+906,2016,Sierra,female,2218
+908,2016,Sisk,female,3340
+910,2016,Sola,female,8805
+912,2016,Sonoma,female,8374
+914,2016,Stanislaus,female,5854
+916,2016,Sutter,female,3265
+918,2016,Tehama,female,2234
+920,2016,Trini,female,870
+922,2016,Tulare,female,8380
+924,2016,Tuolumne,female,2593
+926,2016,Yol,female,3224
