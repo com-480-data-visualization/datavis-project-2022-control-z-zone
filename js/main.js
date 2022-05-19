@@ -151,8 +151,6 @@ class MapPlot_ethnicity {
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
 		
-
-		//console.log(selectionButton)
 		
 		//Load the data of test, it's arrest of white, find by county the number of arrest
 		const white_ca = d3.csv("../data/arrest_white.csv").then((data) => {
@@ -164,7 +162,6 @@ class MapPlot_ethnicity {
 			});
 			return countiesID_to_arrest;
 		})
-		console.log(white_ca)
 				
 
 		Promise.all([map_promise_ca, map_promise_tx, white_ca]).then((results) => {
@@ -189,15 +186,10 @@ class MapPlot_ethnicity {
 
 			var buttonChange = function(d) {
 				var selectedOption = d3.select(this).property("value")
-				console.log(selectedOption)
 			}
 			
 			d3.select(selectBtn).on("change", buttonChange)
 
-				
-					
-			
-			
 			this.map_container_tx.selectAll(".county")
 				.data(map_data_tx)
 				.enter()
@@ -262,7 +254,7 @@ class MapPlot_ethnicity {
 				.attr("class", "ticks")
 				.attr("transform", "translate(0," + 18 + ")")
 				.selectAll("text")
-				.data(x.ticks(10))
+				.data(x.ticks(8))
 				.enter()
 				.append("text")
 				.attr("fill", "CurrentColor")
@@ -282,7 +274,7 @@ class MapPlot_ethnicity {
 			//circle slider
 			var handle = slider.insert("circle", ".track-overlay")
 				.attr("class", "handle")
-				.attr("r", 9);
+				.attr("r", 12);
 			
 			function update(pos) {
 				//move circle
@@ -291,9 +283,9 @@ class MapPlot_ethnicity {
 				//update the slider text
 				label
 					.attr("x", x(pos))
-					.text(pos);
+					.text(Math.round(pos));
+
 				var date = Math.round(pos); //get date from slider pos
-				console.log(date)
 				
 				const white_ca = d3.csv("../data/arrest_white.csv").then((data) => {
 					let countiesID_to_arrest = {};
