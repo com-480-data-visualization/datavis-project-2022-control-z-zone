@@ -1,7 +1,9 @@
 
 class MapPlot_ethnicity {
 	
-	makeColorbar(svg, color_scale, top_left, colorbar_size, scaleClass=d3.scaleLog) {
+	makeColorbar(svg, color_scale, top_left, colorbar_size, format) {
+
+		const scaleClass=d3.scaleLinear;
 
 		const value_to_svg = scaleClass()
 			.domain(color_scale.domain())
@@ -14,7 +16,7 @@ class MapPlot_ethnicity {
 
 		// Axis numbers
 		const colorbar_axis = d3.axisLeft(value_to_svg)
-			.tickFormat(d3.format(".0f"))
+			.tickFormat(d3.format(format))
 
 		const colorbar_g = this.svg.append("g")
 			.attr("id", "colorbar")
@@ -52,7 +54,6 @@ class MapPlot_ethnicity {
 			.style('fill', 'url(#colorbar-gradient)')
 			.style('stroke', 'black')
 			.style('stroke-width', '1px')
-
 	}
 
 	constructor(svg_element_id, map_viz) {
@@ -65,9 +66,26 @@ class MapPlot_ethnicity {
 		this.svg_width = svg_viewbox.width;
 		this.svg_height = svg_viewbox.height;
 
-		const color_scale = d3.scaleLog()
-			.range(["hsl(10,60%,60%)", "hsl(100,50%,50%)"])
-			.interpolate(d3.interpolateHcl);
+		const color_scale = d3.scaleLinear()
+		.range(["blue", "yellow"])
+		// .range(["rgb(0, 0, 0)",
+		// 	"rgb(255, 211, 201)",
+		// 	"rgb(255, 201, 187)",
+		// 	"rgb(255, 190, 174)",
+		// 	"rgb(255, 178, 161)",
+		// 	"rgb(255, 167, 149)",
+		// 	"rgb(255, 156, 136)",
+		// 	"rgb(255, 144, 123)",
+		// 	"rgb(255, 133, 111)",
+		// 	"rgb(255, 121, 99)",
+		// 	"rgb(255, 108, 87)",
+		// 	"rgb(254, 95, 75)",
+		// 	"rgb(251, 80, 63)",
+		// 	"rgb(247, 64, 51)",
+		// 	"rgb(244, 44, 39)",
+		// 	"rgb(240, 5, 27)"])
+		.domain([0, 50000])
+		.interpolate(d3.interpolateRgb);
 
 		// California
 		const projection_ca = d3.geoMercator()
@@ -150,13 +168,13 @@ class MapPlot_ethnicity {
 				.classed("button", true)
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
-		
+		console.log(selectionButton)
 		
 		//Load the data of test, it's arrest of white, find by county the number of arrest
 		const white_ca = d3.csv("../data/arrest_white_ca.csv").then((data) => {
 			let countiesID_to_arrest = {};
 			data.forEach((row) => {
-				if(row.year == 2009){ // peut etre faire l update de la date avec le slider ?
+				if(row.year == 2009){ 
 					countiesID_to_arrest[row.county_name] = (parseFloat(row.date));	
 				}			
 			});
@@ -207,7 +225,7 @@ class MapPlot_ethnicity {
 
 			var dates = [2009,2010,2011,2012,2013,2014,2015,2016]; //get all dates
 			var startDate = dates[0];
-			var endDate =dates[dates.length - 1];
+			var endDate = dates[dates.length - 1];
 
 
 			console.log(startDate)
@@ -302,7 +320,10 @@ class MapPlot_ethnicity {
 					let nb_arrrest_ethny = results[0];
 					map_data_ca.forEach(county => {
 						county.properties.arrest = nb_arrrest_ethny[county.properties.NAME];
+						console.log(county.properties.NAME)
+						console.log(color_scale(nb_arrrest_ethny[county.properties.NAME]))
 					});
+					
 					counties.style("fill",(d) => color_scale(d.properties.arrest));
 				});
 			}
@@ -319,7 +340,8 @@ class MapPlot_ethnicity {
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);	
-			this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
+
+			this.makeColorbar(this.svg, color_scale, [80, 30], [20, this.svg_height - 2*30],".0f");
 		});
 		
 	}
@@ -403,7 +425,7 @@ class MapPlot_gender {
 		this.svg_width = svg_viewbox.width;
 		this.svg_height = svg_viewbox.height;
 
-		const color_scale = d3.scaleLog()
+		const color_scale = d3.scaleLinear()
 			.range(["hsl(10,60%,60%)", "hsl(100,50%,50%)"])
 			.interpolate(d3.interpolateHcl);
 
@@ -596,9 +618,10 @@ class MapPlot_gender {
 				.append("text")
 				.attr("fill", "CurrentColor")
 				.attr("x", x)
-				.attr("y", 10)
+				.attr("y", 5)
 				.attr("text-anchor", "middle")
 				.text(function(d) { return d; });
+
 
 			//text slider
 			var label = slider.append("text")
