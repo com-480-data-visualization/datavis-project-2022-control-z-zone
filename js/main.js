@@ -142,7 +142,7 @@ class MapPlot_ethnicity {
 		const selectBtn = (this.viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
 
 		// Either hardcode choices for race and sex or fetch from data
-		const choices = (this.viz == "race") ? ["White", "Black", "Asian", "Hispanic"] : ["Male", "Female"]
+		const choices = (this.viz == "race") ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
 
 		var selectionButton = d3.select(selectBtn)
 				.selectAll('myOptions')
@@ -189,7 +189,7 @@ class MapPlot_ethnicity {
 
 			var buttonChange = function(d) {
 				var selectedOption = d3.select(this).property("value")
-				console.log(selectedOption)
+				update_button(selectedOption)
 			}
 			
 			d3.select(selectBtn).on("change", buttonChange)
@@ -251,7 +251,7 @@ class MapPlot_ethnicity {
 					.on("start.interrupt", function() { slider.interrupt(); })
 					.on("start drag", function() {
 						currentValue = d3.event.x;
-						update(x.invert(currentValue))
+						update(x.invert(currentValue),d3.select(selectBtn).property("value"))
 					})
 				);
 
@@ -283,7 +283,7 @@ class MapPlot_ethnicity {
 				.attr("class", "handle")
 				.attr("r", 12);
 			
-			function update(pos) {
+			function update(pos,button) {
 				//move circle
 				handle.attr("cx", x(pos));
 
@@ -297,7 +297,7 @@ class MapPlot_ethnicity {
 				const arrest_ethnicity = d3.csv("../data/arrest_ethnicity.csv").then((data) => {
 					let countiesID_to_arrest = {};
 					data.forEach((row) => {
-						if(row.year == date){
+						if(row.year == date && row.subject_race == button){
 							countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
 						}			
 					});
@@ -319,7 +319,33 @@ class MapPlot_ethnicity {
 				});
 			}
 
+			function update_button(button) {
+				console.log(button)
+				var date = Math.round(x.invert(currentValue))
+				const arrest_ethnicity = d3.csv("../data/arrest_ethnicity.csv").then((data) => {
+					let countiesID_to_arrest = {};
+					data.forEach((row) => {
+						if(row.year == date && row.subject_race == button){ 
+							countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
+						}			
+					});
+					return countiesID_to_arrest;
+				})
 
+				Promise.all([arrest_ethnicity]).then((results) => {
+
+					let arrest_ethnicity = results[0];
+					map_data_ca.forEach(county => {
+						county.properties.arrest = arrest_ethnicity[county.properties.NAME];
+					});
+					map_data_tx.forEach(county => {
+						county.properties.arrest = arrest_ethnicity[county.properties.NAME];
+					});
+					counties_ca.style("fill",(d) => color_scale(d.properties.arrest));
+					counties_tx.style("fill",(d) => color_scale(d.properties.arrest));
+				});
+			
+			}
 
 			var counties_ca = this.map_container_ca.selectAll(".county")
 				.data(map_data_ca)
