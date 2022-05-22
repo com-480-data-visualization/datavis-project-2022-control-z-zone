@@ -39,10 +39,10 @@ class MapPlot_ethnicity {
 			.attr('spreadMethod', 'pad');
 
 		gradient.selectAll('stop')
-			.data(range01(5))
+			.data(range01(10))
 			.enter()
 			.append('stop')
-				.attr('offset', d => Math.round(100*d) + '%')
+				.attr('offset', d => 100*d + '%')
 				.attr('stop-color', d => range01_to_color(d))
 				.attr('stop-opacity', 1);
 
@@ -68,7 +68,7 @@ class MapPlot_ethnicity {
 
 		const color_scale = d3.scaleLinear()
 		.range(["white", "blue"])
-		//.domain([0, 1])
+		.domain([0, 1])
 		.interpolate(d3.interpolateRgb);
 
 		// California
@@ -182,6 +182,9 @@ class MapPlot_ethnicity {
 			map_data_ca.forEach(county => {
 				county.properties.arrest = nb_arrrest_ethny[county.properties.NAME];
 			});
+			map_data_tx.forEach(county => {
+				county.properties.arrest = nb_arrrest_ethny[county.properties.NAME];
+			});
 
 
 			var buttonChange = function(d) {
@@ -192,13 +195,13 @@ class MapPlot_ethnicity {
 			d3.select(selectBtn).on("change", buttonChange)
 
 
-			this.map_container_tx.selectAll(".county")
+			var counties_tx = this.map_container_tx.selectAll(".county")
 				.data(map_data_tx)
 				.enter()
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_tx)
-				.style("fill", "red")
+				.style("fill",(d) => color_scale(d.properties.arrest))
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);
@@ -304,17 +307,19 @@ class MapPlot_ethnicity {
 					let nb_arrrest_ethny = results[0];
 					map_data_ca.forEach(county => {
 						county.properties.arrest = nb_arrrest_ethny[county.properties.NAME];
-						console.log(county.properties.NAME)
-						console.log(color_scale(nb_arrrest_ethny[county.properties.NAME]))
+					});
+					map_data_tx.forEach(county => {
+						county.properties.arrest = nb_arrrest_ethny[county.properties.NAME];
 					});
 					
-					counties.style("fill",(d) => color_scale(d.properties.arrest));
+					counties_ca.style("fill",(d) => color_scale(d.properties.arrest));
+					counties_tx.style("fill",(d) => color_scale(d.properties.arrest));
 				});
 			}
 
 
 
-			var counties = this.map_container_ca.selectAll(".county")
+			var counties_ca = this.map_container_ca.selectAll(".county")
 				.data(map_data_ca)
 				.enter()
 				.append("path")
@@ -325,7 +330,7 @@ class MapPlot_ethnicity {
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);	
 
-			this.makeColorbar(this.svg, color_scale, [80, 30], [20, this.svg_height - 2*30],".0f");
+			this.makeColorbar(this.svg, color_scale, [80, 30], [20, this.svg_height - 2*30],".2f");
 		});
 		
 	}
@@ -338,7 +343,7 @@ class MapPlot_gender {
 	
 	makeColorbar2(svg, color_scale, top_left, colorbar_size, scaleClass=d3.scaleLog) {
 
-		const value_to_svg_2 = scaleClass()
+		const value_to_svg = scaleClass()
 			.domain(color_scale.domain())
 			.range([colorbar_size[1], 0]);
 
@@ -348,8 +353,8 @@ class MapPlot_gender {
 			.interpolate(color_scale.interpolate());
 
 		// Axis numbers
-		const colorbar_axis = d3.axisLeft(value_to_svg_2)
-			.tickFormat(d3.format(".0f"))
+		const colorbar_axis = d3.axisLeft(value_to_svg)
+			.tickFormat(d3.format(".2f"))
 
 		const colorbar_g = this.svg.append("g")
 			.attr("id", "colorbar")
@@ -372,10 +377,10 @@ class MapPlot_gender {
 			.attr('spreadMethod', 'pad');
 
 		gradient.selectAll('stop')
-			.data(range01(5))
+			.data(range01(10))
 			.enter()
 			.append('stop')
-				.attr('offset', d => Math.round(100*d) + '%')
+				.attr('offset', d => 100*d + '%')
 				.attr('stop-color', d => range01_to_color(d))
 				.attr('stop-opacity', 1);
 
@@ -514,6 +519,10 @@ class MapPlot_gender {
 				county.properties.arrest = arrest_gender[county.properties.NAME];
 			});
 
+			map_data_tx.forEach(county => {
+				county.properties.arrest = arrest_gender[county.properties.NAME];
+			});
+
 
 			var buttonChange = function(d) {
 				var selectedOption = d3.select(this).property("value")
@@ -523,7 +532,7 @@ class MapPlot_gender {
 			d3.select(selectBtn).on("change", buttonChange)
 
 				
-			var counties = this.map_container_ca.selectAll(".county")
+			var counties_ca = this.map_container_ca.selectAll(".county")
 				.data(map_data_ca)
 				.enter()
 				.append("path")
@@ -535,13 +544,13 @@ class MapPlot_gender {
 				.on("mouseout", mouseout);			
 			
 			
-			this.map_container_tx.selectAll(".county")
+			var counties_tx = this.map_container_tx.selectAll(".county")
 				.data(map_data_tx)
 				.enter()
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_tx)
-				.style("fill", "red")
+				.style("fill", (d) => color_scale(d.properties.arrest))
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);
@@ -649,7 +658,11 @@ class MapPlot_gender {
 					map_data_ca.forEach(county => {
 						county.properties.arrest = arrest_gender[county.properties.NAME];
 					});
-					counties.style("fill",(d) => color_scale(d.properties.arrest));
+					map_data_tx.forEach(county => {
+						county.properties.arrest = arrest_gender[county.properties.NAME];
+					});
+					counties_ca.style("fill",(d) => color_scale(d.properties.arrest));
+					counties_tx.style("fill",(d) => color_scale(d.properties.arrest));
 				});
 			
 			}
