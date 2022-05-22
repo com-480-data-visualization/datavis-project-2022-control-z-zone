@@ -67,24 +67,8 @@ class MapPlot_ethnicity {
 		this.svg_height = svg_viewbox.height;
 
 		const color_scale = d3.scaleLinear()
-		.range(["blue", "yellow"])
-		// .range(["rgb(0, 0, 0)",
-		// 	"rgb(255, 211, 201)",
-		// 	"rgb(255, 201, 187)",
-		// 	"rgb(255, 190, 174)",
-		// 	"rgb(255, 178, 161)",
-		// 	"rgb(255, 167, 149)",
-		// 	"rgb(255, 156, 136)",
-		// 	"rgb(255, 144, 123)",
-		// 	"rgb(255, 133, 111)",
-		// 	"rgb(255, 121, 99)",
-		// 	"rgb(255, 108, 87)",
-		// 	"rgb(254, 95, 75)",
-		// 	"rgb(251, 80, 63)",
-		// 	"rgb(247, 64, 51)",
-		// 	"rgb(244, 44, 39)",
-		// 	"rgb(240, 5, 27)"])
-		.domain([0, 50000])
+		.range(["white", "blue"])
+		//.domain([0, 1])
 		.interpolate(d3.interpolateRgb);
 
 		// California
@@ -175,7 +159,7 @@ class MapPlot_ethnicity {
 			let countiesID_to_arrest = {};
 			data.forEach((row) => {
 				if(row.year == 2009){ 
-					countiesID_to_arrest[row.county_name] = (parseFloat(row.date));	
+					countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
 				}			
 			});
 			return countiesID_to_arrest;
@@ -308,8 +292,8 @@ class MapPlot_ethnicity {
 				const white_ca = d3.csv("../data/arrest_white_ca.csv").then((data) => {
 					let countiesID_to_arrest = {};
 					data.forEach((row) => {
-						if(row.year == date){ // peut etre faire l update de la date avec le slider ?
-							countiesID_to_arrest[row.county_name] = (parseFloat(row.date));	
+						if(row.year == date){
+							countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
 						}			
 					});
 					return countiesID_to_arrest;
@@ -352,9 +336,9 @@ class MapPlot_ethnicity {
 
 class MapPlot_gender {
 	
-	makeColorbar(svg, color_scale, top_left, colorbar_size, scaleClass=d3.scaleLog) {
+	makeColorbar2(svg, color_scale, top_left, colorbar_size, scaleClass=d3.scaleLog) {
 
-		const value_to_svg = scaleClass()
+		const value_to_svg_2 = scaleClass()
 			.domain(color_scale.domain())
 			.range([colorbar_size[1], 0]);
 
@@ -364,7 +348,7 @@ class MapPlot_gender {
 			.interpolate(color_scale.interpolate());
 
 		// Axis numbers
-		const colorbar_axis = d3.axisLeft(value_to_svg)
+		const colorbar_axis = d3.axisLeft(value_to_svg_2)
 			.tickFormat(d3.format(".0f"))
 
 		const colorbar_g = this.svg.append("g")
@@ -380,7 +364,7 @@ class MapPlot_gender {
 		const svg_defs = this.svg.append("defs");
 
 		const gradient = svg_defs.append('linearGradient')
-			.attr('id', 'colorbar-gradient')
+			.attr('id', 'colorbar-gradient_2')
 			.attr('x1', '0%') // bottom
 			.attr('y1', '100%')
 			.attr('x2', '0%') // to top
@@ -400,7 +384,7 @@ class MapPlot_gender {
 			.attr('id', 'colorbar-area')
 			.attr('width', colorbar_size[0])
 			.attr('height', colorbar_size[1])
-			.style('fill', 'url(#colorbar-gradient)')
+			.style('fill', 'url(#colorbar-gradient_2)')
 			.style('stroke', 'black')
 			.style('stroke-width', '1px')
 
@@ -411,7 +395,7 @@ class MapPlot_gender {
 		const female_ca = d3.csv("../data/arrest_female_ca.csv").then((data) => {
 			let countiesID_to_arrest = {};
 			data.forEach((row) => {
-				countiesID_to_arrest[row.county_name] =  parseFloat(row.date);
+				countiesID_to_arrest[row.county_name] =  parseFloat(row.relative_arrest);
 			});
 			return countiesID_to_arrest;
 		});
@@ -426,8 +410,9 @@ class MapPlot_gender {
 		this.svg_height = svg_viewbox.height;
 
 		const color_scale = d3.scaleLinear()
-			.range(["hsl(10,60%,60%)", "hsl(100,50%,50%)"])
-			.interpolate(d3.interpolateHcl);
+		.range(["white", "red"])
+		.domain([0, 1])
+		.interpolate(d3.interpolateRgb);
 
 		// California
 		const projection_ca = d3.geoMercator()
@@ -542,7 +527,7 @@ class MapPlot_gender {
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_ca)
-				.style("fill", (d) => color_scale(d.properties.arrest)) //"blue")
+				.style("fill", (d) => color_scale(d.properties.arrest))
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);			
@@ -650,8 +635,8 @@ class MapPlot_gender {
 				const white_ca = d3.csv("../data/arrest_female_ca.csv").then((data) => {
 					let countiesID_to_arrest = {};
 					data.forEach((row) => {
-						if(row.year == date){ // peut etre faire l update de la date avec le slider ?
-							countiesID_to_arrest[row.county_name] = (parseFloat(row.date));	
+						if(row.year == date){ 
+							countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
 						}			
 					});
 					return countiesID_to_arrest;
@@ -667,7 +652,7 @@ class MapPlot_gender {
 				});
 			
 			}
-			this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
+			this.makeColorbar2(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
 		});
 		
 	}
