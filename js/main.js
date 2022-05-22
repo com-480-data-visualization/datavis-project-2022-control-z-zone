@@ -152,13 +152,13 @@ class MapPlot_ethnicity {
 				.classed("button", true)
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
-		console.log(selectionButton)
+
 		
 		//Load the data of test, it's arrest of white, find by county the number of arrest
-		const white_ca = d3.csv("../data/arrest_white_ca.csv").then((data) => {
+		const arrest_ethnicity = d3.csv("../data/arrest_ethnicity.csv").then((data) => {
 			let countiesID_to_arrest = {};
 			data.forEach((row) => {
-				if(row.year == 2009){ 
+				if(row.year == 2009 && row.subject_race == 'white'){ 
 					countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
 				}			
 			});
@@ -166,7 +166,7 @@ class MapPlot_ethnicity {
 		})
 				
 
-		Promise.all([map_promise_ca, map_promise_tx, white_ca]).then((results) => {
+		Promise.all([map_promise_ca, map_promise_tx, arrest_ethnicity]).then((results) => {
 
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
@@ -212,7 +212,7 @@ class MapPlot_ethnicity {
 			var endDate = dates[dates.length - 1];
 
 
-			console.log(startDate)
+
 			var slider_margin = {top:0, right:50, bottom:0, left:50};
 			var slider_svg = d3.select('#slider');
 
@@ -289,7 +289,7 @@ class MapPlot_ethnicity {
 
 				var date = Math.round(pos); //get date from slider pos
 				
-				const white_ca = d3.csv("../data/arrest_white_ca.csv").then((data) => {
+				const arrest_ethnicity = d3.csv("../data/arrest_ethnicity.csv").then((data) => {
 					let countiesID_to_arrest = {};
 					data.forEach((row) => {
 						if(row.year == date){
@@ -299,7 +299,7 @@ class MapPlot_ethnicity {
 					return countiesID_to_arrest;
 				})
 
-				Promise.all([white_ca]).then((results) => {
+				Promise.all([arrest_ethnicity]).then((results) => {
 
 					let nb_arrrest_ethny = results[0];
 					map_data_ca.forEach(county => {
@@ -392,10 +392,12 @@ class MapPlot_gender {
 
 	constructor(svg_element_id, map_viz) {
 
-		const female_ca = d3.csv("../data/arrest_female_ca.csv").then((data) => {
+		const arrest_gender = d3.csv("../data/arrest_gender.csv").then((data) => {
 			let countiesID_to_arrest = {};
 			data.forEach((row) => {
-				countiesID_to_arrest[row.county_name] =  parseFloat(row.relative_arrest);
+				if(row.year == 2009 && row.subject_sex == 'male'){ 
+					countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
+				}		
 			});
 			return countiesID_to_arrest;
 		});
@@ -410,7 +412,7 @@ class MapPlot_gender {
 		this.svg_height = svg_viewbox.height;
 
 		const color_scale = d3.scaleLinear()
-		.range(["white", "red"])
+		.range(["white", "blue"])
 		.domain([0, 1])
 		.interpolate(d3.interpolateRgb);
 
@@ -496,7 +498,7 @@ class MapPlot_gender {
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
 
-		Promise.all([map_promise_ca, map_promise_tx, female_ca]).then((results) => {
+		Promise.all([map_promise_ca, map_promise_tx, arrest_gender]).then((results) => {
 
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
@@ -554,7 +556,6 @@ class MapPlot_gender {
 			var endDate =dates[dates.length - 1];
 
 
-			console.log(startDate)
 			var slider_margin = {top:0, right:50, bottom:0, left:50};
 			var slider_svg = d3.select('#slider2');
 
@@ -632,17 +633,17 @@ class MapPlot_gender {
 
 				var date = Math.round(pos); //get date from slider pos
 				
-				const white_ca = d3.csv("../data/arrest_female_ca.csv").then((data) => {
+				const arrest_gender = d3.csv("../data/arrest_gender.csv").then((data) => {
 					let countiesID_to_arrest = {};
 					data.forEach((row) => {
-						if(row.year == date){ 
+						if(row.year == date && row.subject_sex == 'male'){ //change the female by button
 							countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
 						}			
 					});
 					return countiesID_to_arrest;
 				})
 
-				Promise.all([white_ca]).then((results) => {
+				Promise.all([arrest_gender]).then((results) => {
 
 					let arrest_gender = results[0];
 					map_data_ca.forEach(county => {
