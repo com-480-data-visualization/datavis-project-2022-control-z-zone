@@ -495,7 +495,7 @@ class MapPlot_gender {
 		const selectBtn = (this.viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
 
 		// Either hardcode choices for race and sex or fetch from data
-		const choices = (this.viz == "race") ? ["White", "Black", "Asian", "Hispanic"] : ["Male", "Female"]
+		const choices = (this.viz == "race") ? ["White", "Black", "Asian", "Hispanic"] : ["male", "female"]
 
 		var selectionButton = d3.select(selectBtn)
 				.selectAll('myOptions')
@@ -505,6 +505,8 @@ class MapPlot_gender {
 				.classed("button", true)
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
+
+
 
 		Promise.all([map_promise_ca, map_promise_tx, arrest_gender]).then((results) => {
 
@@ -529,9 +531,8 @@ class MapPlot_gender {
 
 			var buttonChange = function(d) {
 				var selectedOption = d3.select(this).property("value")
-				console.log(selectedOption)
+				update_button(selectedOption)
 			}
-			
 			d3.select(selectBtn).on("change", buttonChange)
 
 				
@@ -571,6 +572,8 @@ class MapPlot_gender {
 			var slider_margin = {top:0, right:50, bottom:0, left:50};
 			var slider_svg = d3.select('#slider2');
 
+			
+
 			const svg_slider_viewbox = slider_svg.node().viewBox.animVal;
 			const svg_slider_width = svg_slider_viewbox.width - slider_margin.left - slider_margin.right;
 			const svg_slider_height = svg_slider_viewbox.height  - slider_margin.top - slider_margin.bottom;
@@ -590,6 +593,7 @@ class MapPlot_gender {
 					.attr("class", "slider")
 					.attr("transform", "translate(" + slider_margin.left + "," + svg_slider_height/2 + ")");
 
+			
 			// slider line
 			slider.append("line")
 				.attr("class", "track")
@@ -603,10 +607,11 @@ class MapPlot_gender {
 					.on("start.interrupt", function() { slider.interrupt(); })
 					.on("start drag", function() {
 						currentValue = d3.event.x;
-						update(x.invert(currentValue))
+						update(x.invert(currentValue),d3.select(selectBtn).property("value"))
 					})
 				);
 
+					
 			slider.insert("g", ".track-overlay")
 				.attr("class", "ticks")
 				.attr("transform", "translate(0," + 18 + ")")
@@ -620,6 +625,8 @@ class MapPlot_gender {
 				.style("font-size", "15px")
 				.attr("text-anchor", "middle")
 				.text(function(d) { return d; });
+
+
 
 
 			//text slider
@@ -636,10 +643,10 @@ class MapPlot_gender {
 				.attr("class", "handle")
 				.attr("r", 12);
 			
-			function update(pos) {
+			function update(pos,button) {
 				//move circle
 				handle.attr("cx", x(pos));
-
+				
 				//update the slider text
 				label
 					.attr("x", x(pos))
@@ -650,7 +657,7 @@ class MapPlot_gender {
 				const arrest_gender = d3.csv("../data/arrest_gender.csv").then((data) => {
 					let countiesID_to_arrest = {};
 					data.forEach((row) => {
-						if(row.year == date && row.subject_sex == 'male'){ //change the female by button
+						if(row.year == date && row.subject_sex == button){ //change the female by button
 							countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
 						}			
 					});
@@ -671,7 +678,35 @@ class MapPlot_gender {
 				});
 			
 			}
-			this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30],".2f");
+
+			function update_button(button) {
+				var date = Math.round(x.invert(currentValue))
+				const arrest_gender = d3.csv("../data/arrest_gender.csv").then((data) => {
+					let countiesID_to_arrest = {};
+					data.forEach((row) => {
+						if(row.year == date && row.subject_sex == button){ 
+							countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
+						}			
+					});
+					return countiesID_to_arrest;
+				})
+
+				Promise.all([arrest_gender]).then((results) => {
+
+					let arrest_gender = results[0];
+					map_data_ca.forEach(county => {
+						county.properties.arrest = arrest_gender[county.properties.NAME];
+					});
+					map_data_tx.forEach(county => {
+						county.properties.arrest = arrest_gender[county.properties.NAME];
+					});
+					counties_ca.style("fill",(d) => color_scale(d.properties.arrest));
+					counties_tx.style("fill",(d) => color_scale(d.properties.arrest));
+				});
+			
+			}
+
+			this.makeColorbar(this.svg, color_scale, [80, 30], [20, this.svg_height - 2*30],".2f");
 		});
 		
 	}
