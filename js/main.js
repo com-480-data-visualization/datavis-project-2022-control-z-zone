@@ -16,11 +16,11 @@ class MapPlot_ethnicity {
 
 		// Axis numbers
 		const colorbar_axis = d3.axisLeft(value_to_svg)
-			.tickFormat(d3.format(format))
+			.tickFormat(d3.format(format));
 
 		const colorbar_g = this.svg.append("g")
 			.attr("id", "colorbar")
-			.attr("transform", "translate(" + top_left[0] + ', ' + top_left[1] + ")")
+			.attr("transform", "translate(" + top_left[0]+ ', ' + top_left[1] + ")")
 			.call(colorbar_axis);
 
 		// Create the gradient
@@ -53,7 +53,7 @@ class MapPlot_ethnicity {
 			.attr('height', colorbar_size[1])
 			.style('fill', 'url(#colorbar-gradient)')
 			.style('stroke', 'black')
-			.style('stroke-width', '1px')
+			.style('stroke-width', '1px');
 	}
 
 	constructor(svg_element_id, map_viz) {
@@ -266,6 +266,7 @@ class MapPlot_ethnicity {
 				.attr("x", x)
 				.attr("y", 10)
 				.attr("text-anchor", "middle")
+				.style("font-size", "15px")
 				.text(function(d) { return d; });
 
 			//text slider
@@ -274,6 +275,7 @@ class MapPlot_ethnicity {
 				.attr("text-anchor", "middle")
 				.text(startDate)
 				.attr("fill", "CurrentColor")
+				.style("font-size", "15px")
 				.attr("transform", "translate(0," + (-25) + ")")
 
 			//circle slider
@@ -341,7 +343,9 @@ class MapPlot_ethnicity {
 
 class MapPlot_gender {
 	
-	makeColorbar2(svg, color_scale, top_left, colorbar_size, scaleClass=d3.scaleLog) {
+	makeColorbar(svg, color_scale, top_left, colorbar_size, format) {
+
+		const scaleClass=d3.scaleLinear;
 
 		const value_to_svg = scaleClass()
 			.domain(color_scale.domain())
@@ -354,11 +358,11 @@ class MapPlot_gender {
 
 		// Axis numbers
 		const colorbar_axis = d3.axisLeft(value_to_svg)
-			.tickFormat(d3.format(".2f"))
+			.tickFormat(d3.format(format));
 
 		const colorbar_g = this.svg.append("g")
 			.attr("id", "colorbar")
-			.attr("transform", "translate(" + top_left[0] + ', ' + top_left[1] + ")")
+			.attr("transform", "translate(" + top_left[0]+ ', ' + top_left[1] + ")")
 			.call(colorbar_axis);
 
 		// Create the gradient
@@ -369,7 +373,7 @@ class MapPlot_gender {
 		const svg_defs = this.svg.append("defs");
 
 		const gradient = svg_defs.append('linearGradient')
-			.attr('id', 'colorbar-gradient_2')
+			.attr('id', 'colorbar-gradient')
 			.attr('x1', '0%') // bottom
 			.attr('y1', '100%')
 			.attr('x2', '0%') // to top
@@ -389,10 +393,9 @@ class MapPlot_gender {
 			.attr('id', 'colorbar-area')
 			.attr('width', colorbar_size[0])
 			.attr('height', colorbar_size[1])
-			.style('fill', 'url(#colorbar-gradient_2)')
+			.style('fill', 'url(#colorbar-gradient)')
 			.style('stroke', 'black')
-			.style('stroke-width', '1px')
-
+			.style('stroke-width', '1px');
 	}
 
 	constructor(svg_element_id, map_viz) {
@@ -613,7 +616,8 @@ class MapPlot_gender {
 				.append("text")
 				.attr("fill", "CurrentColor")
 				.attr("x", x)
-				.attr("y", 5)
+				.attr("y", 10)
+				.style("font-size", "15px")
 				.attr("text-anchor", "middle")
 				.text(function(d) { return d; });
 
@@ -624,6 +628,7 @@ class MapPlot_gender {
 				.attr("text-anchor", "middle")
 				.text(startDate)
 				.attr("fill", "CurrentColor")
+				.style("font-size", "15px")
 				.attr("transform", "translate(0," + (-25) + ")")
 
 			//circle slider
@@ -666,7 +671,7 @@ class MapPlot_gender {
 				});
 			
 			}
-			this.makeColorbar2(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30]);
+			this.makeColorbar(this.svg, color_scale, [50, 30], [30, this.svg_height - 2*30],".2f");
 		});
 		
 	}
