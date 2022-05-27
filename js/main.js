@@ -3,7 +3,7 @@ class MapPlot {
 	
 	makeColorbar(svg, color_scale, top_left, colorbar_size, format) {
 
-		const scaleClass=d3.scaleLinear;
+		const scaleClass = d3.scaleLinear;
 
 		const value_to_svg = scaleClass()
 			.domain(color_scale.domain())
@@ -39,7 +39,7 @@ class MapPlot {
 			.attr('spreadMethod', 'pad');
 
 		gradient.selectAll('stop')
-			.data(range01(10))
+			.data(range01(2))
 			.enter()
 			.append('stop')
 				.attr('offset', d => 100*d + '%')
@@ -66,11 +66,6 @@ class MapPlot {
 		const svg_viewbox = this.svg.node().viewBox.animVal;
 		this.svg_width = svg_viewbox.width;
 		this.svg_height = svg_viewbox.height;
-
-		const color_scale = d3.scaleLinear()
-				.range(["white", "blue"])
-				.domain([0, 1])
-				.interpolate(d3.interpolateRgb);
 
 		// California
 		const projection_ca = d3.geoMercator()
@@ -123,7 +118,8 @@ class MapPlot {
 			d3.select('#tooltip')
 				.style('opacity', 1)
 				.style("visibility", "visible")
-				.text(d.properties.NAME)
+				.html("<b>" + d.properties.NAME + "</b> <br> <br> Stops: " + d.properties.stops + "<br> Relative stops: " 
+						+ d.properties.relative_stops.toFixed(4) + "<br> Population: " + d.properties.population)
 		}
 
 		var mousemove = function(d) {
@@ -167,16 +163,40 @@ class MapPlot {
 			let map_data_tx = results[1];
 			let data_map = results[2];
 
-			var counties_id_arrest = {}
+			var counties_id_stops = {}
 			var dates = [...new Set(data_map.map(x=> x.year))].sort() //get all dates
 
+			var domain_max = 0.0
+
+			function getCountiesInfo(row) {
+
+				var temp_dict = {}
+
+				temp_dict["stops"] = parseInt(row.nb_arrest)
+				temp_dict["relative_stops"] = parseFloat(row.relative_arrest)
+				temp_dict["population"] = parseInt(row.population)
+
+				return temp_dict
+			}
+
 			if (viz == "race") {
-				data_map.filter(x => (x.year == dates[0]) && x.subject_race == choices[0]).forEach((row) => {
-					counties_id_arrest[row.county_name] = (parseFloat(row.relative_arrest))
+
+				const df = data_map.filter(x => (x.year == dates[0]) && x.subject_race == choices[0])
+
+				domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+
+				df.forEach((row) => {
+					counties_id_stops[row.county_name] = getCountiesInfo(row)
 				})
+
 			} else {
-				data_map.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0]).forEach((row) => {
-					counties_id_arrest[row.county_name] = (parseFloat(row.relative_arrest))
+
+				const df = data_map.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0])
+
+				domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+
+				df.forEach((row) => {
+					counties_id_stops[row.county_name] = getCountiesInfo(row)
 				})
 			}
 
@@ -185,13 +205,36 @@ class MapPlot {
 			this.map_container_ca = this.svg.append('g');
 			this.map_container_tx = this.svg.append('g');
 
+			function setMapInfos(county) {
+
+				const county_name = county.properties.NAME
+
+				var county_stops = 0
+				var county_relative_stops = 0.0
+				var county_population = 0.0
+
+				if (county_name in counties_id_stops) {
+
+					const county_dict = counties_id_stops[county.properties.NAME]
+
+					county_stops = county_dict["stops"];
+					county_relative_stops = county_dict["relative_stops"];
+					county_population = county_dict["population"];
+
+				}
+
+				county.properties.stops = county_stops
+				county.properties.relative_stops = county_relative_stops
+				county.properties.population = county_population
+			}
+
 			//add the data as a property of the county
 			map_data_ca.forEach(county => {
-				county.properties.arrest = counties_id_arrest[county.properties.NAME];
+				setMapInfos(county)
 			});
 
 			map_data_tx.forEach(county => {
-				county.properties.arrest = counties_id_arrest[county.properties.NAME];
+				setMapInfos(county)
 			});
 
 			var buttonChange = function() {
@@ -201,13 +244,18 @@ class MapPlot {
 			
 			d3.select(selectBtn).on("change", buttonChange)
 
+			const color_scale = d3.scaleLinear()
+				.range(["white", "blue"])
+				.domain([0, domain_max])
+				.interpolate(d3.interpolateRgb);
+
 			var counties_tx = this.map_container_tx.selectAll(".county")
 				.data(map_data_tx)
 				.enter()
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_tx)
-				.style("fill",(d) => color_scale(d.properties.arrest))
+				.style("fill",(d) => color_scale(d.properties.relative_stops))
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);
@@ -218,10 +266,56 @@ class MapPlot {
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_ca)
-				.style("fill",(d) => color_scale(d.properties.arrest))
+				.style("fill",(d) => color_scale(d.properties.relative_stops))
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);	
+
+
+			function updateMapData(date, button) {
+
+				if (viz == "race") {
+					data_map.filter(x => (x.year == date) && x.subject_race == button).forEach((row) => {
+						counties_id_stops[row.county_name] = getCountiesInfo(row)
+					})
+				} else {
+					data_map.filter(x => (x.year == date) && x.subject_sex == button).forEach((row) => {
+						counties_id_stops[row.county_name] = getCountiesInfo(row)
+					})
+				}
+
+				map_data_ca.forEach(county => {
+					setMapInfos(county)
+				});
+				map_data_tx.forEach(county => {
+					setMapInfos(county)
+				});
+
+				counties_ca.style("fill",(d) => color_scale(d.properties.relative_stops));
+				counties_tx.style("fill",(d) => color_scale(d.properties.relative_stops));
+			}
+			
+			function update(pos, button) {
+				//move circle
+				handle.attr("cx", x(pos));
+
+				//update the slider text
+				label
+					.attr("x", x(pos))
+					.text(Math.floor(pos));
+
+				var date = Math.floor(pos); //get date from slider pos
+
+				updateMapData(date, button)
+				
+			}
+
+			function updateButton(button) {
+
+				var date = Math.floor(x.invert(currentValue))
+
+				updateMapData(date, button)
+			}
 
 			//---------- SLIDER ----------//
 			
@@ -295,51 +389,6 @@ class MapPlot {
 				.attr("class", "handle")
 				.attr("r", 12);
 
-			
-			function updateMapData(date, button) {
-
-				if (viz == "race") {
-					data_map.filter(x => (x.year == date) && x.subject_race == button).forEach((row) => {
-						counties_id_arrest[row.county_name] = (parseFloat(row.relative_arrest))
-					})
-				} else {
-					data_map.filter(x => (x.year == date) && x.subject_sex == button).forEach((row) => {
-						counties_id_arrest[row.county_name] = (parseFloat(row.relative_arrest))
-					})
-				}
-
-				map_data_ca.forEach(county => {
-					county.properties.arrest = counties_id_arrest[county.properties.NAME];
-				});
-				map_data_tx.forEach(county => {
-					county.properties.arrest = counties_id_arrest[county.properties.NAME];
-				});
-
-				counties_ca.style("fill",(d) => color_scale(d.properties.arrest));
-				counties_tx.style("fill",(d) => color_scale(d.properties.arrest));
-			}
-			
-			function update(pos, button) {
-				//move circle
-				handle.attr("cx", x(pos));
-
-				//update the slider text
-				label
-					.attr("x", x(pos))
-					.text(Math.floor(pos));
-
-				var date = Math.floor(pos); //get date from slider pos
-
-				updateMapData(date, button)
-				
-			}
-
-			function updateButton(button) {
-
-				var date = Math.floor(x.invert(currentValue))
-
-				updateMapData(date, button)
-			}
 
 			this.makeColorbar(this.svg, color_scale, [80, 30], [20, this.svg_height - 2*30],".2f");
 		});	
