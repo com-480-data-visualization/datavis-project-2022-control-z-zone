@@ -1,4 +1,3 @@
-
 class MapPlot {
 	
 	makeColorbar(svg, color_scale, top_left, colorbar_size, format) {
@@ -159,13 +158,16 @@ class MapPlot {
 
 		Promise.all([map_promise_ca, map_promise_tx, data_promise]).then((results) => {
 
+			const stop_min = 100
+
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
-			let data_map = results[2];
+			let data_map = results[2].filter(x => x.nb_arrest > stop_min); // remove counties with less than < 100 stops
 
 			var counties_id_stops = {}
 			var dates = [...new Set(data_map.map(x=> x.year))].sort() //get all dates
 
+			var domain_min = 0.0
 			var domain_max = 0.0
 
 			function getCountiesInfo(row) {
@@ -173,7 +175,7 @@ class MapPlot {
 				var temp_dict = {}
 
 				temp_dict["stops"] = parseInt(row.nb_arrest)
-				temp_dict["relative_stops"] = parseFloat(row.relative_arrest)
+				temp_dict["relative_stops"] = Math.log10(temp_dict["stops"]) //parseFloat(row.relative_arrest)
 				temp_dict["population"] = parseInt(row.population)
 
 				return temp_dict
@@ -183,7 +185,11 @@ class MapPlot {
 
 				const df = data_map.filter(x => (x.year == dates[0]) && x.subject_race == choices[0])
 
-				domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+				//domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+
+				const df_domain =  df.map(x => Math.log10(x.nb_arrest))
+				domain_min = Math.floor(Math.min.apply(Math, df_domain))
+				domain_max = Math.ceil(Math.max.apply(Math, df_domain))
 
 				df.forEach((row) => {
 					counties_id_stops[row.county_name] = getCountiesInfo(row)
@@ -193,7 +199,11 @@ class MapPlot {
 
 				const df = data_map.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0])
 
-				domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+				//domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+				
+				const df_domain =  df.map(x => Math.log10(x.nb_arrest))
+				domain_min = Math.floor(Math.min.apply(Math, df_domain))
+				domain_max = Math.ceil(Math.max.apply(Math, df_domain))
 
 				df.forEach((row) => {
 					counties_id_stops[row.county_name] = getCountiesInfo(row)
@@ -245,8 +255,8 @@ class MapPlot {
 			d3.select(selectBtn).on("change", buttonChange)
 
 			const color_scale = d3.scaleLinear()
-				.range(["white", "blue"])
-				.domain([0, domain_max])
+				.range(["white", "red"])
+				.domain([domain_min, domain_max])
 				.interpolate(d3.interpolateRgb);
 
 			var counties_tx = this.map_container_tx.selectAll(".county")
@@ -395,6 +405,7 @@ class MapPlot {
 	}
 }
 
+
 /*For the moment we use data from serie 4 to do the scatter plot but then
 it will be the hit rate */
 
@@ -405,23 +416,9 @@ class ScatterPlot {
 	
 	constructor(svg_element_id) {
 		this.svg = d3.select('#' + svg_element_id);
+		
+		const viz = "race"
 
-		 const viz = "race"
-		// // Selection button
-		// const selectBtn = (viz == "race") ? "#selectButtonRace_hit" : "#selectButtonGender_hit" 
-	
-		// // Either hardcode choices for race and sex or fetch from data
-		// const choices = (viz == "race") ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
-
-		// var selectionButton = d3.select(selectBtn)
-		// 		.selectAll('myOptions')
-		//     	.data(choices)
-		// 		.enter()
-		//   		.append('option')
-		// 		.classed("button", true)
-		// 		.text(function (d) { return d; })
-		// 		.attr("value", function (d) {return d; })
-				
 		
 		const data_path = (viz == "race") ? "data/city/all_hit_rate_ethnicity_mean.csv" : "data/city/all_hit_rate_gender_mean.csv"
 
@@ -466,19 +463,19 @@ class ScatterPlot {
 
 
 			this.plot_area = this.svg.append('g')
-			.attr('x', 10)
-			.attr('y', 10);
+			 .attr('x', 10)
+			 .attr('y',  10); 
 
 			this.plot_area.append('rect')
-			.classed('plot-background', true)
-			.attr('width', 205)
-			.attr('height', 100)
-			.attr("fill", 'transparent');
+			 .classed('plot-background', true)
+			 .attr('width', this.svg.width)
+			 .attr('height', this.svg.height)
+			 .attr("fill", 'transparent');
 
-			const x_value_range = [d3.min(data_ca, d => d.x), d3.max(data_ca, d => d.x)];
+			const x_value_range = [0, d3.max(data_ca, d => d.x)];//d3.min(data_ca, d => d.x)
 
 			const y_value_range = [0, d3.max(data_ca, d => d.y)];
-
+			
 			const pointX_to_svgX = d3.scaleLinear()
 			 	.domain(x_value_range)
 			 	.range([0, 100]);
@@ -490,39 +487,44 @@ class ScatterPlot {
 			var myColor = d3.scaleOrdinal()
 			.domain(label)
 			.range(d3.schemeSet1);
-			this.plot_area.selectAll("circle")
+
+			var map_hit = this.plot_area.selectAll("circle")
 			  	.data(data_ca)
 			  	.enter()
 			  	.append("circle")
-			  		.attr("r", 1.5) // radius
-			  		.attr("cx", d => pointX_to_svgX(d.x)) // position, rescaled
-			  		.attr("cy", d => pointY_to_svgY(d.y))
-					//.attr("r", d => d.r)
+					.attr("class", function(d) { return "bubbles " + d.label})
+			  		.attr("cx", d => pointX_to_svgX(d.x|| 0) ) // position, rescaled
+			  		.attr("cy", d => pointY_to_svgY(d.y|| 0))
+					.attr("r", d => d.r *0.002)
 					.style("fill", function (d) { return myColor(d.label); } )
 			//  		.classed('cold', d => d.y <= 17) // color classes
 			//  		.classed('warm', d => d.y >= 23);
 			
 
-			var size = 20
-			
+			var size = 2
+
+			var highlight = function(d){
+				// reduce opacity of all groups
+				d3.selectAll(".bubbles").style("opacity", .05)
+				// expect the one that is hovered
+				d3.selectAll("."+d).style("opacity", 1)
+			}
+
+			var noHighlight = function(d){
+				d3.selectAll(".bubbles").style("opacity", 1)
+			}
+			console.log(label)
 			this.svg.selectAll("myrect")
 			  .data(label)
 			  .enter()
 			  .append("circle")
 				.attr("cx", 105)
-				.attr("cy", function(d,i){ return 10 + i*(size+5)}) 
-				.attr("r", 2)
+				.attr("cy", function(d,i){ return 15 + i*(size+5)}) 
+				.attr("r", 1)
 				.style("fill", function(d){ return myColor(d)})
+				.on("mouseover", highlight)
+        		.on("mouseleave", noHighlight)
 
-			// // Create a label for each point
-			this.svg.append('g')
-			.selectAll('text')
-			.data(data_ca)
-			.enter()
-				.append('text')
-				.text( d => d.label )
-				.attr('x', d => pointX_to_svgX(d.y))
-				.attr('y', 105);
 
 					// // Create Y labels
 			const label_ys = Array.from(Array(6), (elem, index) => 20 * index); // 0 20 40 ... 180
@@ -543,6 +545,133 @@ class ScatterPlot {
 				.text( svg_x => pointX_to_svgX.invert(svg_x).toFixed(1) )
 				.attr('x', svg_x => svg_x + 1)
 				.attr('y', 105);
+
+
+			function updateMapData(date) {
+				var counties_id_hit_rate_ca = []
+				var counties_id_hit_rate_tx = []
+				var total_arrest = []
+				var label = []
+				if (viz == "race") {
+					hit_rate.filter(x => (x.year == date && x.County == 'California')).forEach((row) => { // x.subject_race == choices[0] &&
+						counties_id_hit_rate_ca.push((parseFloat(row.mean)))
+						total_arrest.push((parseFloat(row.sum)))
+						console.log(counties_id_hit_rate_ca)
+						label.push(row.subject_race)
+					})
+					hit_rate.filter(x => (x.year == date &&  x.County == 'Texas')).forEach((row) => {// x.subject_race == choices[0] &&
+						counties_id_hit_rate_tx.push((parseFloat(row.mean)))		
+					})
+				} else {
+					hit_rate.filter(x => (x.year == date) ).forEach((row) => {
+						counties_id_hit_rate.push((parseFloat(row.mean)))
+						total_arrest.push((parseFloat(row.sum)))
+	
+					})
+				}
+
+				data_ca = counties_id_hit_rate_ca.map((value, index) => {
+					return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'r' : total_arrest[index], 'label' : label[index]};
+				});
+
+				map_hit.append("circle")
+					.attr("class", function(d) { return "bubbles " + d.label})
+			  		.attr("cx", d => pointX_to_svgX(d.x|| 0) ) // position, rescaled
+			  		.attr("cy", d => pointY_to_svgY(d.y|| 0))
+					.attr("r", d => d.r *0.002)
+					.style("fill", function (d) { return myColor(d.label); } )
+
+				
+			}
+			
+			function update(pos) {
+				//move circle
+				handle.attr("cx", x(pos));
+
+				//update the slider text
+				label
+					.attr("x", x(pos))
+					.text(Math.floor(pos));
+
+				var date = Math.floor(pos); //get date from slider pos
+
+				updateMapData(date)
+				
+			}
+	
+
+
+			//---------- SLIDER ----------//
+			
+			var startDate = dates[0];
+			var endDate = dates[dates.length - 1];
+
+			var slider_margin = {top:0, right:50, bottom:0, left:50};
+
+			var slider_svg = d3.select('#slider3');
+
+			const svg_slider_viewbox = slider_svg.node().viewBox.animVal;
+			const svg_slider_width = svg_slider_viewbox.width - slider_margin.left - slider_margin.right;
+			const svg_slider_height = svg_slider_viewbox.height  - slider_margin.top - slider_margin.bottom;
+
+			var moving_b = false; //if slider is moving
+			var currentValue = 0; //slider value
+			var targetValue = svg_slider_width;
+			var timer = 0;
+
+			var x = d3.scaleLinear()
+					.domain([startDate, endDate])
+					.range([0, svg_slider_width])
+					.clamp(true);
+		
+			var slider = slider_svg.append("g")
+					.attr("class", "slider")
+					.attr("transform", "translate(" + slider_margin.left + "," + svg_slider_height/2 + ")");
+
+			// slider line
+			slider.append("line")
+				.attr("class", "track")
+				.attr("x1", x.range()[0])
+				.attr("x2", x.range()[1])
+				.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+				.attr("class", "track-inset")
+				.select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+				.attr("class", "track-overlay")
+				.call(d3.drag()
+					.on("start.interrupt", function() { slider.interrupt(); })
+					.on("start drag", function() {
+						currentValue = d3.event.x;
+						update(x.invert(currentValue))
+					})
+				);
+
+			slider.insert("g", ".track-overlay")
+				.attr("class", "ticks")
+				.attr("transform", "translate(0," + 18 + ")")
+				.selectAll("text")
+				.data(x.ticks(8))
+				.enter()
+				.append("text")
+				.attr("fill", "CurrentColor")
+				.attr("x", x)
+				.attr("y", 10)
+				.attr("text-anchor", "middle")
+				.style("font-size", "15px")
+				.text(function(d) { return d; });
+
+			//text slider
+			var label = slider.append("text")
+				.attr("class", "label")
+				.attr("text-anchor", "middle")
+				.text(startDate)
+				.attr("fill", "CurrentColor")
+				.style("font-size", "15px")
+				.attr("transform", "translate(0," + (-25) + ")")
+
+			//circle slider
+			var handle = slider.insert("circle", ".track-overlay")
+				.attr("class", "handle")
+				.attr("r", 12);
 		});
 
 	}
