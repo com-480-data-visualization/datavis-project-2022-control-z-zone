@@ -154,17 +154,10 @@ class MapPlot {
 				.attr("value", function (d) {return d; })
 				
 		
-		const data_path = (viz == "race") ? "../data/arrest_ethnicity.csv" : "../data/arrest_gender.csv"
+		const data_path = (viz == "race") ? "data/arrest_ethnicity.csv" : "data/arrest_gender.csv"
 		
 		//Load the data of test, it's arrest of white, find by county the number of arrest
 		const data_promise = d3.csv(data_path).then((data) => {
-			// let countiesID_to_arrest = {};
-			// data.forEach((row) => {
-			// 	if(row.year == 2009 && row.subject_race == 'white'){ 
-			// 		countiesID_to_arrest[row.county_name] = (parseFloat(row.relative_arrest));	
-			// 	}			
-			// });
-			// return countiesID_to_arrest;
 			return data
 		})
 
