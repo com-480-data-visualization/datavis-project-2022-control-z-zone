@@ -395,7 +395,7 @@ class ScatterPlot {
 				.attr("value", function (d) {return d; })
 				
 		
-		const data_path = (viz == "race") ? "../data/city/all_hit_rate_ethnicity_mean.csv" : "../data/city/all_hit_rate_gender_mean.csv"
+		const data_path = (viz == "race") ? "data/city/all_hit_rate_ethnicity_mean.csv" : "data/city/all_hit_rate_gender_mean.csv"
 
 		const hit_rate_promise = d3.csv(data_path).then((data) => {
 			return data
