@@ -137,7 +137,7 @@ class MapPlot {
 			d3.select('#tooltip')
 				.style("visibility", "hidden")
 		}
-		
+
 		// Selection button
 		const selectBtn = (viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
 
@@ -177,7 +177,7 @@ class MapPlot {
 			var counties_id_arrest = {}
 			var dates = [...new Set(data_map.map(x=> x.year))].sort() //get all dates
 
-			console.log(dates)
+
 
 			if (viz == "race") {
 				data_map.filter(x => (x.year == dates[0]) && x.subject_race == choices[0]).forEach((row) => {
@@ -344,7 +344,6 @@ class MapPlot {
 			}
 
 			function update_button(button) {
-				console.log(button)
 
 				var date = Math.floor(x.invert(currentValue))
 
@@ -368,27 +367,69 @@ class ScatterPlot {
 		this.svg = d3.select('#' + svg_element_id);
 
 
-		const hit_rate_ethnicity = d3.csv("../data/city/all_hit_rate_ethnicity.csv").then((data) => {
-			let countiesID_to_hit = [];
-			let city_names = [];
-			data.forEach((row) => {
-				if(row.year == 2016 && row.subject_race == 'black'){ //
-					countiesID_to_hit.push((parseFloat(row.Hit_rate)));	
-					city_names.push(row.City);
-				}			
-			});
-			return [countiesID_to_hit, city_names];
+		// const hit_rate_ethnicity = d3.csv("../data/city/all_hit_rate_ethnicity.csv").then((data) => {
+		// 	let countiesID_to_hit = [];
+		// 	let city_names = [];
+		// 	data.forEach((row) => {
+		// 		if(row.year == 2016 && row.subject_race == 'black'){ //
+		// 			countiesID_to_hit.push((parseFloat(row.Hit_rate)));	
+		// 			city_names.push(row.City);
+		// 		}			
+		// 	});
+		// 	return [countiesID_to_hit, city_names];
+		// })
+		const viz = "race"
+		// Selection button
+		const selectBtn = (viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
+
+		// Either hardcode choices for race and sex or fetch from data
+		const choices = (viz == "race") ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
+
+		var selectionButton = d3.select(selectBtn)
+				.selectAll('myOptions')
+		    	.data(choices)
+				.enter()
+		  		.append('option')
+				.classed("button", true)
+				.text(function (d) { return d; })
+				.attr("value", function (d) {return d; })
+				
+		
+		const data_path = (viz == "race") ? "../data/city/all_hit_rate_ethnicity_mean.csv" : "../data/city/all_hit_rate_gender_mean.csv"
+
+		const hit_rate_promise = d3.csv(data_path).then((data) => {
+			return data
 		})
 
 		
-		Promise.all([hit_rate_ethnicity]).then((results) => {
+		Promise.all([hit_rate_promise]).then((results) => {
 
-			let hit_rate_ethnicity = results[0][0];
-			let city = results[0][1]
+			let hit_rate = results[0];
 
-			let data = hit_rate_ethnicity.map((value, index) => {
-				return {'x': index, 'y': value, 'name': city[index]};
+			var counties_id_hit_rate_ca = []
+			var counties_id_hit_rate_tx = []
+			var label = []
+			var dates = [...new Set(hit_rate.map(x=> x.year))].sort() //get all dates
+
+			if (viz == "race") {
+				hit_rate.filter(x => (x.year == dates[3] && x.County == 'California')).forEach((row) => { // x.subject_race == choices[0] &&
+					counties_id_hit_rate_ca.push((parseFloat(row.mean)))
+				})
+				hit_rate.filter(x => (x.year == dates[3] &&  x.County == 'Texas')).forEach((row) => {// x.subject_race == choices[0] &&
+					counties_id_hit_rate_tx.push((parseFloat(row.mean)))		
+				})
+			} else {
+				hit_rate.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0]).forEach((row) => {
+					counties_id_hit_rate.push((parseFloat(row.mean)))
+					label.push(row.County);	
+				})
+			}
+			
+
+			let data_ca = counties_id_hit_rate_ca.map((value, index) => {
+				return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'label' : label[index]};
 			});
+
 
 
 			this.plot_area = this.svg.append('g')
@@ -401,20 +442,20 @@ class ScatterPlot {
 			.attr('height', 100)
 			.attr("fill", 'transparent');
 
-			const x_value_range = [d3.min(data, d => d.x), d3.max(data, d => d.x)];
+			const x_value_range = [d3.min(data_ca, d => d.x), d3.max(data_ca, d => d.x)];
 
-			const y_value_range = [0, d3.max(data, d => d.y)];
+			const y_value_range = [0, d3.max(data_ca, d => d.y)];
 
 			const pointX_to_svgX = d3.scaleLinear()
 			 	.domain(x_value_range)
-			 	.range([0, 200]);
+			 	.range([0, 100]);
 
 			const pointY_to_svgY = d3.scaleLinear()
 			 	.domain(y_value_range)
 			 	.range([100, 0]);
 				
 			this.plot_area.selectAll("circle")
-			  	.data(data)
+			  	.data(data_ca)
 			  	.enter()
 			  	.append("circle")
 			  		.attr("r", 1.5) // radius
@@ -426,11 +467,11 @@ class ScatterPlot {
 			// // Create a label for each point
 			this.svg.append('g')
 			.selectAll('text')
-			.data(data)
+			.data(data_ca)
 			.enter()
 				.append('text')
-				.text( d => d.name )
-				.attr('x', d => pointX_to_svgX(d.x))
+				.text( d => d.label )
+				.attr('x', d => pointX_to_svgX(d.y))
 				.attr('y', 105);
 
 					// // Create Y labels
@@ -443,6 +484,15 @@ class ScatterPlot {
 					.text( svg_y => pointY_to_svgY.invert(svg_y).toFixed(1) )
 					.attr('x', -5)
 					.attr('y', svg_y => svg_y + 1);
+
+			this.svg.append('g')
+			.selectAll('text')
+			.data(label_ys)
+			.enter()
+				.append('text')
+				.text( svg_x => pointX_to_svgX.invert(svg_x).toFixed(1) )
+				.attr('x', svg_x => svg_x + 1)
+				.attr('y', 105);
 		});
 
 	}
