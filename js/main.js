@@ -68,9 +68,9 @@ class MapPlot {
 		this.svg_height = svg_viewbox.height;
 
 		const color_scale = d3.scaleLinear()
-		.range(["white", "blue"])
-		.domain([0, 1])
-		.interpolate(d3.interpolateRgb);
+				.range(["white", "blue"])
+				.domain([0, 1])
+				.interpolate(d3.interpolateRgb);
 
 		// California
 		const projection_ca = d3.geoMercator()
@@ -170,8 +170,6 @@ class MapPlot {
 			var counties_id_arrest = {}
 			var dates = [...new Set(data_map.map(x=> x.year))].sort() //get all dates
 
-
-
 			if (viz == "race") {
 				data_map.filter(x => (x.year == dates[0]) && x.subject_race == choices[0]).forEach((row) => {
 					counties_id_arrest[row.county_name] = (parseFloat(row.relative_arrest))
@@ -196,9 +194,9 @@ class MapPlot {
 				county.properties.arrest = counties_id_arrest[county.properties.NAME];
 			});
 
-			var buttonChange = function(d) {
+			var buttonChange = function() {
 				var selectedOption = d3.select(this).property("value")
-				update_button(selectedOption)
+				updateButton(selectedOption)
 			}
 			
 			d3.select(selectBtn).on("change", buttonChange)
@@ -215,15 +213,15 @@ class MapPlot {
 				.on("mouseout", mouseout);
 
 			var counties_ca = this.map_container_ca.selectAll(".county")
-			.data(map_data_ca)
-			.enter()
-			.append("path")
-			.classed("county", true)
-			.attr("d", path_generator_ca)
-			.style("fill",(d) => color_scale(d.properties.arrest))
-			.on("mouseover", mouseover)
-			.on('mousemove', mousemove)
-			.on("mouseout", mouseout);	
+				.data(map_data_ca)
+				.enter()
+				.append("path")
+				.classed("county", true)
+				.attr("d", path_generator_ca)
+				.style("fill",(d) => color_scale(d.properties.arrest))
+				.on("mouseover", mouseover)
+				.on('mousemove', mousemove)
+				.on("mouseout", mouseout);	
 
 			//---------- SLIDER ----------//
 			
@@ -298,7 +296,7 @@ class MapPlot {
 				.attr("r", 12);
 
 			
-			function update_map_data(date, button) {
+			function updateMapData(date, button) {
 
 				if (viz == "race") {
 					data_map.filter(x => (x.year == date) && x.subject_race == button).forEach((row) => {
@@ -332,15 +330,15 @@ class MapPlot {
 
 				var date = Math.floor(pos); //get date from slider pos
 
-				update_map_data(date, button)
+				updateMapData(date, button)
 				
 			}
 
-			function update_button(button) {
+			function updateButton(button) {
 
 				var date = Math.floor(x.invert(currentValue))
 
-				update_map_data(date, button)
+				updateMapData(date, button)
 			}
 
 			this.makeColorbar(this.svg, color_scale, [80, 30], [20, this.svg_height - 2*30],".2f");
@@ -359,33 +357,21 @@ class ScatterPlot {
 	constructor(svg_element_id) {
 		this.svg = d3.select('#' + svg_element_id);
 
+		 const viz = "race"
+		// // Selection button
+		// const selectBtn = (viz == "race") ? "#selectButtonRace_hit" : "#selectButtonGender_hit" 
+	
+		// // Either hardcode choices for race and sex or fetch from data
+		// const choices = (viz == "race") ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
 
-		// const hit_rate_ethnicity = d3.csv("../data/city/all_hit_rate_ethnicity.csv").then((data) => {
-		// 	let countiesID_to_hit = [];
-		// 	let city_names = [];
-		// 	data.forEach((row) => {
-		// 		if(row.year == 2016 && row.subject_race == 'black'){ //
-		// 			countiesID_to_hit.push((parseFloat(row.Hit_rate)));	
-		// 			city_names.push(row.City);
-		// 		}			
-		// 	});
-		// 	return [countiesID_to_hit, city_names];
-		// })
-		const viz = "race"
-		// Selection button
-		const selectBtn = (viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
-
-		// Either hardcode choices for race and sex or fetch from data
-		const choices = (viz == "race") ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
-
-		var selectionButton = d3.select(selectBtn)
-				.selectAll('myOptions')
-		    	.data(choices)
-				.enter()
-		  		.append('option')
-				.classed("button", true)
-				.text(function (d) { return d; })
-				.attr("value", function (d) {return d; })
+		// var selectionButton = d3.select(selectBtn)
+		// 		.selectAll('myOptions')
+		//     	.data(choices)
+		// 		.enter()
+		//   		.append('option')
+		// 		.classed("button", true)
+		// 		.text(function (d) { return d; })
+		// 		.attr("value", function (d) {return d; })
 				
 		
 		const data_path = (viz == "race") ? "data/city/all_hit_rate_ethnicity_mean.csv" : "data/city/all_hit_rate_gender_mean.csv"
@@ -401,12 +387,16 @@ class ScatterPlot {
 
 			var counties_id_hit_rate_ca = []
 			var counties_id_hit_rate_tx = []
+			var total_arrest = []
 			var label = []
 			var dates = [...new Set(hit_rate.map(x=> x.year))].sort() //get all dates
 
 			if (viz == "race") {
 				hit_rate.filter(x => (x.year == dates[3] && x.County == 'California')).forEach((row) => { // x.subject_race == choices[0] &&
 					counties_id_hit_rate_ca.push((parseFloat(row.mean)))
+					total_arrest.push((parseFloat(row.sum)))
+					console.log(total_arrest)
+					label.push(row.subject_race)
 				})
 				hit_rate.filter(x => (x.year == dates[3] &&  x.County == 'Texas')).forEach((row) => {// x.subject_race == choices[0] &&
 					counties_id_hit_rate_tx.push((parseFloat(row.mean)))		
@@ -414,13 +404,14 @@ class ScatterPlot {
 			} else {
 				hit_rate.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0]).forEach((row) => {
 					counties_id_hit_rate.push((parseFloat(row.mean)))
-					label.push(row.County);	
+					total_arrest.push((parseFloat(row.sum)))
+
 				})
 			}
 			
 
 			let data_ca = counties_id_hit_rate_ca.map((value, index) => {
-				return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'label' : label[index]};
+				return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'r' : total_arrest[index], 'label' : label[index]};
 			});
 
 
@@ -447,6 +438,9 @@ class ScatterPlot {
 			 	.domain(y_value_range)
 			 	.range([100, 0]);
 				
+			var myColor = d3.scaleOrdinal()
+			.domain(label)
+			.range(d3.schemeSet1);
 			this.plot_area.selectAll("circle")
 			  	.data(data_ca)
 			  	.enter()
@@ -454,8 +448,22 @@ class ScatterPlot {
 			  		.attr("r", 1.5) // radius
 			  		.attr("cx", d => pointX_to_svgX(d.x)) // position, rescaled
 			  		.attr("cy", d => pointY_to_svgY(d.y))
+					//.attr("r", d => d.r)
+					.style("fill", function (d) { return myColor(d.label); } )
 			//  		.classed('cold', d => d.y <= 17) // color classes
 			//  		.classed('warm', d => d.y >= 23);
+			
+
+			var size = 20
+			
+			this.svg.selectAll("myrect")
+			  .data(label)
+			  .enter()
+			  .append("circle")
+				.attr("cx", 105)
+				.attr("cy", function(d,i){ return 10 + i*(size+5)}) 
+				.attr("r", 2)
+				.style("fill", function(d){ return myColor(d)})
 
 			// // Create a label for each point
 			this.svg.append('g')
@@ -502,8 +510,8 @@ function whenDocumentLoaded(action) {
 }
 
 whenDocumentLoaded(() => {
-	plot_object = new MapPlot('map-plot', "race");
-	plot_object = new MapPlot('map-plot2', "gender");
+	map1 = new MapPlot('map-plot', "race");
+	map2 = new MapPlot('map-plot2', "gender");
 	// plot object is global, you can inspect it in the dev-console
 	
 	let plot = new ScatterPlot('plot');
