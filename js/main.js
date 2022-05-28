@@ -83,7 +83,7 @@ class MapPlot {
 			.rotate([0, 0])
 			.center([-120, 37])
 			.scale(1400)
-			.translate([this.svg_width / 4, this.svg_height / 2]) // SVG space
+			.translate([this.svg_width / 4 + 20, this.svg_height / 2]) // SVG space
 			.precision(.1);
 
 		// path generator to convert JSON to SVG paths
@@ -166,23 +166,32 @@ class MapPlot {
 				.attr("value", function (d) {return d; })
 				
 		
-		const data_path = (viz == "race") ? "data/arrest_ethnicity.csv" : "data/arrest_gender.csv"
+		const data_path_map = (viz == "race") ? "data/arrest_ethnicity.csv" : "data/arrest_gender.csv"
 		
 		//Load the data of test, it's arrest of white, find by county the number of arrest
-		const data_promise = d3.csv(data_path).then((data) => {
+		const data_promise_map = d3.csv(data_path_map).then((data) => {
 			return data
 		})
 
-		Promise.all([map_promise_ca, map_promise_tx, data_promise]).then((results) => {
+		const data_path_graph = (viz == "race") ? "data/count_ethnicity_state.csv" : "data/count_gender_state.csv"
+
+		//Load the data of test, it's arrest of white, find by county the number of arrest
+		const data_promise_graph = d3.csv(data_path_graph).then((data) => {
+			return data
+		})
+
+		Promise.all([map_promise_ca, map_promise_tx, data_promise_map, data_promise_graph]).then((results) => {
 
 			const stop_min = 100
 
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
 			let data_map = results[2].filter(x => x.nb_arrest > stop_min); // remove counties with less than < 100 stops
+			let data_graph = results[3]
 
 			var counties_id_stops = {}
 			var dates = [...new Set(data_map.map(x=> x.year))].sort() //get all dates
+			var state_choices = [...new Set(data_graph.map(x=> x.state))]
 
 			var domain_min = 0.0
 			var domain_max = 0.0
@@ -352,27 +361,29 @@ class MapPlot {
 				var date = Math.floor(x.invert(currentValue))
 
 				updateMapData(date, selector)
+				updateChartData(data_graph, selector, state_choices)
 			}
 
 			//------------------------------- GRAPH ----------------------------------//
 
 
 			// set the dimensions and margins of the graph
-			var chart_margin = {top: 5, right: 50, bottom: 30, left: 50};
+			var chart_margin = {top: 5, right: 50, bottom: 30, left: 100};
 
 			const line_chart = (viz == "race") ? "#line-chart" : "#line-chart2"
+			const chart_svg_ = (viz == "race") ? "chart_svg" : "chart_svg2"
 
 			// apppend a svg
 			var chart = d3.select(line_chart)
 						.append("svg")
-						.attr("id", "chart-svg")
-						.attr("viewBox", "0 0 960 100")
+						.attr("id", chart_svg_)
+						.attr("viewBox", "0 0 960 150")
 						.attr("width", "70%")
 						.append("g")
 						.attr("transform",
 							"translate(" + chart_margin.left + "," + chart_margin.top + ")");
 
-			var chart_svg = d3.select("#chart-svg")
+			var chart_svg = d3.select("#" + chart_svg_)
 
 			//get dimension of the svg
 			const svg_chart_viewbox = chart_svg.node().viewBox.animVal;
@@ -388,60 +399,72 @@ class MapPlot {
 				.attr("transform", "translate(0," + svg_chart_height + ")");
 
 			//vertical axis and scale
-			var y_chart = d3.scaleLinear().range([svg_chart_height, 0 ]);
-			var y_chart_axis = d3.axisLeft().scale(y_chart).ticks(5);
+			var y_chart = d3.scaleLinear().range([svg_chart_height, 5]);
+			var y_chart_axis = d3.axisLeft().scale(y_chart).ticks(5).tickPadding(40);
 
 			chart.append("g")
 				.attr("class","y_axis");
 
+			
+			function updateChartLine(chart_svg, data, color_line) {
 
-			function update_chart_data(data) {
+				chart_svg.append("path")
+						.classed("line_graph", true)
+						.datum(data)
+						.transition()
+						.duration(300)
+						.attr("transform", "translate( "+ chart_margin.left +",0)")
+						.attr("d", d3.line()
+								.x(function(d) { return x_chart(new Date(d.year))})
+								.y(function(d) { return y_chart(d.nb_arrest) }))
+						.attr("fill", "none")
+						.attr("stroke", color_line)
+						.attr("stroke-width", 1.5)
+			}
 
-				console.log(data)
+			function updateChartData(data, selector, state_choices) {
+
+				const data_selector = (viz == "race") ? data.filter(x => x.subject_race == selector) : data.filter(x => x.subject_sex == selector)
 
 				// Create the horizontal axis with call():
-				x_chart.domain(d3.extent(data, function(d) { return new Date(d.year); }));
+				x_chart.domain(d3.extent(data_selector, function(d) { return new Date(d.year); }));
 
 				chart.selectAll(".x_axis").transition()
 					.duration(300)
 					.call(x_chart_axis);
 
 				// Create the vertical axis with call():
-			  	y_chart.domain([0, d3.max(data.map(x => x.nb_arrest))]);
+			  	y_chart.domain([0,d3.max(data_selector.map(x => parseInt(x.nb_arrest)))]);
+
+				console.log("max", d3.max(data_selector.map(x => parseInt(x.nb_arrest))))
 
 				chart.selectAll(".y_axis")
 					.transition()
 					.duration(300)
 					.call(y_chart_axis);
 
-				// Create the line
-				var line = chart.selectAll(".line")
-					.data(data, function(d){ return new Date(d.year) });
+				chart_svg.selectAll("path").classed("line_graph", function (d,i) {
+					var elem = d3.select(this)
+					if (elem.classed("line_graph")) elem.remove()
+				})
 
-				// Update the line
-				line.enter()
-					.append("path")
-					.attr("class","line")
-					.merge(line)
-					.transition()
-					.duration(300)
-					.attr("d", d3.line()
-							.x(function(d) { return x_chart(new Date(d[0]))})
-							.y(function(d) { return y_chart(d[1]) }))
-					.attr("fill", "none")
-					.attr("stroke", "steelblue")
-					.attr("stroke-width", 1.5)
+				const color_choices = ["steelblue", "red"]
+
+				state_choices.forEach((state, i) => {
+					updateChartLine(chart_svg, data_selector.filter(x => x.state == state), color_choices[i])	
+				})
+						
 			}
 
 			//call the fucntion created with defalut dataset
-			update_chart_data(data_map.filter(x => x.subject_race = choices[0]))
+			updateChartData(data_graph, choices[0], state_choices)
 
 			//------------------------------- SLIDER ----------------------------------//
 			
 			var startDate = dates[0];
 			var endDate = dates[dates.length - 1];
 
-			var slider_margin = {top:0, right:50, bottom:0, left:50};
+			var slider_margin = {top:0, right:50, bottom:0, left: chart_margin.left};
 
 			var slider_svg = d3.select((viz == "race") ? '#slider' : "#slider2");
 
@@ -509,7 +532,7 @@ class MapPlot {
 				.attr("r", 12);
 
 
-			this.makeColorbar(this.svg, color_scale, [70, 30], [20, this.svg_height - 2*30],".1f");
+			this.makeColorbar(this.svg, color_scale, [70, 70], [20, this.svg_height * 2/3],".1f");
 		});	
 	}
 }
