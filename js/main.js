@@ -2,9 +2,7 @@ class MapPlot {
 	
 	makeColorbar(svg, color_scale, top_left, colorbar_size, format) {
 
-		const scaleClass = d3.scaleLinear;
-
-		const value_to_svg = scaleClass()
+		const value_to_svg =  d3.scaleLinear()
 			.domain(color_scale.domain())
 			.range([colorbar_size[1], 0]);
 
@@ -15,7 +13,8 @@ class MapPlot {
 
 		// Axis numbers
 		const colorbar_axis = d3.axisLeft(value_to_svg)
-			.tickFormat(d3.format(format));
+			.tickFormat(d3.format(format))
+			.tickPadding(15);
 
 		const colorbar_g = this.svg.append("g")
 			.attr("id", "colorbar")
@@ -26,6 +25,16 @@ class MapPlot {
 		function range01(steps) {
 			return Array.from(Array(steps), (elem, index) => index / (steps-1));
 		}
+
+		svg.append("text")
+			.attr("class", "y label")
+			.attr("text-anchor", "end")
+			.attr("x", - 250)
+			.attr("y", 20)
+			//.attr("y", top_left[0])
+			.style("font-size", "15px")
+			.attr("transform", "rotate(-90)")
+			.text("Number of stops (log10)");
 
 		const svg_defs = this.svg.append("defs");
 
@@ -38,7 +47,7 @@ class MapPlot {
 			.attr('spreadMethod', 'pad');
 
 		gradient.selectAll('stop')
-			.data(range01(2))
+			.data(range01(10))
 			.enter()
 			.append('stop')
 				.attr('offset', d => 100*d + '%')
@@ -50,6 +59,7 @@ class MapPlot {
 			.attr('id', 'colorbar-area')
 			.attr('width', colorbar_size[0])
 			.attr('height', colorbar_size[1])
+			//.attr("transform", "translate(" + top_left[0] + ', ' + top_left[1] + ")")
 			.style('fill', 'url(#colorbar-gradient)')
 			.style('stroke', 'black')
 			.style('stroke-width', '1px');
@@ -58,6 +68,8 @@ class MapPlot {
 	constructor(svg_element_id, map_viz) {
 
 		this.svg = d3.select('#' + svg_element_id);
+
+		//------------------------------- MAP ----------------------------------//
 
 		const viz = map_viz
 
@@ -113,12 +125,17 @@ class MapPlot {
 							.style("padding", "10px");
 		
 		var mouseover = function(d) {
+
+			var html_text = ""
+
+			if (d.properties.stops > 0) html_text = ("<b>" + d.properties.NAME + "</b> <br> <br> Stops: " + d.properties.stops + "<br> Relative stops: " 
+													+ d.properties.relative_stops.toFixed(4) + "<br> Population: " + d.properties.population)
+			else html_text = "<b>" + d.properties.NAME + "</b> <br> <br> <i> Less than 100 stops </i>"
 			d3.select(this).style('opacity', 0.6)
 			d3.select('#tooltip')
 				.style('opacity', 1)
 				.style("visibility", "visible")
-				.html("<b>" + d.properties.NAME + "</b> <br> <br> Stops: " + d.properties.stops + "<br> Relative stops: " 
-						+ d.properties.relative_stops.toFixed(4) + "<br> Population: " + d.properties.population)
+				.html(html_text)
 		}
 
 		var mousemove = function(d) {
@@ -133,7 +150,7 @@ class MapPlot {
 				.style("visibility", "hidden")
 		}
 
-		// Selection button
+		// Selection selector
 		const selectBtn = (viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
 
 		// Either hardcode choices for race and sex or fetch from data
@@ -144,7 +161,7 @@ class MapPlot {
 		    	.data(choices)
 				.enter()
 		  		.append('option')
-				.classed("button", true)
+				.classed("selector", true)
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
 				
@@ -175,7 +192,7 @@ class MapPlot {
 				var temp_dict = {}
 
 				temp_dict["stops"] = parseInt(row.nb_arrest)
-				temp_dict["relative_stops"] = Math.log10(temp_dict["stops"]) //parseFloat(row.relative_arrest)
+				temp_dict["relative_stops"] = Math.log10(temp_dict["stops"])
 				temp_dict["population"] = parseInt(row.population)
 
 				return temp_dict
@@ -247,17 +264,19 @@ class MapPlot {
 				setMapInfos(county)
 			});
 
-			var buttonChange = function() {
+			var selectorChange = function() {
 				var selectedOption = d3.select(this).property("value")
-				updateButton(selectedOption)
+				updateSelector(selectedOption)
 			}
 			
-			d3.select(selectBtn).on("change", buttonChange)
+			d3.select(selectBtn).on("change", selectorChange)
 
 			const color_scale = d3.scaleLinear()
 				.range(["white", "red"])
 				.domain([domain_min, domain_max])
 				.interpolate(d3.interpolateRgb);
+			
+			const none_color = "white"
 
 			var counties_tx = this.map_container_tx.selectAll(".county")
 				.data(map_data_tx)
@@ -265,7 +284,9 @@ class MapPlot {
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_tx)
-				.style("fill",(d) => color_scale(d.properties.relative_stops))
+				.style("fill",(d) => {
+					if (d.properties.stops == 0) return none_color
+					else return color_scale(d.properties.relative_stops)})
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);
@@ -276,20 +297,24 @@ class MapPlot {
 				.append("path")
 				.classed("county", true)
 				.attr("d", path_generator_ca)
-				.style("fill",(d) => color_scale(d.properties.relative_stops))
+				.style("fill",(d) => {
+					if (d.properties.stops == 0) return none_color
+					else return color_scale(d.properties.relative_stops)})
 				.on("mouseover", mouseover)
 				.on('mousemove', mousemove)
 				.on("mouseout", mouseout);	
 
 
-			function updateMapData(date, button) {
+			function updateMapData(date, selector) {
+
+				counties_id_stops = {}
 
 				if (viz == "race") {
-					data_map.filter(x => (x.year == date) && x.subject_race == button).forEach((row) => {
+					data_map.filter(x => (x.year == date) && x.subject_race == selector).forEach((row) => {
 						counties_id_stops[row.county_name] = getCountiesInfo(row)
 					})
 				} else {
-					data_map.filter(x => (x.year == date) && x.subject_sex == button).forEach((row) => {
+					data_map.filter(x => (x.year == date) && x.subject_sex == selector).forEach((row) => {
 						counties_id_stops[row.county_name] = getCountiesInfo(row)
 					})
 				}
@@ -301,11 +326,13 @@ class MapPlot {
 					setMapInfos(county)
 				});
 
-				counties_ca.style("fill",(d) => color_scale(d.properties.relative_stops));
-				counties_tx.style("fill",(d) => color_scale(d.properties.relative_stops));
+				counties_ca.style("fill",(d) => {if (d.properties.stops == 0) return none_color
+												else return color_scale(d.properties.relative_stops)});
+				counties_tx.style("fill",(d) => {if (d.properties.stops == 0) return none_color
+												else return color_scale(d.properties.relative_stops)});
 			}
 			
-			function update(pos, button) {
+			function update(pos, selector) {
 				//move circle
 				handle.attr("cx", x(pos));
 
@@ -316,18 +343,100 @@ class MapPlot {
 
 				var date = Math.floor(pos); //get date from slider pos
 
-				updateMapData(date, button)
+				updateMapData(date, selector)
 				
 			}
 
-			function updateButton(button) {
+			function updateSelector(selector) {
 
 				var date = Math.floor(x.invert(currentValue))
 
-				updateMapData(date, button)
+				updateMapData(date, selector)
 			}
 
-			//---------- SLIDER ----------//
+			//------------------------------- GRAPH ----------------------------------//
+
+
+			// set the dimensions and margins of the graph
+			var chart_margin = {top: 5, right: 50, bottom: 30, left: 50};
+
+			const line_chart = (viz == "race") ? "#line-chart" : "#line-chart2"
+
+			// apppend a svg
+			var chart = d3.select(line_chart)
+						.append("svg")
+						.attr("id", "chart-svg")
+						.attr("viewBox", "0 0 960 100")
+						.attr("width", "70%")
+						.append("g")
+						.attr("transform",
+							"translate(" + chart_margin.left + "," + chart_margin.top + ")");
+
+			var chart_svg = d3.select("#chart-svg")
+
+			//get dimension of the svg
+			const svg_chart_viewbox = chart_svg.node().viewBox.animVal;
+			const svg_chart_width = svg_chart_viewbox.width - chart_margin.left - chart_margin.right;
+			const svg_chart_height = svg_chart_viewbox.height  - chart_margin.top - chart_margin.bottom;
+
+			//horizontal axis and scale
+			var x_chart = d3.scaleTime().range([ 0, svg_chart_width]);
+			var x_chart_axis = d3.axisBottom().scale(x_chart);
+
+			chart.append("g")
+				.attr("class","x_axis")
+				.attr("transform", "translate(0," + svg_chart_height + ")");
+
+			//vertical axis and scale
+			var y_chart = d3.scaleLinear().range([svg_chart_height, 0 ]);
+			var y_chart_axis = d3.axisLeft().scale(y_chart).ticks(5);
+
+			chart.append("g")
+				.attr("class","y_axis");
+
+
+			function update_chart_data(data) {
+
+				console.log(data)
+
+				// Create the horizontal axis with call():
+				x_chart.domain(d3.extent(data, function(d) { return new Date(d.year); }));
+
+				chart.selectAll(".x_axis").transition()
+					.duration(300)
+					.call(x_chart_axis);
+
+				// Create the vertical axis with call():
+			  	y_chart.domain([0, d3.max(data.map(x => x.nb_arrest))]);
+
+				chart.selectAll(".y_axis")
+					.transition()
+					.duration(300)
+					.call(y_chart_axis);
+
+				// Create the line
+				var line = chart.selectAll(".line")
+					.data(data, function(d){ return new Date(d.year) });
+
+				// Update the line
+				line.enter()
+					.append("path")
+					.attr("class","line")
+					.merge(line)
+					.transition()
+					.duration(300)
+					.attr("d", d3.line()
+							.x(function(d) { return x_chart(new Date(d[0]))})
+							.y(function(d) { return y_chart(d[1]) }))
+					.attr("fill", "none")
+					.attr("stroke", "steelblue")
+					.attr("stroke-width", 1.5)
+			}
+
+			//call the fucntion created with defalut dataset
+			update_chart_data(data_map.filter(x => x.subject_race = choices[0]))
+
+			//------------------------------- SLIDER ----------------------------------//
 			
 			var startDate = dates[0];
 			var endDate = dates[dates.length - 1];
@@ -400,7 +509,7 @@ class MapPlot {
 				.attr("r", 12);
 
 
-			this.makeColorbar(this.svg, color_scale, [80, 30], [20, this.svg_height - 2*30],".2f");
+			this.makeColorbar(this.svg, color_scale, [70, 30], [20, this.svg_height - 2*30],".1f");
 		});	
 	}
 }
@@ -441,7 +550,7 @@ class ScatterPlot {
 				hit_rate.filter(x => (x.year == dates[3] && x.County == 'California')).forEach((row) => { // x.subject_race == choices[0] &&
 					counties_id_hit_rate_ca.push((parseFloat(row.mean)))
 					total_arrest.push((parseFloat(row.sum)))
-					console.log(total_arrest)
+					//console.log(total_arrest)
 					label.push(row.subject_race)
 				})
 				hit_rate.filter(x => (x.year == dates[3] &&  x.County == 'Texas')).forEach((row) => {// x.subject_race == choices[0] &&
@@ -513,7 +622,7 @@ class ScatterPlot {
 			var noHighlight = function(d){
 				d3.selectAll(".bubbles").style("opacity", 1)
 			}
-			console.log(label)
+			//console.log(label)
 			this.svg.selectAll("myrect")
 			  .data(label)
 			  .enter()
@@ -556,7 +665,7 @@ class ScatterPlot {
 					hit_rate.filter(x => (x.year == date && x.County == 'California')).forEach((row) => { // x.subject_race == choices[0] &&
 						counties_id_hit_rate_ca.push((parseFloat(row.mean)))
 						total_arrest.push((parseFloat(row.sum)))
-						console.log(counties_id_hit_rate_ca)
+						//console.log(counties_id_hit_rate_ca)
 						label.push(row.subject_race)
 					})
 					hit_rate.filter(x => (x.year == date &&  x.County == 'Texas')).forEach((row) => {// x.subject_race == choices[0] &&
