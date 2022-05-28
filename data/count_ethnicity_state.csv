@@ -1,0 +1,89 @@
+,year,state,subject_race,nb_arrest
+0,2009,ca,asian/pacific islander,163572
+1,2009,ca,black,199846
+2,2009,ca,hispanic,798562
+3,2009,ca,other,164346
+4,2009,ca,white,1168017
+5,2010,ca,asian/pacific islander,335803
+6,2010,ca,black,408498
+7,2010,ca,hispanic,1620693
+8,2010,ca,other,346073
+9,2010,ca,white,2349253
+10,2011,ca,asian/pacific islander,345834
+11,2011,ca,black,409839
+12,2011,ca,hispanic,1627277
+13,2011,ca,other,368087
+14,2011,ca,white,2295965
+15,2012,ca,asian/pacific islander,318947
+16,2012,ca,black,369762
+17,2012,ca,hispanic,1504935
+18,2012,ca,other,344776
+19,2012,ca,white,2050504
+20,2013,ca,asian/pacific islander,311347
+21,2013,ca,black,362797
+22,2013,ca,hispanic,1462257
+23,2013,ca,other,342502
+24,2013,ca,white,1936698
+25,2014,ca,asian/pacific islander,289549
+26,2014,ca,black,343189
+27,2014,ca,hispanic,1407142
+28,2014,ca,other,327345
+29,2014,ca,white,1768706
+30,2015,ca,asian/pacific islander,278019
+31,2015,ca,black,342075
+32,2015,ca,hispanic,1395639
+33,2015,ca,other,332220
+34,2015,ca,white,1679190
+35,2016,ca,asian/pacific islander,130637
+36,2016,ca,black,165961
+37,2016,ca,hispanic,683003
+38,2016,ca,other,158577
+39,2016,ca,white,776090
+40,2009,tx,asian/pacific islander,36460
+41,2009,tx,black,236021
+42,2009,tx,hispanic,748478
+43,2009,tx,other,2763
+44,2009,tx,unknown,70319
+45,2009,tx,white,1347229
+46,2010,tx,asian/pacific islander,39299
+47,2010,tx,black,251355
+48,2010,tx,hispanic,780478
+49,2010,tx,other,3121
+50,2010,tx,unknown,72788
+51,2010,tx,white,1377663
+52,2011,tx,asian/pacific islander,44686
+53,2011,tx,black,261982
+54,2011,tx,hispanic,793740
+55,2011,tx,other,3445
+56,2011,tx,unknown,76325
+57,2011,tx,white,1407378
+58,2012,tx,asian/pacific islander,43890
+59,2012,tx,black,253577
+60,2012,tx,hispanic,726238
+61,2012,tx,other,4328
+62,2012,tx,unknown,66753
+63,2012,tx,white,1340284
+64,2013,tx,asian/pacific islander,38502
+65,2013,tx,black,215537
+66,2013,tx,hispanic,657774
+67,2013,tx,other,4928
+68,2013,tx,unknown,58323
+69,2013,tx,white,1158890
+70,2014,tx,asian/pacific islander,32904
+71,2014,tx,black,181853
+72,2014,tx,hispanic,655343
+73,2014,tx,other,4612
+74,2014,tx,unknown,57702
+75,2014,tx,white,946044
+76,2015,tx,asian/pacific islander,30725
+77,2015,tx,black,169819
+78,2015,tx,hispanic,676290
+79,2015,tx,other,5338
+80,2015,tx,unknown,61421
+81,2015,tx,white,801759
+82,2016,tx,asian/pacific islander,28231
+83,2016,tx,black,187982
+84,2016,tx,hispanic,751052
+85,2016,tx,other,1486
+86,2016,tx,unknown,1
+87,2016,tx,white,863223
