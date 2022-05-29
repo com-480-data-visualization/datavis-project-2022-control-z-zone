@@ -416,7 +416,7 @@ class MapPlot {
 						.attr("transform", "translate( "+ chart_margin.left +",0)")
 						.attr("d", d3.line()
 								.x(function(d) { return x_chart(new Date(d.year))})
-								.y(function(d) { return y_chart(d.nb_arrest) }))
+								.y(function(d) { return y_chart(d.percentage) }))
 						.attr("fill", "none")
 						.attr("stroke", color_line)
 						.attr("stroke-width", 1.5)
@@ -434,9 +434,9 @@ class MapPlot {
 					.call(x_chart_axis);
 
 				// Create the vertical axis with call():
-			  	y_chart.domain([0,d3.max(data_selector.map(x => parseInt(x.nb_arrest)))]);
+			  	y_chart.domain([0,d3.max(data_selector.map(x => parseInt(x.percentage)))]);
 
-				console.log("max", d3.max(data_selector.map(x => parseInt(x.nb_arrest))))
+				console.log("max", d3.max(data_selector.map(x => parseInt(x.percentage))))
 
 				chart.selectAll(".y_axis")
 					.transition()
