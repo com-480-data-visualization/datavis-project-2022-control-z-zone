@@ -557,25 +557,31 @@ class ScatterPlot {
 		Promise.all([hit_rate_promise]).then((results) => {
 
 			let hit_rate = results[0];
-
+			
 			var counties_id_hit_rate_ca = []
 			var counties_id_hit_rate_tx = []
 			var total_arrest = []
 			var label = []
 			var dates = [...new Set(hit_rate.map(x=> x.year))].sort() //get all dates
+			var ethni = 'base'
 
 			if (viz == "race") {
-				hit_rate.filter(x => (x.year == dates[3] && x.County == 'ca')).forEach((row) => { // x.subject_race == choices[0] &&
+				hit_rate.filter(x => (x.year == dates[0] && x.County == 'ca')).forEach((row) => { // x.subject_race == choices[0] &&
 					counties_id_hit_rate_ca.push((parseFloat(row.mean)))
 					total_arrest.push((parseFloat(row.sum)))
+					ethni = row.subject_race
+					console.log(parseFloat(row.mean))
 					//console.log(total_arrest)
 					label.push(row.subject_race)
+					console.log(ethni)		
 				})
-				hit_rate.filter(x => (x.year == dates[3] &&  x.County == 'tx')).forEach((row) => {// x.subject_race == choices[0] &&
-					counties_id_hit_rate_tx.push((parseFloat(row.mean)))		
+				hit_rate.filter(x => (x.year == dates[0] &&  x.County == 'tx' )).forEach((row) => {// x.subject_race == choices[0] &&
+					counties_id_hit_rate_tx.push((parseFloat(row.mean)))
+					console.log(row.mean)
 				})
 			 } else {
 			 	hit_rate.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0]).forEach((row) => {
+					
 			 		counties_id_hit_rate.push((parseFloat(row.mean)))
 			 		total_arrest.push((parseFloat(row.sum)))
 
@@ -586,7 +592,7 @@ class ScatterPlot {
 			let data_ca = counties_id_hit_rate_ca.map((value, index) => {
 				return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'r' : total_arrest[index], 'label' : label[index]};
 			});
-
+			
 
 
 			this.plot_area = this.svg.append('g')
@@ -619,9 +625,9 @@ class ScatterPlot {
 			  	.data(data_ca)
 			  	.enter()
 			  	.append("circle")
-					//.attr("class", function(d) { return "bubbles " + d.label})
+					.attr("class", function(d) { return "bubbles " + d.label})
 			  		.attr("cx", d =>  pointX_to_svgX(d.x|| 0)) // position, rescaled 
-			  		.attr("cy", d =>pointY_to_svgY(d.y)) //pointY_to_svgY(d.y|| 0)
+			  		.attr("cy", d => pointY_to_svgY(d.y|| 0)) //
 					.attr("r", d => d.r *0.002)
 					.style("fill", function (d) { return myColor(d.label); } )
 			//  		.classed('cold', d => d.y <= 17) // color classes
@@ -641,7 +647,7 @@ class ScatterPlot {
 				d3.selectAll(".bubbles").style("opacity", 1)
 			}
 			//console.log(label)
-			this.svg.selectAll("myrect")
+			var label = this.svg.selectAll("myrect")
 			  .data(label)
 			  .enter()
 			  .append("circle")
@@ -654,7 +660,7 @@ class ScatterPlot {
 
 
 					// // Create Y labels
-			const label_ys = Array.from(Array(6), (elem, index) => 100 - 20 * index); // 0 20 40 ... 180
+			const label_ys = Array.from(Array(6), (elem, index) => 20 * index); // 0 20 40 ... 180
 			var axis_y = this.svg.append('g')
 				.selectAll('text')
 				.data(label_ys)
@@ -710,17 +716,6 @@ class ScatterPlot {
 				.attr("cy", d => pointY_to_svgY(d.y|| 0))
 				.attr("r", d => d.r *0.002)
 
-				axis_y
-				.data(label_ys)
-				.text( svg_y => pointY_to_svgY.invert(svg_y).toFixed(1) )
-				.attr('x', -5)
-				.attr('y', svg_y => svg_y + 1);
-				
-				axis_x
-				.data(label_ys)
-				.text( svg_x => pointX_to_svgX.invert(svg_x).toFixed(1) )
-				.attr('x', svg_x => svg_x + 1)
-				.attr('y', 105);
 
 				
 			}
