@@ -570,13 +570,13 @@ class ScatterPlot {
 			var dates = [...new Set(hit_rate.map(x=> x.year))].sort() //get all dates
 
 			if (viz == "race") {
-				hit_rate.filter(x => (x.year == dates[3] && x.County == 'California')).forEach((row) => { // x.subject_race == choices[0] &&
+				hit_rate.filter(x => (x.year == dates[3] && x.County == 'ca')).forEach((row) => { // x.subject_race == choices[0] &&
 					counties_id_hit_rate_ca.push((parseFloat(row.mean)))
 					total_arrest.push((parseFloat(row.sum)))
 					//console.log(total_arrest)
 					label.push(row.subject_race)
 				})
-				hit_rate.filter(x => (x.year == dates[3] &&  x.County == 'Texas')).forEach((row) => {// x.subject_race == choices[0] &&
+				hit_rate.filter(x => (x.year == dates[3] &&  x.County == 'tx')).forEach((row) => {// x.subject_race == choices[0] &&
 					counties_id_hit_rate_tx.push((parseFloat(row.mean)))		
 				})
 			} else {
@@ -685,13 +685,13 @@ class ScatterPlot {
 				var total_arrest = []
 				var label = []
 				if (viz == "race") {
-					hit_rate.filter(x => (x.year == date && x.County == 'California')).forEach((row) => { // x.subject_race == choices[0] &&
+					hit_rate.filter(x => (x.year == date && x.County == 'ca')).forEach((row) => { // x.subject_race == choices[0] &&
 						counties_id_hit_rate_ca.push((parseFloat(row.mean)))
 						total_arrest.push((parseFloat(row.sum)))
 						//console.log(counties_id_hit_rate_ca)
 						label.push(row.subject_race)
 					})
-					hit_rate.filter(x => (x.year == date &&  x.County == 'Texas')).forEach((row) => {// x.subject_race == choices[0] &&
+					hit_rate.filter(x => (x.year == date &&  x.County == 'tx')).forEach((row) => {// x.subject_race == choices[0] &&
 						counties_id_hit_rate_tx.push((parseFloat(row.mean)))		
 					})
 				} else {
