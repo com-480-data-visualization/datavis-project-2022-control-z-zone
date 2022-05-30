@@ -4,11 +4,6 @@
 20,2016.0,hispanic,True,634,1633,38.824249846907534,ca,oakland
 22,2016.0,other,True,55,180,30.555555555555557,ca,oakland
 24,2016.0,white,True,239,583,40.99485420240137,ca,oakland
-26,2017.0,asian/pacific islander,True,66,323,20.43343653250774,ca,oakland
-28,2017.0,black,True,1756,7816,22.466734902763562,ca,oakland
-30,2017.0,hispanic,True,482,2007,24.015944195316393,ca,oakland
-32,2017.0,other,True,30,179,16.75977653631285,ca,oakland
-34,2017.0,white,True,172,556,30.935251798561154,ca,oakland
 1,2014.0,asian/pacific islander,True,46,435,10.574712643678161,ca,oakland
 3,2014.0,black,True,114,1598,7.133917396745932,ca,oakland
 5,2014.0,hispanic,True,193,2754,7.0079883805374,ca,oakland
@@ -24,115 +19,86 @@
 25,2016.0,hispanic,True,164,1618,10.135970333745364,ca,oakland
 27,2016.0,other,True,12,120,10.0,ca,oakland
 29,2016.0,white,True,142,954,14.884696016771489,ca,oakland
-31,2017.0,asian/pacific islander,True,9,48,18.75,ca,oakland
-33,2017.0,black,True,39,290,13.448275862068964,ca,oakland
-35,2017.0,hispanic,True,39,454,8.590308370044053,ca,oakland
-37,2017.0,other,True,2,28,7.142857142857142,ca,oakland
-39,2017.0,white,True,28,414,6.763285024154589,ca,oakland
-1,2007.0,asian/pacific islander,True,177,390,45.38461538461539,ca,oakland
-3,2007.0,black,True,292,2628,11.11111111111111,ca,oakland
-5,2007.0,hispanic,True,182,1528,11.910994764397905,ca,oakland
-7,2007.0,other,True,125,439,28.473804100227788,ca,oakland
-9,2007.0,white,True,485,1853,26.17377226119806,ca,oakland
-11,2008.0,asian/pacific islander,True,185,465,39.784946236559136,ca,oakland
-13,2008.0,black,True,281,2826,9.943382873319178,ca,oakland
-15,2008.0,hispanic,True,169,2062,8.19592628516004,ca,oakland
-17,2008.0,other,True,147,741,19.838056680161944,ca,oakland
-19,2008.0,white,True,470,1940,24.22680412371134,ca,oakland
-21,2009.0,asian/pacific islander,True,136,384,35.41666666666667,ca,oakland
-23,2009.0,black,True,256,2955,8.663282571912013,ca,oakland
-25,2009.0,hispanic,True,110,1832,6.004366812227074,ca,oakland
-27,2009.0,other,True,106,589,17.996604414261462,ca,oakland
-29,2009.0,white,True,350,1815,19.28374655647383,ca,oakland
-31,2010.0,asian/pacific islander,True,109,292,37.32876712328767,ca,oakland
-33,2010.0,black,True,214,2409,8.88335408883354,ca,oakland
-35,2010.0,hispanic,True,117,1003,11.665004985044865,ca,oakland
-37,2010.0,other,True,107,454,23.568281938325992,ca,oakland
-39,2010.0,white,True,409,1480,27.635135135135137,ca,oakland
-41,2011.0,asian/pacific islander,True,114,407,28.00982800982801,ca,oakland
-43,2011.0,black,True,172,2867,5.999302406696896,ca,oakland
-45,2011.0,hispanic,True,97,1384,7.008670520231214,ca,oakland
-47,2011.0,other,True,54,393,13.740458015267176,ca,oakland
-49,2011.0,white,True,299,1386,21.572871572871573,ca,oakland
-51,2012.0,asian/pacific islander,True,50,226,22.123893805309734,ca,oakland
-53,2012.0,black,True,140,2364,5.922165820642978,ca,oakland
-55,2012.0,hispanic,True,93,1055,8.81516587677725,ca,oakland
-57,2012.0,other,True,47,324,14.506172839506174,ca,oakland
-59,2012.0,white,True,208,1004,20.717131474103585,ca,oakland
-61,2013.0,asian/pacific islander,True,57,203,28.078817733990146,ca,oakland
-63,2013.0,black,True,159,2096,7.585877862595419,ca,oakland
-65,2013.0,hispanic,True,61,740,8.243243243243244,ca,oakland
-67,2013.0,other,True,40,229,17.46724890829694,ca,oakland
-69,2013.0,white,True,142,649,21.879815100154083,ca,oakland
-71,2014.0,asian/pacific islander,True,107,236,45.33898305084746,ca,oakland
-73,2014.0,black,True,199,2116,9.40453686200378,ca,oakland
-75,2014.0,hispanic,True,109,678,16.07669616519174,ca,oakland
-77,2014.0,other,True,58,228,25.438596491228072,ca,oakland
-79,2014.0,white,True,188,613,30.668841761827082,ca,oakland
-81,2015.0,asian/pacific islander,True,73,194,37.628865979381445,ca,oakland
-83,2015.0,black,True,307,2344,13.097269624573379,ca,oakland
-85,2015.0,hispanic,True,145,761,19.053876478318003,ca,oakland
-87,2015.0,other,True,50,237,21.09704641350211,ca,oakland
-89,2015.0,white,True,197,662,29.758308157099698,ca,oakland
-91,2016.0,asian/pacific islander,True,25,64,39.0625,ca,oakland
-93,2016.0,black,True,163,1017,16.027531956735498,ca,oakland
-95,2016.0,hispanic,True,82,402,20.398009950248756,ca,oakland
-97,2016.0,other,True,27,112,24.107142857142858,ca,oakland
-99,2016.0,white,True,86,305,28.196721311475407,ca,oakland
-1,2006.0,asian/pacific islander,True,3,44,6.8181818181818175,tx,oakland
-3,2006.0,black,True,117,497,23.541247484909455,tx,oakland
-5,2006.0,hispanic,True,111,524,21.183206106870227,tx,oakland
-8,2006.0,unknown,True,1,31,3.225806451612903,tx,oakland
-10,2006.0,white,True,140,1107,12.646793134598013,tx,oakland
-12,2007.0,asian/pacific islander,True,2,11,18.181818181818183,tx,oakland
-14,2007.0,black,True,80,355,22.535211267605636,tx,oakland
-16,2007.0,hispanic,True,77,317,24.290220820189273,tx,oakland
-19,2007.0,unknown,True,1,7,14.285714285714285,tx,oakland
-21,2007.0,white,True,119,620,19.193548387096772,tx,oakland
-23,2008.0,asian/pacific islander,True,2,17,11.76470588235294,tx,oakland
-25,2008.0,black,True,92,324,28.39506172839506,tx,oakland
-27,2008.0,hispanic,True,84,377,22.281167108753316,tx,oakland
-31,2008.0,white,True,146,638,22.884012539184955,tx,oakland
-33,2009.0,asian/pacific islander,True,1,10,10.0,tx,oakland
-35,2009.0,black,True,74,323,22.910216718266255,tx,oakland
-37,2009.0,hispanic,True,122,439,27.790432801822323,tx,oakland
-40,2009.0,white,True,123,533,23.076923076923077,tx,oakland
-42,2010.0,asian/pacific islander,True,3,24,12.5,tx,oakland
-44,2010.0,black,True,102,430,23.72093023255814,tx,oakland
-46,2010.0,hispanic,True,165,702,23.504273504273502,tx,oakland
-50,2010.0,white,True,127,558,22.759856630824373,tx,oakland
-52,2011.0,asian/pacific islander,True,3,10,30.0,tx,oakland
-54,2011.0,black,True,184,671,27.421758569299552,tx,oakland
-56,2011.0,hispanic,True,283,976,28.99590163934426,tx,oakland
-57,2011.0,other,True,4,7,57.14285714285714,tx,oakland
-60,2011.0,unknown,True,2,7,28.57142857142857,tx,oakland
-62,2011.0,white,True,158,585,27.00854700854701,tx,oakland
-65,2012.0,black,True,136,596,22.818791946308725,tx,oakland
-67,2012.0,hispanic,True,211,840,25.11904761904762,tx,oakland
-69,2012.0,other,True,1,12,8.333333333333332,tx,oakland
-71,2012.0,unknown,True,2,5,40.0,tx,oakland
-73,2012.0,white,True,166,612,27.124183006535947,tx,oakland
-75,2013.0,asian/pacific islander,True,5,20,25.0,tx,oakland
-77,2013.0,black,True,173,634,27.287066246056785,tx,oakland
-79,2013.0,hispanic,True,241,924,26.082251082251084,tx,oakland
-81,2013.0,other,True,4,13,30.76923076923077,tx,oakland
-83,2013.0,unknown,True,1,7,14.285714285714285,tx,oakland
-85,2013.0,white,True,169,647,26.120556414219475,tx,oakland
-88,2014.0,black,True,143,540,26.481481481481485,tx,oakland
-90,2014.0,hispanic,True,216,850,25.41176470588235,tx,oakland
-92,2014.0,other,True,2,15,13.333333333333334,tx,oakland
-95,2014.0,white,True,223,683,32.650073206442165,tx,oakland
-97,2015.0,asian/pacific islander,True,3,16,18.75,tx,oakland
-99,2015.0,black,True,115,475,24.210526315789473,tx,oakland
-101,2015.0,hispanic,True,230,780,29.48717948717949,tx,oakland
-103,2015.0,other,True,4,13,30.76923076923077,tx,oakland
-105,2015.0,unknown,True,2,10,20.0,tx,oakland
-107,2015.0,white,True,183,587,31.175468483816015,tx,oakland
-109,2016.0,asian/pacific islander,True,1,9,11.11111111111111,tx,oakland
-111,2016.0,black,True,60,226,26.548672566371685,tx,oakland
-113,2016.0,hispanic,True,93,328,28.353658536585364,tx,oakland
-114,2016.0,other,True,2,3,66.66666666666666,tx,oakland
-118,2016.0,white,True,60,204,29.411764705882355,tx,oakland
+1,2009.0,asian/pacific islander,True,136,384,35.41666666666667,ca,oakland
+3,2009.0,black,True,256,2955,8.663282571912013,ca,oakland
+5,2009.0,hispanic,True,110,1832,6.004366812227074,ca,oakland
+7,2009.0,other,True,106,589,17.996604414261462,ca,oakland
+9,2009.0,white,True,350,1815,19.28374655647383,ca,oakland
+11,2010.0,asian/pacific islander,True,109,292,37.32876712328767,ca,oakland
+13,2010.0,black,True,214,2409,8.88335408883354,ca,oakland
+15,2010.0,hispanic,True,117,1003,11.665004985044865,ca,oakland
+17,2010.0,other,True,107,454,23.568281938325992,ca,oakland
+19,2010.0,white,True,409,1480,27.635135135135137,ca,oakland
+21,2011.0,asian/pacific islander,True,114,407,28.00982800982801,ca,oakland
+23,2011.0,black,True,172,2867,5.999302406696896,ca,oakland
+25,2011.0,hispanic,True,97,1384,7.008670520231214,ca,oakland
+27,2011.0,other,True,54,393,13.740458015267176,ca,oakland
+29,2011.0,white,True,299,1386,21.572871572871573,ca,oakland
+31,2012.0,asian/pacific islander,True,50,226,22.123893805309734,ca,oakland
+33,2012.0,black,True,140,2364,5.922165820642978,ca,oakland
+35,2012.0,hispanic,True,93,1055,8.81516587677725,ca,oakland
+37,2012.0,other,True,47,324,14.506172839506174,ca,oakland
+39,2012.0,white,True,208,1004,20.717131474103585,ca,oakland
+41,2013.0,asian/pacific islander,True,57,203,28.078817733990146,ca,oakland
+43,2013.0,black,True,159,2096,7.585877862595419,ca,oakland
+45,2013.0,hispanic,True,61,740,8.243243243243244,ca,oakland
+47,2013.0,other,True,40,229,17.46724890829694,ca,oakland
+49,2013.0,white,True,142,649,21.879815100154083,ca,oakland
+51,2014.0,asian/pacific islander,True,107,236,45.33898305084746,ca,oakland
+53,2014.0,black,True,199,2116,9.40453686200378,ca,oakland
+55,2014.0,hispanic,True,109,678,16.07669616519174,ca,oakland
+57,2014.0,other,True,58,228,25.438596491228072,ca,oakland
+59,2014.0,white,True,188,613,30.668841761827082,ca,oakland
+61,2015.0,asian/pacific islander,True,73,194,37.628865979381445,ca,oakland
+63,2015.0,black,True,307,2344,13.097269624573379,ca,oakland
+65,2015.0,hispanic,True,145,761,19.053876478318003,ca,oakland
+67,2015.0,other,True,50,237,21.09704641350211,ca,oakland
+69,2015.0,white,True,197,662,29.758308157099698,ca,oakland
+71,2016.0,asian/pacific islander,True,25,64,39.0625,ca,oakland
+73,2016.0,black,True,163,1017,16.027531956735498,ca,oakland
+75,2016.0,hispanic,True,82,402,20.398009950248756,ca,oakland
+77,2016.0,other,True,27,112,24.107142857142858,ca,oakland
+79,2016.0,white,True,86,305,28.196721311475407,ca,oakland
+1,2009.0,asian/pacific islander,True,1,10,10.0,tx,oakland
+3,2009.0,black,True,74,323,22.910216718266255,tx,oakland
+5,2009.0,hispanic,True,122,439,27.790432801822323,tx,oakland
+8,2009.0,white,True,123,533,23.076923076923077,tx,oakland
+10,2010.0,asian/pacific islander,True,3,24,12.5,tx,oakland
+12,2010.0,black,True,102,430,23.72093023255814,tx,oakland
+14,2010.0,hispanic,True,165,702,23.504273504273502,tx,oakland
+18,2010.0,white,True,127,558,22.759856630824373,tx,oakland
+20,2011.0,asian/pacific islander,True,3,10,30.0,tx,oakland
+22,2011.0,black,True,184,671,27.421758569299552,tx,oakland
+24,2011.0,hispanic,True,283,976,28.99590163934426,tx,oakland
+25,2011.0,other,True,4,7,57.14285714285714,tx,oakland
+28,2011.0,unknown,True,2,7,28.57142857142857,tx,oakland
+30,2011.0,white,True,158,585,27.00854700854701,tx,oakland
+33,2012.0,black,True,136,596,22.818791946308725,tx,oakland
+35,2012.0,hispanic,True,211,840,25.11904761904762,tx,oakland
+37,2012.0,other,True,1,12,8.333333333333332,tx,oakland
+39,2012.0,unknown,True,2,5,40.0,tx,oakland
+41,2012.0,white,True,166,612,27.124183006535947,tx,oakland
+43,2013.0,asian/pacific islander,True,5,20,25.0,tx,oakland
+45,2013.0,black,True,173,634,27.287066246056785,tx,oakland
+47,2013.0,hispanic,True,241,924,26.082251082251084,tx,oakland
+49,2013.0,other,True,4,13,30.76923076923077,tx,oakland
+51,2013.0,unknown,True,1,7,14.285714285714285,tx,oakland
+53,2013.0,white,True,169,647,26.120556414219475,tx,oakland
+56,2014.0,black,True,143,540,26.481481481481485,tx,oakland
+58,2014.0,hispanic,True,216,850,25.41176470588235,tx,oakland
+60,2014.0,other,True,2,15,13.333333333333334,tx,oakland
+63,2014.0,white,True,223,683,32.650073206442165,tx,oakland
+65,2015.0,asian/pacific islander,True,3,16,18.75,tx,oakland
+67,2015.0,black,True,115,475,24.210526315789473,tx,oakland
+69,2015.0,hispanic,True,230,780,29.48717948717949,tx,oakland
+71,2015.0,other,True,4,13,30.76923076923077,tx,oakland
+73,2015.0,unknown,True,2,10,20.0,tx,oakland
+75,2015.0,white,True,183,587,31.175468483816015,tx,oakland
+77,2016.0,asian/pacific islander,True,1,9,11.11111111111111,tx,oakland
+79,2016.0,black,True,60,226,26.548672566371685,tx,oakland
+81,2016.0,hispanic,True,93,328,28.353658536585364,tx,oakland
+82,2016.0,other,True,2,3,66.66666666666666,tx,oakland
+86,2016.0,white,True,60,204,29.411764705882355,tx,oakland
 7,2013.0,asian/pacific islander,True,2,104,1.9230769230769231,tx,oakland
 9,2013.0,black,True,4,946,0.42283298097251587,tx,oakland
 11,2013.0,hispanic,True,3,945,0.31746031746031744,tx,oakland
@@ -168,12 +134,3 @@
 45,2016.0,hispanic,True,32,309,10.355987055016183,tx,oakland
 47,2016.0,other,True,1,3,33.33333333333333,tx,oakland
 50,2016.0,white,True,39,275,14.181818181818182,tx,oakland
-53,2017.0,black,True,23,155,14.838709677419354,tx,oakland
-55,2017.0,hispanic,True,62,465,13.333333333333334,tx,oakland
-57,2017.0,other,True,2,9,22.22222222222222,tx,oakland
-60,2017.0,white,True,53,458,11.572052401746726,tx,oakland
-61,2018.0,asian/pacific islander,True,1,1,100.0,tx,oakland
-63,2018.0,black,True,6,50,12.0,tx,oakland
-65,2018.0,hispanic,True,9,151,5.960264900662252,tx,oakland
-67,2018.0,other,True,2,10,20.0,tx,oakland
-70,2018.0,white,True,17,187,9.090909090909092,tx,oakland

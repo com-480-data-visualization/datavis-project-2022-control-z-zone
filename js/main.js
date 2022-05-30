@@ -436,7 +436,6 @@ class MapPlot {
 				// Create the vertical axis with call():
 			  	y_chart.domain([0,d3.max(data_selector.map(x => parseInt(x.percentage)))]);
 
-				console.log("max", d3.max(data_selector.map(x => parseInt(x.percentage))))
 
 				chart.selectAll(".y_axis")
 					.transition()
@@ -538,10 +537,6 @@ class MapPlot {
 }
 
 
-/*For the moment we use data from serie 4 to do the scatter plot but then
-it will be the hit rate */
-
-
 
 class ScatterPlot {
 
@@ -579,13 +574,13 @@ class ScatterPlot {
 				hit_rate.filter(x => (x.year == dates[3] &&  x.County == 'tx')).forEach((row) => {// x.subject_race == choices[0] &&
 					counties_id_hit_rate_tx.push((parseFloat(row.mean)))		
 				})
-			} else {
-				hit_rate.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0]).forEach((row) => {
-					counties_id_hit_rate.push((parseFloat(row.mean)))
-					total_arrest.push((parseFloat(row.sum)))
+			 } else {
+			 	hit_rate.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0]).forEach((row) => {
+			 		counties_id_hit_rate.push((parseFloat(row.mean)))
+			 		total_arrest.push((parseFloat(row.sum)))
 
-				})
-			}
+			 	})
+			 }
 			
 
 			let data_ca = counties_id_hit_rate_ca.map((value, index) => {
@@ -604,10 +599,10 @@ class ScatterPlot {
 			 .attr('height', this.svg.height)
 			 .attr("fill", 'transparent');
 
-			const x_value_range = [0, d3.max(data_ca, d => d.x)];//d3.min(data_ca, d => d.x)
+			const x_value_range = [0, 100];//d3.min(data_ca, d => d.x)  d3.max(data_ca, d => d.x)
 
-			const y_value_range = [0, d3.max(data_ca, d => d.y)];
-			
+			//const y_value_range = [0, d3.max(data_ca, d => d.y)];
+			const y_value_range = [0, 100];
 			const pointX_to_svgX = d3.scaleLinear()
 			 	.domain(x_value_range)
 			 	.range([0, 100]);
@@ -624,9 +619,9 @@ class ScatterPlot {
 			  	.data(data_ca)
 			  	.enter()
 			  	.append("circle")
-					.attr("class", function(d) { return "bubbles " + d.label})
-			  		.attr("cx", d => pointX_to_svgX(d.x|| 0) ) // position, rescaled
-			  		.attr("cy", d => pointY_to_svgY(d.y|| 0))
+					//.attr("class", function(d) { return "bubbles " + d.label})
+			  		.attr("cx", d =>  pointX_to_svgX(d.x|| 0)) // position, rescaled 
+			  		.attr("cy", d =>pointY_to_svgY(d.y)) //pointY_to_svgY(d.y|| 0)
 					.attr("r", d => d.r *0.002)
 					.style("fill", function (d) { return myColor(d.label); } )
 			//  		.classed('cold', d => d.y <= 17) // color classes
@@ -659,27 +654,28 @@ class ScatterPlot {
 
 
 					// // Create Y labels
-			const label_ys = Array.from(Array(6), (elem, index) => 20 * index); // 0 20 40 ... 180
-			this.svg.append('g')
+			const label_ys = Array.from(Array(6), (elem, index) => 100 - 20 * index); // 0 20 40 ... 180
+			var axis_y = this.svg.append('g')
 				.selectAll('text')
 				.data(label_ys)
 				.enter()
 					.append('text')
-					.text( svg_y => pointY_to_svgY.invert(svg_y).toFixed(1) )
+					.text( svg_y => pointY_to_svgY.invert(svg_y).toFixed(1) )//
 					.attr('x', -5)
 					.attr('y', svg_y => svg_y + 1);
 
-			this.svg.append('g')
+			var axis_x = this.svg.append('g')
 			.selectAll('text')
 			.data(label_ys)
 			.enter()
 				.append('text')
-				.text( svg_x => pointX_to_svgX.invert(svg_x).toFixed(1) )
+				.text( svg_x => pointX_to_svgX.invert(svg_x).toFixed(1))//
 				.attr('x', svg_x => svg_x + 1)
 				.attr('y', 105);
 
 
 			function updateMapData(date) {
+				console.log(date)
 				var counties_id_hit_rate_ca = []
 				var counties_id_hit_rate_tx = []
 				var total_arrest = []
@@ -701,17 +697,30 @@ class ScatterPlot {
 	
 					})
 				}
+				console.log(data_ca)
 
 				data_ca = counties_id_hit_rate_ca.map((value, index) => {
 					return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'r' : total_arrest[index], 'label' : label[index]};
 				});
 
-				map_hit.append("circle")
-					.attr("class", function(d) { return "bubbles " + d.label})
-			  		.attr("cx", d => pointX_to_svgX(d.x|| 0) ) // position, rescaled
-			  		.attr("cy", d => pointY_to_svgY(d.y|| 0))
-					.attr("r", d => d.r *0.002)
-					.style("fill", function (d) { return myColor(d.label); } )
+
+				map_hit
+			  	.data(data_ca)
+				.attr("cx", d => pointX_to_svgX(d.x|| 0) ) // position, rescaled
+				.attr("cy", d => pointY_to_svgY(d.y|| 0))
+				.attr("r", d => d.r *0.002)
+
+				axis_y
+				.data(label_ys)
+				.text( svg_y => pointY_to_svgY.invert(svg_y).toFixed(1) )
+				.attr('x', -5)
+				.attr('y', svg_y => svg_y + 1);
+				
+				axis_x
+				.data(label_ys)
+				.text( svg_x => pointX_to_svgX.invert(svg_x).toFixed(1) )
+				.attr('x', svg_x => svg_x + 1)
+				.attr('y', 105);
 
 				
 			}
