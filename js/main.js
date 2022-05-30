@@ -563,28 +563,20 @@ class ScatterPlot {
 			var total_arrest = []
 			var label = []
 			var dates = [...new Set(hit_rate.map(x=> x.year))].sort() //get all dates
-			var ethni = 'base'
 
 			if (viz == "race") {
 				hit_rate.filter(x => (x.year == dates[0] && x.County == 'ca')).forEach((row) => { // x.subject_race == choices[0] &&
 					counties_id_hit_rate_ca.push((parseFloat(row.mean)))
 					total_arrest.push((parseFloat(row.sum)))
-					ethni = row.subject_race
-					console.log(parseFloat(row.mean))
-					//console.log(total_arrest)
 					label.push(row.subject_race)
-					console.log(ethni)		
 				})
 				hit_rate.filter(x => (x.year == dates[0] &&  x.County == 'tx' )).forEach((row) => {// x.subject_race == choices[0] &&
 					counties_id_hit_rate_tx.push((parseFloat(row.mean)))
-					console.log(row.mean)
 				})
 			 } else {
 			 	hit_rate.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0]).forEach((row) => {
-					
 			 		counties_id_hit_rate.push((parseFloat(row.mean)))
 			 		total_arrest.push((parseFloat(row.sum)))
-
 			 	})
 			 }
 			
@@ -605,10 +597,10 @@ class ScatterPlot {
 			 .attr('height', this.svg.height)
 			 .attr("fill", 'transparent');
 
-			const x_value_range = [0, 100];//d3.min(data_ca, d => d.x)  d3.max(data_ca, d => d.x)
+			const x_value_range = [0, 50];//d3.min(data_ca, d => d.x)  d3.max(data_ca, d => d.x)
 
 			//const y_value_range = [0, d3.max(data_ca, d => d.y)];
-			const y_value_range = [0, 100];
+			const y_value_range = [0, 50];
 			const pointX_to_svgX = d3.scaleLinear()
 			 	.domain(x_value_range)
 			 	.range([0, 100]);
@@ -690,11 +682,12 @@ class ScatterPlot {
 					hit_rate.filter(x => (x.year == date && x.County == 'ca')).forEach((row) => { // x.subject_race == choices[0] &&
 						counties_id_hit_rate_ca.push((parseFloat(row.mean)))
 						total_arrest.push((parseFloat(row.sum)))
-						//console.log(counties_id_hit_rate_ca)
+						
 						label.push(row.subject_race)
 					})
 					hit_rate.filter(x => (x.year == date &&  x.County == 'tx')).forEach((row) => {// x.subject_race == choices[0] &&
 						counties_id_hit_rate_tx.push((parseFloat(row.mean)))		
+						console.log(row.mean)
 					})
 				} else {
 					hit_rate.filter(x => (x.year == date) ).forEach((row) => {
@@ -703,12 +696,12 @@ class ScatterPlot {
 	
 					})
 				}
-				console.log(data_ca)
+				
 
 				data_ca = counties_id_hit_rate_ca.map((value, index) => {
 					return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'r' : total_arrest[index], 'label' : label[index]};
 				});
-
+				console.log(data_ca)
 
 				map_hit
 			  	.data(data_ca)
