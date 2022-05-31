@@ -81,6 +81,46 @@ body {
 	margin-right: auto;
 }
 
+/* Top navigation bar */
+nav {
+	width: 100%;
+
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+
+	background-color: var(--dark-background-color);
+}
+
+/* Make the links in the navbar bold */
+nav a {
+	font-weight: bold;
+	color: var(--theme-color-light);
+}
+
+/* Style of the list of links in the navbar */
+nav ul {
+	/* Clear defaults */
+	margin: 0;
+	padding: 0;
+
+	/* Remove list bullet points */
+	list-style-type: none;
+
+	/*
+	Flexbox is a modern mechanism for arranging elements
+		https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+	This will arrange the elements in a row
+	*/
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: flex-start;
+}
+
+/* Space between links */
+nav li {
+	margin-right: 3rem;
+}
+
 p {
 	text-align: justify;
 	display: flex;
