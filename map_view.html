@@ -34,8 +34,29 @@
 		</p>
 	<section class="usa_map">
 		<div id ="map_div" >
-			<select id="selectButtonRace"></select>
-
+			<div id="button_container">
+				<button id ="race_btn" style = "background-color: #39A9DB; color: rgb(255,255,255) !important" >Race</button>
+				<button id ="gender_btn" style = "background-color: #39A9DB; color: rgb(255,255,255) !important" >Gender</button>
+				<select id="selectButtonRace"></select>
+				 <style>
+					#button_container{
+					width:100%;
+					text-align: center;
+					}
+					#button_container > div{
+					display: inline-block;
+					padding-left: 0.5cm;
+					padding-right: 0.5cm;
+					vertical-align: middle;
+					}
+					#button_container > div > button {
+					  color: rgb(255,255,255);
+					}
+					.separator{
+					margin-right: 2cm;
+					}
+				 </style>
+			  </div>
 			<svg id="map-plot" viewBox="0 0 960 500" width="100%">
 				<style>
 

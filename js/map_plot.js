@@ -65,9 +65,21 @@ class MapPlot {
 			.style('stroke-width', '1px');
 	}
 
+
+	attributeSelector(race) {
+		return (race) ? "#selectButtonRace" : "#selectButtonGender" 
+	}
+
+	choicesSelector(race) {
+		return (race) ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
+	}
+
 	constructor(svg_element_id, map_viz) {
 
 		this.svg = d3.select('#' + svg_element_id);
+
+		var race = true
+		var gender = false
 
 		//------------------------------- MAP ----------------------------------//
 
@@ -151,10 +163,10 @@ class MapPlot {
 		}
 
 		// Selection selector
-		const selectBtn = (viz == "race") ? "#selectButtonRace" : "#selectButtonGender"
+		const selectBtn = this.attributeSelector(race)
 
 		// Either hardcode choices for race and sex or fetch from data
-		const choices = (viz == "race") ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
+		var choices = this.choicesSelector(race)
 
 		var selectionButton = d3.select(selectBtn)
 				.selectAll('myOptions')
@@ -164,8 +176,12 @@ class MapPlot {
 				.classed("selector", true)
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
+				.exit().remove()
+
+
+		var race_button = d3.select("#race_btn").style("background-color", "red")
+		var gender_button = d3.select("#gender_btn")
 				
-		
 		const data_path_map = (viz == "race") ? "data/arrest_ethnicity.csv" : "data/arrest_gender.csv"
 		
 		//Load the data of test, it's arrest of white, find by county the number of arrest
@@ -363,6 +379,71 @@ class MapPlot {
 				updateMapData(date, selector)
 				updateChartData(data_graph, selector, state_choices)
 			}
+
+			//------------------------------- VIZ SELECTION ----------------------------------//
+
+			function buttonColor(button, value, color="red") {
+				if (value) {
+					button.style("background-color", color)
+				} else {
+					button.style("background-color", "#39A9DB")
+				}
+			}
+
+			gender_button.on("click", () => {
+
+				if (gender) {
+					gender = false;
+				} else {
+					gender = true;
+				}
+
+				race = !gender
+
+				buttonColor(gender_button, gender)
+				buttonColor(race_button, race)
+
+				choices = this.choicesSelector(race)
+
+				selectionButton = d3.select(selectBtn)
+				.selectAll('option')
+		    	.remove()
+				
+				d3.select(selectBtn).selectAll('myOptions')
+		    	.data(choices)
+				.enter()
+		  		.append('option')
+				.classed("selector", true)
+				.text(function (d) { return d; })
+				.attr("value", function (d) {return d; })
+			})
+
+			race_button.on("click", () => {
+
+				if (race) {
+					race = false;
+				} else {
+					race = true;
+				}
+				gender = !race
+
+				buttonColor(gender_button, gender)
+				buttonColor(race_button, race)
+
+				choices = this.choicesSelector(race)
+
+				selectionButton = d3.select(selectBtn)
+				.selectAll('option')
+		    	.remove()
+				
+				d3.select(selectBtn).selectAll('myOptions')
+		    	.data(choices)
+				.enter()
+		  		.append('option')
+				.classed("selector", true)
+				.text(function (d) { return d; })
+				.attr("value", function (d) {return d; })
+			})
 
 			//------------------------------- GRAPH ----------------------------------//
 
