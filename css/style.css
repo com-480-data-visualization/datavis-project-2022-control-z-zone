@@ -41,11 +41,12 @@ body {
 
 	/* background behind the plot */
 	/*background: rgb(40, 40, 40);*/
-	background: rgb(228, 228, 232);
+	background: rgb(255, 255, 255);
 
 	/* default text */
 	font-family: sans-serif;
 	font-size: 1.1rem;
+
 }
 
 .title-row {
@@ -53,16 +54,16 @@ body {
 
 	/* Space above and below the title */
 	padding-top: 6rem;
-	padding-bottom: 3rem;
+	padding-bottom: 40rem;
 
 
-	background-image:
-      url("../US-Police-Dodge-Charger.webp");
-	/*background: linear-gradient(45deg, rgb(19, 68, 204), rgb(223, 16, 16));
-	 Center the title using flexbox */
+	background-image: url("../data/black-illustration-police-space-artwork-graphic-design-ART-darkness-graphics-1920x1080-px-computer-wallpaper-fictional-character-font-843208.jpg");
+	object-fit: fill;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .title-row h1 {
@@ -70,11 +71,15 @@ body {
 	color: rgb(255, 255, 255);
 	font-variant: stylistic;
 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	text-shadow: black 0 0 2rem;
 }
 
 .width-limited {
-	max-width: 60rem;
+	max-width: 80rem;
 
 	/* Center horizontally: */
 	margin-left: auto;
@@ -122,6 +127,7 @@ nav li {
 }
 
 p {
+	color: rgb(8, 8, 8);
 	text-align: justify;
 	display: flex;
 	justify-content: center;

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Control+Z Zone</title>
+	<meta name="author" content="test">
+
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body>
+
+<nav>
+	<ul class="width-limited">
+		<li><a href="index.html">Home</a></li>
+		<li><a href="map_view.html">Map View</a></li>
+		<li><a href="map_hit_rate.html">Hit Rate</a></li>
+	</ul>
+</nav>
+
+<header class="title-row">
+	<h1> Our team </h1>
+</header>
+
+<main class="width-limited">
+	<div class="box">
+		<h4>Hit Rate</h4>
+		<section class="hit_rate">
+			<svg id="plot" viewBox="-10 -10 220 120" width="100%" height="100%">
+				<style>
+					.axis {
+						stroke-width: 1;
+						stroke: rgb(10, 10, 10);
+					}
+					text {
+						fill: rgb(11, 11, 11);
+						font-size: 4px;
+						text-anchor: middle;
+					}
+			
+					circle {
+						fill: white;
+					}
+
+			
+					.cold {
+						fill: rgb(79, 89, 250);
+					}
+			
+					.warm {
+						fill: rgb(255, 80, 68);
+					}
+			
+				</style>
+			
+			
+			
+			</svg>
+			<svg id="slider3" viewBox="0 0 960 100" width="70%">
+				<style>
+					 .ticks {
+					 font-size: 10px;
+					 }
+					 .track,
+					 .track-inset,
+					 .track-overlay {
+					 stroke-linecap: round;
+					 }
+					 .track {
+					 stroke: #000;
+					 stroke-opacity: 0.3;
+					 stroke-width: 10px;
+					 }
+					 .track-inset {
+					 stroke: #ddd;
+					 stroke-width: 10px;
+					 }
+					 .track-overlay {
+					 pointer-events: stroke;
+					 stroke-width: 50px;
+					 stroke: transparent;
+					 cursor: crosshair;
+					 }
+					 .handle {
+					 fill: #fff;
+					 stroke: #000;
+					 stroke-opacity: 0.5;
+					 stroke-width: 1.25px;
+					 }
+				</style>
+			</svg>
+		</section>
+		<p>
+		In this second view, we want to focus on illustrating potential bias by measuring the hit rate (an arrested person is found guilty of an infraction). The size of the bubbles will represent the number of arrests and, the (x,y) position, will illustrate the hit rate of each population in Texas compared to the respective hit rate in California.
+		</p>
+	</div>
+
+
+</div>
+
+<footer></footer>
+<script src="lib/d3.min.js"></script>
+<script src="lib/topojson.min.js"></script>
+<script src="js/hit_rate.js"></script>
+</body>
+</html>

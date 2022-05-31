@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>Control+Z Zone</title>
+	<meta name="author" content="test">
+
+	<link rel="stylesheet" href="css/style.css">
+</head>
+
+
+<body>
+
+<nav>
+	<ul class="width-limited">
+		<li><a href="index.html">Home</a></li>
+		<li><a href="map_view.html">Map View</a></li>
+		<li><a href="map_hit_rate.html">Hit Rate</a></li>
+	</ul>
+</nav>
+
+<header class="title-row">
+	<h1> My Visualization Project - Data Sources</h1>
+</header>
+
+<div class="box">
+	<h4>Map view ethnicity</h4>
+		<p>
+			It will be possible to visualize the respective number of police arrest of Black, White and Hispanic persons in the different counties of California and Texas. With the help of a cursor it will be possible to observe the evolution of the number of arrests between 2009 and 2016.
+		</p>
+	<section class="usa_map">
+		<div id ="map_div" >
+			<select id="selectButtonRace"></select>
+
+			<svg id="map-plot" viewBox="0 0 960 500" width="100%">
+				<style>
+
+					.county {
+						stroke: rgb(25, 25, 25);
+						stroke-width: 1px;
+						fill: white
+					}
+
+					.county:hover {
+						fill: blue
+					}
+
+					.county_name {
+						fill: rgba(0, 0, 0, 0);
+						font-size: 15px;
+					}
+
+					.tooltip {
+						background-color: black;
+						border: none;
+						border-radius: 5px;
+						padding: 15px;
+						min-width: 400px;
+						text-align: left;
+						color: white;
+						}
+
+				</style>
+			</svg>
+		</div>
+		<div id="line-chart"></div>
+		<div id ="slider_div" >
+			<svg id="slider" viewBox="0 0 960 80" width="70%">
+				<style>
+					 .ticks {
+					 font-size: 10px;
+					 }
+					 .track,
+					 .track-inset,
+					 .track-overlay {
+					 stroke-linecap: round;
+					 }
+					 .track {
+					 stroke: #000;
+					 stroke-opacity: 0.3;
+					 stroke-width: 10px;
+					 }
+					 .track-inset {
+					 stroke: #ddd;
+					 stroke-width: 10px;
+					 }
+					 .track-overlay {
+					 pointer-events: stroke;
+					 stroke-width: 50px;
+					 stroke: transparent;
+					 cursor: crosshair;
+					 }
+					 .handle {
+					 fill: #fff;
+					 stroke: #000;
+					 stroke-opacity: 0.5;
+					 stroke-width: 1.25px;
+					 }
+				</style>
+			</svg>
+		</div>
+	</section>
+	<p>
+		Here will be some analysis of the arrest map.
+	</p>
+</div>
+
+<footer></footer>
+<script src="lib/d3.min.js"></script>
+<script src="lib/topojson.min.js"></script>
+<script src="js/map_plot.js"></script>
+</body>
+</html>
