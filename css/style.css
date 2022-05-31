@@ -46,8 +46,6 @@ body {
 	/* Space above and below the title */
 	padding-top: 6rem;
 	padding-bottom: 35rem;
-
-
 	background-image: url("../data/black-illustration-police-space-artwork-graphic-design-ART-darkness-graphics-1920x1080-px-computer-wallpaper-fictional-character-font-843208.jpg");
 	object-fit: fill;
 	display: flex;
@@ -98,19 +96,10 @@ nav a {
 
 /* Style of the list of links in the navbar */
 nav ul {
-	/* Clear defaults */
+
 	margin: 0;
 	padding: 0;
-
-	/* Remove list bullet points */
-	
 	list-style-type: none;
-
-	/*
-	Flexbox is a modern mechanism for arranging elements
-		https://css-tricks.com/snippets/css/a-guide-to-flexbox/
-	This will arrange the elements in a row
-	*/
 	display: flex;
 	flex-flow: row wrap;
 
@@ -147,7 +136,7 @@ p {
 
 div2 {
 	float:left;
-	width: 40%;
+	width: 30%;
 	padding: 0 10px;
   }
   
@@ -174,6 +163,11 @@ div2 {
 	background-color: rgba(114, 165, 227, 0.1);
 
 	border-radius: 2rem;
+
+}
+
+.button_link {
+	margin-left: 15rem;
 
 }
 
@@ -222,12 +216,10 @@ h4{
 	width : 80%;
 	margin-left: auto;
 	margin-right: auto;
-	/*background-color: rgb(216, 215, 219)*/
 }
 
 .hit_rate {
 	width : 80%;
 	margin-left: auto;
 	margin-right: auto;
-	/*background-color: rgb(216, 215, 219)*/
 }
