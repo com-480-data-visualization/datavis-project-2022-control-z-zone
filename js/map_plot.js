@@ -14,7 +14,7 @@ class MapPlot {
 		// Axis numbers
 		const colorbar_axis = d3.axisLeft(value_to_svg)
 			.tickFormat(d3.format(format))
-			.tickPadding(15);
+			.tickPadding(8);
 
 		const colorbar_g = this.svg.append("g")
 			.attr("id", "colorbar")
@@ -29,7 +29,7 @@ class MapPlot {
 		svg.append("text")
 			.attr("class", "y label")
 			.attr("text-anchor", "end")
-			.attr("x", - 250)
+			.attr("x", - (this.svg_height / 4 + 15))
 			.attr("y", 20)
 			//.attr("y", top_left[0])
 			.style("font-size", "15px")
@@ -64,7 +64,6 @@ class MapPlot {
 			.style('stroke', 'black')
 			.style('stroke-width', '1px');
 	}
-
 
 	attributeSelector(race) {
 		return (race) ? "#selectButtonRace" : "#selectButtonGender" 
@@ -177,15 +176,19 @@ class MapPlot {
 				.text(function (d) { return d; })
 				.attr("value", function (d) {return d; })
 				.exit().remove()
-
+				
 
 		var race_button = d3.select("#race_btn").style("background-color", "red")
 		var gender_button = d3.select("#gender_btn")
 				
-		const data_path_map = (viz == "race") ? "data/arrest_ethnicity.csv" : "data/arrest_gender.csv"
+		const data_path_race =  "data/arrest_ethnicity.csv"
+		const data_path_gender = "data/arrest_gender.csv"
 		
-		//Load the data of test, it's arrest of white, find by county the number of arrest
-		const data_promise_map = d3.csv(data_path_map).then((data) => {
+		const data_promise_race = d3.csv(data_path_race).then((data) => {
+			return data
+		})
+
+		const data_promise_gender = d3.csv(data_path_gender).then((data) => {
 			return data
 		})
 
@@ -196,14 +199,17 @@ class MapPlot {
 			return data
 		})
 
-		Promise.all([map_promise_ca, map_promise_tx, data_promise_map, data_promise_graph]).then((results) => {
+		Promise.all([map_promise_ca, map_promise_tx, data_promise_race, data_promise_gender, data_promise_graph]).then((results) => {
 
 			const stop_min = 100
 
 			let map_data_ca = results[0];
 			let map_data_tx = results[1];
-			let data_map = results[2].filter(x => x.nb_arrest > stop_min); // remove counties with less than < 100 stops
-			let data_graph = results[3]
+			let data_race = results[2].filter(x => x.nb_arrest > stop_min); // remove counties with less than < 100 stops
+			let data_gender = results[3].filter(x => x.nb_arrest > stop_min); // remove counties with less than < 100 stops
+			let data_graph = results[4]
+
+			var data_map = data_race
 
 			var counties_id_stops = {}
 			var dates = [...new Set(data_map.map(x=> x.year))].sort() //get all dates
@@ -223,39 +229,39 @@ class MapPlot {
 				return temp_dict
 			}
 
-			if (viz == "race") {
+			function buildCountyInfo(data, selection=choices[0]) {
 
-				const df = data_map.filter(x => (x.year == dates[0]) && x.subject_race == choices[0])
+				counties_id_stops = {}
 
-				//domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+				if (race) {
 
-				const df_domain =  df.map(x => Math.log10(x.nb_arrest))
-				domain_min = Math.floor(Math.min.apply(Math, df_domain))
-				domain_max = Math.ceil(Math.max.apply(Math, df_domain))
-
-				df.forEach((row) => {
-					counties_id_stops[row.county_name] = getCountiesInfo(row)
-				})
-
-			} else {
-
-				const df = data_map.filter(x => (x.year == dates[0]) && x.subject_sex == choices[0])
-
-				//domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
-				
-				const df_domain =  df.map(x => Math.log10(x.nb_arrest))
-				domain_min = Math.floor(Math.min.apply(Math, df_domain))
-				domain_max = Math.ceil(Math.max.apply(Math, df_domain))
-
-				df.forEach((row) => {
-					counties_id_stops[row.county_name] = getCountiesInfo(row)
-				})
+					const df = data.filter(x => (x.year == dates[0]) && x.subject_race == selection)
+	
+					//domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+	
+					const df_domain =  df.map(x => Math.log10(x.nb_arrest))
+					domain_min = Math.floor(Math.min.apply(Math, df_domain))
+					domain_max = Math.ceil(Math.max.apply(Math, df_domain))
+	
+					df.forEach((row) => {
+						counties_id_stops[row.county_name] = getCountiesInfo(row)
+					})
+	
+				} else {
+	
+					const df = data.filter(x => (x.year == dates[0]) && x.subject_sex == selection)
+	
+					//domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
+					
+					const df_domain =  df.map(x => Math.log10(x.nb_arrest))
+					domain_min = Math.floor(Math.min.apply(Math, df_domain))
+					domain_max = Math.ceil(Math.max.apply(Math, df_domain))
+	
+					df.forEach((row) => {
+						counties_id_stops[row.county_name] = getCountiesInfo(row)
+					})
+				}
 			}
-
-			// Order of creating groups decides what is on top
-			//this.map_container_usa = this.svg.append('g');
-			this.map_container_ca = this.svg.append('g');
-			this.map_container_tx = this.svg.append('g');
 
 			function setMapInfos(county) {
 
@@ -280,14 +286,28 @@ class MapPlot {
 				county.properties.population = county_population
 			}
 
-			//add the data as a property of the county
-			map_data_ca.forEach(county => {
-				setMapInfos(county)
-			});
+			function buildMap(data, selection) {
 
-			map_data_tx.forEach(county => {
-				setMapInfos(county)
-			});
+				buildCountyInfo(data, selection)
+
+				//add the data as a property of the county
+				map_data_ca.forEach(county => {
+					setMapInfos(county)
+				});
+
+				map_data_tx.forEach(county => {
+					setMapInfos(county)
+				});
+			}
+
+
+			buildMap(data_map, choices[0])
+
+			// Order of creating groups decides what is on top
+			//this.map_container_usa = this.svg.append('g');
+			this.map_container_ca = this.svg.append('g');
+			this.map_container_tx = this.svg.append('g');
+	
 
 			var selectorChange = function() {
 				var selectedOption = d3.select(this).property("value")
@@ -334,7 +354,7 @@ class MapPlot {
 
 				counties_id_stops = {}
 
-				if (viz == "race") {
+				if (race) {
 					data_map.filter(x => (x.year == date) && x.subject_race == selector).forEach((row) => {
 						counties_id_stops[row.county_name] = getCountiesInfo(row)
 					})
@@ -357,93 +377,6 @@ class MapPlot {
 												else return color_scale(d.properties.relative_stops)});
 			}
 			
-			function update(pos, selector) {
-				//move circle
-				handle.attr("cx", x(pos));
-
-				//update the slider text
-				label
-					.attr("x", x(pos))
-					.text(Math.floor(pos));
-
-				var date = Math.floor(pos); //get date from slider pos
-
-				updateMapData(date, selector)
-				
-			}
-
-			function updateSelector(selector) {
-
-				var date = Math.floor(x.invert(currentValue))
-
-				updateMapData(date, selector)
-				updateChartData(data_graph, selector, state_choices)
-			}
-
-			//------------------------------- VIZ SELECTION ----------------------------------//
-
-			function buttonColor(button, value, color="red") {
-				if (value) {
-					button.style("background-color", color)
-				} else {
-					button.style("background-color", "#39A9DB")
-				}
-			}
-
-			gender_button.on("click", () => {
-
-				if (gender) {
-					gender = false;
-				} else {
-					gender = true;
-				}
-
-				race = !gender
-
-				buttonColor(gender_button, gender)
-				buttonColor(race_button, race)
-
-				choices = this.choicesSelector(race)
-
-				selectionButton = d3.select(selectBtn)
-				.selectAll('option')
-		    	.remove()
-				
-				d3.select(selectBtn).selectAll('myOptions')
-		    	.data(choices)
-				.enter()
-		  		.append('option')
-				.classed("selector", true)
-				.text(function (d) { return d; })
-				.attr("value", function (d) {return d; })
-			})
-
-			race_button.on("click", () => {
-
-				if (race) {
-					race = false;
-				} else {
-					race = true;
-				}
-				gender = !race
-
-				buttonColor(gender_button, gender)
-				buttonColor(race_button, race)
-
-				choices = this.choicesSelector(race)
-
-				selectionButton = d3.select(selectBtn)
-				.selectAll('option')
-		    	.remove()
-				
-				d3.select(selectBtn).selectAll('myOptions')
-		    	.data(choices)
-				.enter()
-		  		.append('option')
-				.classed("selector", true)
-				.text(function (d) { return d; })
-				.attr("value", function (d) {return d; })
-			})
 
 			//------------------------------- GRAPH ----------------------------------//
 
@@ -540,13 +473,35 @@ class MapPlot {
 			updateChartData(data_graph, choices[0], state_choices)
 
 			//------------------------------- SLIDER ----------------------------------//
+
+			function update(pos, selector) {
+				//move circle
+				handle.attr("cx", x(pos));
+
+				//update the slider text
+				label
+					.attr("x", x(pos))
+					.text(Math.floor(pos));
+
+				var date = Math.floor(pos); //get date from slider pos
+
+				updateMapData(date, selector)
+			}
+
+			function updateSelector(selector) {
+
+				var date = Math.floor(x.invert(currentValue))
+
+				updateMapData(date, selector)
+				updateChartData(data_graph, selector, state_choices)
+			}
 			
 			var startDate = dates[0];
 			var endDate = dates[dates.length - 1];
 
 			var slider_margin = {top:0, right:50, bottom:0, left: chart_margin.left};
 
-			var slider_svg = d3.select((viz == "race") ? '#slider' : "#slider2");
+			var slider_svg = d3.select('#slider');
 
 			const svg_slider_viewbox = slider_svg.node().viewBox.animVal;
 			const svg_slider_width = svg_slider_viewbox.width - slider_margin.left - slider_margin.right;
@@ -556,6 +511,39 @@ class MapPlot {
 			var currentValue = 0; //slider value
 			var targetValue = svg_slider_width;
 			var timer = 0;
+
+			var playButton = d3.select("#play-button")
+
+			function step() {
+
+				const selector = d3.select(selectBtn).property("value");
+
+				update(x.invert(currentValue), selector);
+
+				currentValue = currentValue + (targetValue/50);
+
+				if (currentValue > targetValue) {
+					moving_b = false;
+					currentValue = 0;
+					update(x.invert(currentValue), selector);
+					clearInterval(timer);
+					playButton.text("Play");
+				}
+			}
+
+			playButton
+				.on("click", function() {
+					var button = d3.select(this);
+					if (button.text() == "Pause") {
+						moving_b = false;
+						clearInterval(timer);
+						button.text("Play");
+					} else {
+						moving_b = true;
+						timer = setInterval(step, 100); //call step() each 100ms
+						button.text("Pause");
+					}
+				});
 
 			var x = d3.scaleLinear()
 					.domain([startDate, endDate])
@@ -611,8 +599,85 @@ class MapPlot {
 				.attr("class", "handle")
 				.attr("r", 12);
 
+			
+			//------------------------------- VIZ SELECTION ----------------------------------//
 
-			this.makeColorbar(this.svg, color_scale, [70, 70], [20, this.svg_height * 2/3],".1f");
+			function buttonColor(button, value, color="red") {
+				if (value) {
+					button.style("background-color", color)
+				} else {
+					button.style("background-color", "#39A9DB")
+				}
+			}
+
+			function changeMap(selector) {
+
+				data_map = (race) ? data_race : data_gender
+
+				updateMapData(Math.floor(x.invert(currentValue)	), selector)
+			} 
+
+			gender_button.on("click", () => {
+
+				if (gender) {
+					gender = false;
+				} else {
+					gender = true;
+				}
+
+				race = !gender
+
+				buttonColor(gender_button, gender)
+				buttonColor(race_button, race)
+
+				choices = this.choicesSelector(race)
+
+				selectionButton = d3.select(selectBtn)
+				.selectAll('option')
+		    	.remove()
+				
+				d3.select(selectBtn).selectAll('myOptions')
+		    	.data(choices)
+				.enter()
+		  		.append('option')
+				.classed("selector", true)
+				.text(function (d) { return d; })
+				.attr("value", function (d) {return d; })
+
+				changeMap(d3.select(selectBtn).property("value"))
+			})
+
+			race_button.on("click", () => {
+
+				if (race) {
+					race = false;
+				} else {
+					race = true;
+				}
+				gender = !race
+
+				buttonColor(gender_button, gender)
+				buttonColor(race_button, race)
+
+				choices = this.choicesSelector(race)
+
+				selectionButton = d3.select(selectBtn)
+				.selectAll('option')
+		    	.remove()
+				
+				d3.select(selectBtn).selectAll('myOptions')
+		    	.data(choices)
+				.enter()
+		  		.append('option')
+				.classed("selector", true)
+				.text(function (d) { return d; })
+				.attr("value", function (d) {return d; })
+
+				changeMap(d3.select(selectBtn).property("value"))
+			})
+
+
+			this.makeColorbar(this.svg, color_scale, [70, 50], [20, this.svg_height * 2/3],".1f");
 		});	
 	}
 }
