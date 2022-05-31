@@ -58,7 +58,7 @@ body {
 
 
 	background-image: url("../data/black-illustration-police-space-artwork-graphic-design-ART-darkness-graphics-1920x1080-px-computer-wallpaper-fictional-character-font-843208.jpg");
-
+	object-fit: fill;
 	display: flex;
 	justify-content: center;
 	align-items: center;
