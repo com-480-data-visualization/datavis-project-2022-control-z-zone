@@ -58,8 +58,7 @@ body {
 
 	background-image:
       url("../US-Police-Dodge-Charger.webp");
-	/*background: linear-gradient(45deg, rgb(19, 68, 204), rgb(223, 16, 16));
-	 Center the title using flexbox */
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -70,11 +69,15 @@ body {
 	color: rgb(255, 255, 255);
 	font-variant: stylistic;
 
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	text-shadow: black 0 0 2rem;
 }
 
 .width-limited {
-	max-width: 60rem;
+	max-width: 80rem;
 
 	/* Center horizontally: */
 	margin-left: auto;
