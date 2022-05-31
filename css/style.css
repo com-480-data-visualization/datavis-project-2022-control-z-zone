@@ -32,15 +32,6 @@ body {
 	width: 100vw;
 	height: 100vh;
 
-
-	/* center vertically 
-	display: flex;
-	flex-flow: row nowrap;
-	justify-content: center;
-	align-content: center;*/
-
-	/* background behind the plot */
-	/*background: rgb(40, 40, 40);*/
 	background: rgb(255, 255, 255);
 
 	/* default text */
@@ -54,7 +45,7 @@ body {
 
 	/* Space above and below the title */
 	padding-top: 6rem;
-	padding-bottom: 40rem;
+	padding-bottom: 35rem;
 
 
 	background-image: url("../data/black-illustration-police-space-artwork-graphic-design-ART-darkness-graphics-1920x1080-px-computer-wallpaper-fictional-character-font-843208.jpg");
@@ -70,6 +61,7 @@ body {
 	font-size: 3.5rem;
 	color: rgb(255, 255, 255);
 	font-variant: stylistic;
+	padding-left: 3rem;
 
 	display: flex;
 	justify-content: center;
@@ -93,13 +85,15 @@ nav {
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 
-	background-color: var(--dark-background-color);
+	background-color: rgb(0, 2, 4);
 }
 
 /* Make the links in the navbar bold */
 nav a {
 	font-weight: bold;
-	color: var(--theme-color-light);
+	color: rgb(251, 251, 251);
+
+
 }
 
 /* Style of the list of links in the navbar */
@@ -109,6 +103,7 @@ nav ul {
 	padding: 0;
 
 	/* Remove list bullet points */
+	
 	list-style-type: none;
 
 	/*
@@ -118,7 +113,7 @@ nav ul {
 	*/
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: flex-start;
+
 }
 
 /* Space between links */
@@ -140,13 +135,46 @@ p {
 	margin-bottom: 1rem;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top: 2rem;
 
-	max-width: 70rem;
+	max-width: 85rem;
 	background-color: rgba(114, 165, 227, 0.1);
 
 	border: 2px solid var(--theme-color-dark);
 	border-radius: 2rem;
 	
+}
+
+div2 {
+	float:left;
+	width: 40%;
+	padding: 0 10px;
+  }
+  
+
+.box_right{
+	padding-left: 2rem;
+	padding-right: 2rem;
+	margin-top: 1rem;
+	margin-left: 10rem;
+	margin-bottom: 2rem;
+	max-width: 40rem;
+	background-color: rgba(114, 165, 227, 0.1);
+
+	border-radius: 2rem;
+}
+
+.box_left{
+	padding-left: 2rem;
+	padding-right: 2rem;
+	margin-top: 1rem;
+	margin-left: 15rem;
+	margin-bottom: 2rem;
+	max-width: 40rem;
+	background-color: rgba(114, 165, 227, 0.1);
+
+	border-radius: 2rem;
+
 }
 
 svg {
@@ -159,7 +187,30 @@ svg .tick > text {
 	font-size: 1rem;	
 }
 
-h4 {
+title_plot{
+	color: rgb(8, 0, 0);
+	font-size: xx-large;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+}
+
+h3 {
+	color: rgb(238, 14, 18);
+	font-size: xx-large;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h4{
+	color: rgb(14, 36, 238);
+	font-size: xx-large;
 	margin-left: auto;
 	margin-right: auto;
 	display: flex;
