@@ -19,6 +19,20 @@ class ScatterPlot {
 			"hispanic" : "MediumAquaMarine"
 		}
 
+		const scale_factor = 0.012
+
+		var tooltip = d3.select("#hit_div")
+							.append("div")
+							.attr('id', 'tooltip')
+							.attr("class", "infos")
+							.style("position", "absolute")
+							.style("visibility", "hidden")
+							.style("background-color", "white")
+							.style("border", "solid")
+							.style("border-width", "1px")
+							.style("border-radius", "5px")
+							.style("padding", "10px");
+
 		
 		Promise.all([hit_rate_promise]).then((results) => {
 
@@ -46,7 +60,6 @@ class ScatterPlot {
 			 	})
 			 }
 			
-
 			let data_ca = counties_id_hit_rate_ca.map((value, index) => {
 				return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'r' : total_arrest[index], 'label' : label[index]};
 			});
@@ -61,7 +74,7 @@ class ScatterPlot {
 			 .attr('height', this.svg.height)
 			 .attr("fill", 'transparent');
 			
-			var hit_margin = {top: 0, right: 20, bottom: 20, left: 0};
+			var hit_margin = {top: 0, right: 20, bottom: 50, left: 0};
 
 			//get dimension of the svg
 			const svg_hit_viewbox = this.svg.node().viewBox.animVal;
@@ -82,83 +95,149 @@ class ScatterPlot {
 			const pointY_to_svgY = d3.scaleLinear()
 			 	.domain(y_value_range)
 			 	.range([svg_hit_height, 0]);
-				
-			var myColor = d3.scaleOrdinal()
-						.domain(label)
-						.range(d3.schemeSet1);
 
 			var map_hit = this.plot_area.selectAll("circle")
 			  	.data(data_ca)
 			  	.enter()
 			  	.append("circle")
-				.attr("class", function(d) { return "bubbles " + d.label})
+				.attr("class", function(d) { return "bubbles " + d.label.split('/')[0]})
 				.attr("cx", d =>  pointX_to_svgX(d.x|| 0)) // position, rescaled 
 				.attr("cy", d => pointY_to_svgY(d.y|| 0)) //
-				.attr("r", d => d.r *0.002)
-				.style("fill", function (d) { return color_choices[d.label]; } )
-				.attr("transform", "translate(" + x_shift + ", " + 0 + ")");
+				.attr("r", d => d.r * scale_factor)
+				.style("fill", function (d) { return color_choices[d.label]; })
+				.style("opacity", 0.9)
+				.attr("transform", "translate(" + x_shift + ", " + 0 + ")")
+				.on("mouseover", function(d) {
+					highlight(d.label)
+				})
+				.on("mousemove", function(d) {
+					highlightMove(d.label)
+				})
+				.on("mouseleave", function(d) {
+					noHighlight(d.label)
+				});
 			//  		.classed('cold', d => d.y <= 17) // color classes
-			//  		.classed('warm', d => d.y >= 23);
-			
+			//  		.classed('warm', d => d.y >= 23);		
 
-			var size = 2
+			var size = 10
 
 			var highlight = function(d){
+				
 				// reduce opacity of all groups
-				d3.selectAll(".bubbles").style("opacity", .05)
+				d3.selectAll(".bubbles")
+					.style("opacity", .2)
+
 				// expect the one that is hovered
-				d3.selectAll("."+d).style("opacity", 1)
+				var current = d3.selectAll("."+d.split('/')[0])
+
+				current.style("opacity", 1)
+				
+				const current_cx = parseFloat(current.attr("cx"))
+				const current_cy = parseFloat(current.attr("cy"))
+				const searches = Math.round(parseFloat(current.attr("r")) / scale_factor)
+
+				const html_text = "<b>" + d + "</b> <br> <br> Number of searches : " + searches
+
+				d3.select('#tooltip')
+					.style('opacity', 1)
+					.style("visibility", "visible")
+					.style('left', (current_cx + svg_hit_width/2 + 200) + "px")
+					.style('top', (current_cy + svg_hit_height/2 - 20) + "px")
+					.html(html_text)
+					.style("font-size", "13px")
+			}
+
+			var highlightMove = function(d){
+				
+				// reduce opacity of all groups
+				d3.selectAll(".bubbles")
+					.style("opacity", .2)
+
+				// expect the one that is hovered
+				var current = d3.selectAll("."+d.split('/')[0])
+
+				current.style("opacity", 1)
+				
+				const current_cx = parseFloat(current.attr("cx"))
+				const current_cy = parseFloat(current.attr("cy"))
+				const searches = Math.round(parseFloat(current.attr("r")) / scale_factor)
+
+				const html_text = "<b>" + d + "</b> <br> <br> Number of searches : " + searches
+
+				d3.select('#tooltip')
+					.style('opacity', 1)
+					.style("visibility", "visible")
+					.style('left', (current_cx + svg_hit_width/2 + 200) + "px")
+					.style('top', (current_cy + svg_hit_height/2 - 20) + "px")
+					.html(html_text)
+					.style("font-size", "13px")
 			}
 
 			var noHighlight = function(d){
-				d3.selectAll(".bubbles").style("opacity", 1)
+
+				d3.select('#tooltip')
+					.style('opacity', 0)
+					.style("visibility", "hidden")
+
+				d3.selectAll(".bubbles").style("opacity", 0.9)
 			}
 
 			this.svg.selectAll("bubble")
 				.data(label)
 				.enter()
 				.append("circle")
-				.attr("cx", 105)
+				.attr("cx", svg_hit_width * 0.55)
 				.attr("cy", function(d,i){ return 15 + i*(size+5)}) 
-				.attr("r", 1)
+				.attr("r", 4)
 				.style("fill", function(d){ return color_choices[d]})
-				.on("mouseover", highlight)
-				.on("mouseleave", noHighlight)
 				.attr("transform", "translate(" + x_shift + ", " + 0 + ")");
-			
+				
 			this.svg.selectAll("legend")
 				.data(label)
 				.enter()
 				.append("text")
 				.classed("legend", true)
-				.attr("x", 178)
-				.attr("y", function(d, i){ return 16 + i*(size+5);})
+				.attr("x", svg_hit_width * 0.865)
+				.attr("y", function(d, i){ return 17 + i*(size+5);})
 				.text(function(d, i) {return d})
-				.style("font-size", "4px")
+				.style("font-size", "10px")
+			
+			this.svg.selectAll(".rect")
+				.data(label)
+				.enter()
+				.append("rect")
+				.attr("x", svg_hit_width * 0.545)
+				.attr("y", function(d,i){ return 8 + i*(size+5)}) 
+				.attr("height", 15)
+				.attr("width", 120)
+				.style("fill", "blue")
+				.style("opacity", 0)
+				.on("mouseover", highlight)
+				.on("mousemove", highlightMove)
+				.on("mouseleave", noHighlight)
+				.attr("transform", "translate(" + x_shift + ", " + 0 + ")");
 
 
 			// // Create Y labels
 			const label_ys = Array.from(Array(6), (elem, index) => 20 * index); // 0 20 40 ... 180
 
-			var axis_y = this.svg.append('g')
-				.selectAll('text')
-				.data(label_ys)
-				.enter()
-				.append('text')
-				.text( svg_y => pointY_to_svgY.invert(svg_y).toFixed(1) )//
-				.attr('x', -5)
-				.attr('y', svg_y => svg_y + 1)
-				.attr("transform", "translate(" + x_shift + ", " + 0 + ")");
+			var axis_y = d3.axisLeft().scale(pointY_to_svgY).ticks(5).tickPadding(10).tickFormat(d3.format(".2"));
+			var axis_x = d3.axisBottom().scale(pointX_to_svgX).ticks(5).tickPadding(5).tickFormat(d3.format(".2"));
 
-			var axis_x = this.svg.append('g')
-				.selectAll('text')
-				.data(label_ys)
-				.enter()
-				.append('text')
-				.text( svg_x => pointX_to_svgX.invert(svg_x).toFixed(1))//
-				.attr('x', svg_x => svg_x + 1)
-				.attr('y', 105)
-				.attr("transform", "translate(" + x_shift + ", " + 0 + ")");
+			this.svg.append("g")
+					.attr("class","y_axis")
+					.attr("transform", "translate(" + x_shift + ", " + 0 + ")")
+					.transition()
+					.duration(100)
+					.call(axis_y);
+			
+			
+			this.svg.append("g")
+				.attr("class","x_axis")
+				.attr("transform", "translate(" + x_shift + ", " + svg_hit_height + ")")
+				.transition()
+				.duration(100)
+				.call(axis_x);
 			
 
 			this.svg.append('line')
@@ -182,7 +261,7 @@ class ScatterPlot {
 					hit_rate.filter(x => (x.year == date && x.County == 'ca')).forEach((row) => { // x.subject_race == choices[0] &&
 						counties_id_hit_rate_ca.push((parseFloat(row.mean)))
 						total_arrest.push((parseFloat(row.sum)))
-						
+
 						label.push(row.subject_race)
 					})
 					hit_rate.filter(x => (x.year == date &&  x.County == 'tx')).forEach((row) => {// x.subject_race == choices[0] &&
@@ -196,7 +275,6 @@ class ScatterPlot {
 					})
 				}
 				
-
 				data_ca = counties_id_hit_rate_ca.map((value, index) => {
 					return {'index': index, 'y': value, 'x' :  counties_id_hit_rate_tx[index], 'r' : total_arrest[index], 'label' : label[index]};
 				});
@@ -204,10 +282,10 @@ class ScatterPlot {
 				map_hit
 			  	.data(data_ca)
 				.transition()
-				.duration(500)
+				.duration(480)
 				.attr("cx", d => pointX_to_svgX(d.x|| 0) ) // position, rescaled
 				.attr("cy", d => pointY_to_svgY(d.y|| 0))
-				.attr("r", d => d.r *0.002)
+				.attr("r", d => d.r * scale_factor)
 			}
 			
 			function update(pos) {
