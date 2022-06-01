@@ -1,16 +1,21 @@
 # Data Visualization project (COM-480 EPFL)
 ## Bias in police stops
-<img src="./data/black-illustration-police-space-artwork-graphic-design-ART-darkness-graphics-1920x1080-px-computer-wallpaper-fictional-character-font-843208.jpg" alt="drawing" width="600"/>
+<img src="./data/black-illustration-police-space-artwork-graphic-design-ART-darkness-graphics-1920x1080-px-computer-wallpaper-fictional-character-font-843208.jpg" alt="drawing" width="700"/>
 
 
-## Datasets
-[Stanford Open Policing Project](https://openpolicing.stanford.edu/data/), 100 million traffic stops in the USA.
+## Motivation
+
 
 More than 20 million Americans are stopped for traffic violations each year, making it one of the most common ways for the public to interface with the police.
 However, there has never been a comprehensive national repository containing information on these interactions. To alter that, the Open Policing Stanford dataset collaborated with Big Local News to collect a dataset of over 200 million traffic stops done in dozens of cities and states throughout the US, making it the largest such endeavor to date.
 
 It has become a valuable resource for politicians, scholars, journalists, and campaigners striving to improve policing via data.
 In our turn, we too want to help ameliorate policing and we will do so in our visualizations by raising awareness on potential racial and gender biases in police stops.
+
+## Dataset
+<img src="./data/logo_stanford.png" alt="drawing" width="200"/>
+
+[Stanford Open Policing Project](https://openpolicing.stanford.edu/data/), 100 million traffic stops in the USA.
 
 ## Problematic
 
