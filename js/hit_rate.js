@@ -271,7 +271,9 @@ class ScatterPlot {
 						button.text("Play");
 					} else {
 						moving_b = true;
-						currentValue = 0;
+						if (currentValue > targetValue) {
+							currentValue = 0;
+						}
 						timer = setInterval(step, 150); //call step() each 100ms
 						button.text("Pause");
 					}
