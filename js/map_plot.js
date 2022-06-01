@@ -69,9 +69,6 @@ class MapPlot {
 		return (race) ? "#selectButtonRace" : "#selectButtonGender" 
 	}
 
-	choicesSelector(race) {
-		return (race) ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
-	}
 
 	constructor(svg_element_id, map_viz) {
 
@@ -161,11 +158,15 @@ class MapPlot {
 				.style("visibility", "hidden")
 		}
 
+		function choicesSelector(race) {
+			return (race) ? ["white", "black", "asian/pacific islander", "hispanic"] : ["male", "female"]
+		}
+
 		// Selection selector
 		const selectBtn = this.attributeSelector(race)
 
 		// Either hardcode choices for race and sex or fetch from data
-		var choices = this.choicesSelector(race)
+		var choices = choicesSelector(race)
 
 		var selectionButton = d3.select(selectBtn)
 				.selectAll('myOptions')
@@ -192,14 +193,18 @@ class MapPlot {
 			return data
 		})
 
-		const data_path_graph = (viz == "race") ? "data/count_ethnicity_state.csv" : "data/count_gender_state.csv"
+		const data_path_graph_race = "data/count_ethnicity_state.csv"
+		const data_path_graph_gender = "data/count_gender_state.csv"
 
-		//Load the data of test, it's arrest of white, find by county the number of arrest
-		const data_promise_graph = d3.csv(data_path_graph).then((data) => {
+		const data_promise_graph_race = d3.csv(data_path_graph_race).then((data) => {
 			return data
 		})
 
-		Promise.all([map_promise_ca, map_promise_tx, data_promise_race, data_promise_gender, data_promise_graph]).then((results) => {
+		const data_promise_graph_gender = d3.csv(data_path_graph_gender).then((data) => {
+			return data
+		})
+
+		Promise.all([map_promise_ca, map_promise_tx, data_promise_race, data_promise_gender, data_promise_graph_race, data_promise_graph_gender]).then((results) => {
 
 			const stop_min = 100
 
@@ -207,9 +212,11 @@ class MapPlot {
 			let map_data_tx = results[1];
 			let data_race = results[2].filter(x => x.nb_arrest > stop_min); // remove counties with less than < 100 stops
 			let data_gender = results[3].filter(x => x.nb_arrest > stop_min); // remove counties with less than < 100 stops
-			let data_graph = results[4]
+			let data_graph_race = results[4]
+			let data_graph_gender = results[5]
 
 			var data_map = data_race
+			var data_graph = data_graph_race
 
 			var counties_id_stops = {}
 			var dates = [...new Set(data_map.map(x=> x.year))].sort() //get all dates
@@ -300,7 +307,6 @@ class MapPlot {
 				});
 			}
 
-
 			buildMap(data_map, choices[0])
 
 			// Order of creating groups decides what is on top
@@ -380,24 +386,16 @@ class MapPlot {
 
 			//------------------------------- GRAPH ----------------------------------//
 
-
 			// set the dimensions and margins of the graph
-			var chart_margin = {top: 5, right: 50, bottom: 30, left: 100};
-
-			const line_chart = (viz == "race") ? "#line-chart" : "#line-chart2"
-			const chart_svg_ = (viz == "race") ? "chart_svg" : "chart_svg2"
+			var chart_margin = {top: 40, right: 50, bottom: 30, left: 60};
 
 			// apppend a svg
-			var chart = d3.select(line_chart)
-						.append("svg")
-						.attr("id", chart_svg_)
-						.attr("viewBox", "0 0 960 150")
-						.attr("width", "70%")
+			var chart = d3.select("#chart")
 						.append("g")
 						.attr("transform",
 							"translate(" + chart_margin.left + "," + chart_margin.top + ")");
 
-			var chart_svg = d3.select("#" + chart_svg_)
+			var chart_svg = d3.select("#chart")
 
 			//get dimension of the svg
 			const svg_chart_viewbox = chart_svg.node().viewBox.animVal;
@@ -405,72 +403,114 @@ class MapPlot {
 			const svg_chart_height = svg_chart_viewbox.height  - chart_margin.top - chart_margin.bottom;
 
 			//horizontal axis and scale
-			var x_chart = d3.scaleTime().range([ 0, svg_chart_width]);
+			var x_chart = d3.scaleTime().range([ 0, svg_chart_width/2 - 10]);
 			var x_chart_axis = d3.axisBottom().scale(x_chart);
 
 			chart.append("g")
 				.attr("class","x_axis")
 				.attr("transform", "translate(0," + svg_chart_height + ")");
 
+			chart.append("g")
+			.attr("class","x_axis")
+			.attr("transform", "translate("+ (svg_chart_width/2  +  10)+"," + svg_chart_height + ")");
+
 			//vertical axis and scale
 			var y_chart = d3.scaleLinear().range([svg_chart_height, 5]);
-			var y_chart_axis = d3.axisLeft().scale(y_chart).ticks(5).tickPadding(40);
+			var y_chart_axis = d3.axisLeft().scale(y_chart).ticks(5).tickPadding(10).tickFormat(d3.format(".2s"));
+
+			const color_choices = ["steelblue", "firebrick", "goldenrod", "MediumAquaMarine"]
 
 			chart.append("g")
 				.attr("class","y_axis");
-
 			
-			function updateChartLine(chart_svg, data, color_line) {
+			function updateChartLine(chart_svg, data, transform, color_line) {
 
 				chart_svg.append("path")
 						.classed("line_graph", true)
 						.datum(data)
 						.transition()
 						.duration(300)
-						.attr("transform", "translate( "+ chart_margin.left +",0)")
+						.attr("transform", "translate( "+ transform[0] + ", " + transform[1] + ")")
 						.attr("d", d3.line()
 								.x(function(d) { return x_chart(new Date(d.year))})
-								.y(function(d) { return y_chart(d.percentage) }))
+								.y(function(d) { return y_chart(parseInt(d.nb_arrest)) }))
 						.attr("fill", "none")
 						.attr("stroke", color_line)
 						.attr("stroke-width", 1.5)
 			}
 
-			function updateChartData(data, selector, state_choices) {
-
-				const data_selector = (viz == "race") ? data.filter(x => x.subject_race == selector) : data.filter(x => x.subject_sex == selector)
-
-				// Create the horizontal axis with call():
-				x_chart.domain(d3.extent(data_selector, function(d) { return new Date(d.year); }));
-
-				chart.selectAll(".x_axis").transition()
-					.duration(300)
-					.call(x_chart_axis);
-
-				// Create the vertical axis with call():
-			  	y_chart.domain([0,d3.max(data_selector.map(x => parseInt(x.percentage)))]);
-
-
-				chart.selectAll(".y_axis")
-					.transition()
-					.duration(300)
-					.call(y_chart_axis);
-
+			function resetChart(data) {
+				
 				chart_svg.selectAll("path").classed("line_graph", function (d,i) {
 					var elem = d3.select(this)
 					if (elem.classed("line_graph")) elem.remove()
 				})
 
-				const color_choices = ["steelblue", "red"]
+				// Create the vertical axis with call():
+				y_chart.domain([0,d3.max(data.map(x => parseInt(x.nb_arrest)))]);
 
-				state_choices.forEach((state, i) => {
-					updateChartLine(chart_svg, data_selector.filter(x => x.state == state), color_choices[i])	
+				chart.selectAll(".y_axis")
+					.transition()
+					.duration(300)
+					.call(y_chart_axis);		
+			}
+
+			function updateChartLegend(chart_svg, data, pos_legend) {
+				//clear legend
+				chart_svg.selectAll("rect")
+						.remove()
+
+				chart_svg.selectAll("text").classed("legend", function (d,i) {
+					var elem = d3.select(this)
+					if (elem.classed("legend")) elem.remove()
+				})
+
+				chart_svg.selectAll("rect")
+						.data(data)
+						.enter()
+						.append("rect")
+						.attr("x", pos_legend[0])
+						.attr("y", function(d, i){ return 5 + i *  20;})
+						.attr("width", 10)
+						.attr("height", 10)
+						.style("fill", function(d, i) { 
+							var color = color_choices[i];
+							return color;
+						});
+				
+				chart_svg.selectAll("legend")
+						 .data(data)
+						 .enter()
+						 .append("text")
+						 .classed("legend", true)
+						 .attr("x", pos_legend[0] + 14)
+						 .attr("y", function(d, i){ return 14 + (i *  20);})
+						 .text(function(d, i) {return choices[i]})
+						 .style("font-size", "12px")
+				}
+
+			function updateChartData(data, state_choice, transform) {
+
+				const data_state = data.filter(x => x.state == state_choice)
+
+				// Create the horizontal axis with call():
+				x_chart.domain(d3.extent(data_state, function(d) { return new Date(d.year); }));
+
+				chart.selectAll(".x_axis").transition()
+					.duration(300)
+					.call(x_chart_axis);
+
+				choices.forEach((choice, i) => {
+					const data_choice = (race) ? data_state.filter(x => x.subject_race == choice) : data_state.filter(x => x.subject_sex == choice)
+					updateChartLine(chart_svg, data_choice, transform, color_choices[i])	
 				})
 						
 			}
 
-			//call the fucntion created with defalut dataset
-			updateChartData(data_graph, choices[0], state_choices)
+			resetChart(data_graph)
+			updateChartData(data_graph, "ca", [chart_margin.left, chart_margin.top])
+			updateChartLegend(chart_svg, choices, [svg_chart_width - 20, 0])
+			updateChartData(data_graph, "tx", [svg_chart_width / 2 + chart_margin.left + 10, chart_margin.top])
 
 			//------------------------------- SLIDER ----------------------------------//
 
@@ -493,7 +533,6 @@ class MapPlot {
 				var date = Math.floor(x.invert(currentValue))
 
 				updateMapData(date, selector)
-				updateChartData(data_graph, selector, state_choices)
 			}
 			
 			var startDate = dates[0];
@@ -615,7 +654,36 @@ class MapPlot {
 				data_map = (race) ? data_race : data_gender
 
 				updateMapData(Math.floor(x.invert(currentValue)	), selector)
-			} 
+			}
+
+			function click() {
+
+				buttonColor(gender_button, gender)
+				buttonColor(race_button, race)
+
+				choices = choicesSelector(race)
+
+				selectionButton = d3.select(selectBtn)
+					.selectAll('option')
+					.remove()
+					
+				d3.select(selectBtn).selectAll('myOptions')
+					.data(choices)
+					.enter()
+					.append('option')
+					.classed("selector", true)
+					.text(function (d) { return d; })
+					.attr("value", function (d) {return d; })
+
+				changeMap(d3.select(selectBtn).property("value"))
+
+				data_graph = (race) ? data_graph_race : data_graph_gender
+
+				resetChart(data_graph)
+				updateChartData(data_graph, "ca", [chart_margin.left, chart_margin.top])
+				updateChartData(data_graph, "tx", [svg_chart_width / 2 + chart_margin.left + 10, chart_margin.top])
+				updateChartLegend(chart_svg, choices, [svg_chart_width - 20, 0])
+			}
 
 			gender_button.on("click", () => {
 
@@ -627,24 +695,7 @@ class MapPlot {
 
 				race = !gender
 
-				buttonColor(gender_button, gender)
-				buttonColor(race_button, race)
-
-				choices = this.choicesSelector(race)
-
-				selectionButton = d3.select(selectBtn)
-				.selectAll('option')
-		    	.remove()
-				
-				d3.select(selectBtn).selectAll('myOptions')
-		    	.data(choices)
-				.enter()
-		  		.append('option')
-				.classed("selector", true)
-				.text(function (d) { return d; })
-				.attr("value", function (d) {return d; })
-
-				changeMap(d3.select(selectBtn).property("value"))
+				click()
 			})
 
 			race_button.on("click", () => {
@@ -656,24 +707,7 @@ class MapPlot {
 				}
 				gender = !race
 
-				buttonColor(gender_button, gender)
-				buttonColor(race_button, race)
-
-				choices = this.choicesSelector(race)
-
-				selectionButton = d3.select(selectBtn)
-				.selectAll('option')
-		    	.remove()
-				
-				d3.select(selectBtn).selectAll('myOptions')
-		    	.data(choices)
-				.enter()
-		  		.append('option')
-				.classed("selector", true)
-				.text(function (d) { return d; })
-				.attr("value", function (d) {return d; })
-
-				changeMap(d3.select(selectBtn).property("value"))
+				click()
 			})
 
 
@@ -693,5 +727,4 @@ function whenDocumentLoaded(action) {
 
 whenDocumentLoaded(() => {
 	map1 = new MapPlot('map-plot', "race");
-
 });
