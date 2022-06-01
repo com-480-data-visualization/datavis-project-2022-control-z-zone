@@ -69,8 +69,7 @@ class MapPlot {
 		return (race) ? "#selectButtonRace" : "#selectButtonGender" 
 	}
 
-
-	constructor(svg_element_id, map_viz) {
+	constructor(svg_element_id) {
 
 		this.svg = d3.select('#' + svg_element_id);
 
@@ -78,8 +77,6 @@ class MapPlot {
 		var gender = false
 
 		//------------------------------- MAP ----------------------------------//
-
-		const viz = map_viz
 
 		// may be useful for calculating scales
 		const svg_viewbox = this.svg.node().viewBox.animVal;
@@ -726,5 +723,5 @@ function whenDocumentLoaded(action) {
 }
 
 whenDocumentLoaded(() => {
-	map1 = new MapPlot('map-plot', "race");
+	map1 = new MapPlot('map-plot');
 });
