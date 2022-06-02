@@ -33,20 +33,18 @@
 	<section class="usa_map">
 		<div id ="map_div" >
 			<div id="button_container" style="visibility: hidden;">
-				<button id ="map_btn" style = "background-color: #39A9DB; color: rgb(255,255,255) !important" >Map</button>
-				<button id ="race_btn" style = "background-color: #39A9DB; color: rgb(255,255,255) !important" >Race</button>
-				<button id ="gender_btn" style = "background-color: #39A9DB; color: rgb(255,255,255) !important" >Gender</button>
+				<button id ="map_btn" style = "background-color: #88b7cf; color: rgb(255,255,255); border-radius: 4px !important" >USA Map view</button>
+				<div class="space"></div>
+				<button id ="race_btn" style = "background-color: #39A9DB; color: rgb(255,255,255); border-radius: 4px !important" >Show race</button>
+				<button id ="gender_btn" style = "background-color: #39A9DB; color: rgb(255,255,255); border-radius: 4px !important" >Show gender</button>
+				<div class="space"></div>
 				<select id="selectButton"></select>
 				 <style>
 
-					#map_btn{
-						position: relative;
-						left: -400px;
-					}
-
 					#button_container{
-						width:100%;
+						width:80%;
 						text-align: center;
+						position: absolute;
 					}
 					#button_container > div{
 						display: inline-block;
@@ -57,6 +55,25 @@
 					#button_container > div > button {
 					  color: rgb(255,255,255);
 					}
+
+					#race_btn {
+						margin-right: 4px;
+					}
+
+					#gender_btn {
+						margin-right: 4px;
+					}
+
+					#selectButton {
+						text-align: center;
+					}
+
+					.space {
+						width: 5cm;
+						height: auto;
+						display: inline-block;
+					}
+
 				 </style>
 			  </div>
 			<svg id="map-plot" viewBox="0 0 1020 400" width="100%">
@@ -128,8 +145,12 @@
 				</style>
 			</svg>
 		</div>
-		<div id="line-chart">
+		<div id="line-text">
+			<p>
+				Here will be some analysis of the arrest map.
+			</p>
 		</div>
+		<div id="line-chart"></div>
 	</section>
 	<p>
 		Here will be some analysis of the arrest map.

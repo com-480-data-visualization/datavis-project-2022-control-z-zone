@@ -186,7 +186,7 @@ class MapPlot {
 		var play_button = d3.select("#play-button")
 		var map_button = d3.select("#map_btn")
 
-		race_button.style("background-color", "red")
+		race_button.style("background-color", "#39A9DB").style("border", "2px solid black")
 
 		selection_button.selectAll('myOptions')
 		    	.data(choices)
@@ -315,7 +315,7 @@ class MapPlot {
 				.classed("state", true)
 				.attr("d", path_generator_usa)
 				.style("fill", function(d) {
-					if (states_available.includes(d.properties.name)) return "red"
+					if (states_available.includes(d.properties.name)) return "Crimson"
 					else return "white"
 				})
 				.on("click", clickState)
@@ -402,7 +402,7 @@ class MapPlot {
 							const df_domain =  df.map(x => x.relative)
 							domain_min = Math.floor(Math.min.apply(Math, df_domain))
 							//domain_max = Math.ceil(Math.max.apply(Math, df_domain))
-							domain_max = 5
+							domain_max = 2.5
 							df.forEach((row) => {
 								counties_id_stops[row.county_name] = getCountiesInfo(row)
 							})
@@ -820,11 +820,11 @@ class MapPlot {
 					
 					//------------------------------- VIZ SELECTION ----------------------------------//
 		
-					function buttonColor(button, value, color="red") {
+					function buttonColor(button, value, color="#39A9DB") {
 						if (value) {
-							button.style("background-color", color)
+							button.style("background-color", color).style("border", "2px solid black")
 						} else {
-							button.style("background-color", "#39A9DB")
+							button.style("background-color", "#39A9DB").style("border", "")
 						}
 					}
 		
