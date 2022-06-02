@@ -40,6 +40,9 @@ stops bias
 ## Link to Website
 [Our website](https://com-480-data-visualization.github.io/datavis-project-2022-control-z-zone/)
 
+## Contribute to the project
+You will find all the necessary documentation for the tools and requirements you need if you want to clone the repository and contribute to project in the folder [technical_setup](./technical_setup/README.md).
+
 ## Milestones
 
 ### Milestone 1
