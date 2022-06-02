@@ -74,7 +74,7 @@ class ScatterPlot {
 			 .attr('height', this.svg.height)
 			 .attr("fill", 'transparent');
 			
-			var hit_margin = {top: 0, right: 20, bottom: 50, left: 0};
+			var hit_margin = {top: 0, right: 20, bottom: 60, left: 0};
 
 			//get dimension of the svg
 			const svg_hit_viewbox = this.svg.node().viewBox.animVal;
@@ -253,8 +253,15 @@ class ScatterPlot {
 
 			this.svg.append("text")
 					.style("text-anchor", "middle")
-					.attr("transform", "translate(" +0 + ", " + 0 + ")")
-					.text("Date");
+					.attr("transform", "translate(" + svg_hit_width/2 + ", " + (svg_hit_viewbox.height - 13) + ")")
+					.style("font-size", "20px")
+					.text("Texas hit rate (%)");
+			
+			this.svg.append("text")
+				.style("text-anchor", "middle")
+				.attr("transform", "translate(" + (x_shift - 40) + ", " + svg_hit_height/2 + ") " + "rotate(-90)")
+				.style("font-size", "20px")
+				.text("California hit rate (%)");
 
 			function updatePlotData(date) {
 

@@ -40,7 +40,7 @@ class MapPlot {
 			//.attr("y", top_left[0])
 			.style("font-size", "15px")
 			.attr("transform", "rotate(-90)")
-			.text("Number of stops (log10)");
+			.text("Relative number of stops");
 
 		const svg_defs = svg.append("defs").classed("colorbar", true);
 
@@ -401,8 +401,8 @@ class MapPlot {
 							//const df_domain =  df.map(x => Math.log10(x.nb_arrest))
 							const df_domain =  df.map(x => x.relative)
 							domain_min = Math.floor(Math.min.apply(Math, df_domain))
-							domain_max = Math.ceil(Math.max.apply(Math, df_domain))
-			
+							//domain_max = Math.ceil(Math.max.apply(Math, df_domain))
+							domain_max = 5
 							df.forEach((row) => {
 								counties_id_stops[row.county_name] = getCountiesInfo(row)
 							})
@@ -507,6 +507,20 @@ class MapPlot {
 						.on("mouseover", mouseover)
 						.on('mousemove', mousemove)
 						.on("mouseout", mouseout);
+
+					
+					map_svg.append("text")
+						.style("text-anchor", "middle")
+						.attr("transform", "translate(" + (svg_width / 4 + 40) + ", " + (svg_height - 20) + ")")
+						.style("font-size", "25px")
+						.text("California");
+
+					
+					map_svg.append("text")
+						.style("text-anchor", "middle")
+						.attr("transform", "translate(" + (svg_width * 3/4) + ", " + (svg_height - 20) + ")")
+						.style("font-size", "25px")
+						.text("Texas");
 		
 		
 					function updateMapData(date, selector) {
@@ -540,7 +554,7 @@ class MapPlot {
 					//------------------------------- GRAPH ----------------------------------//
 		
 					// set the dimensions and margins of the graph
-					var chart_margin = {top: 40, right: 50, bottom: 30, left: 60};
+					var chart_margin = {top: 40, right: 50, bottom: 30, left: 85};
 
 					d3.select("#line-chart").append("svg")
 								.attr("id", "chart")
@@ -572,7 +586,7 @@ class MapPlot {
 			
 					//vertical axis and scale
 					var y_chart = d3.scaleLinear().range([svg_chart_height, 5]);
-					var y_chart_axis = d3.axisLeft().scale(y_chart).ticks(5).tickPadding(10).tickFormat(d3.format(".2s"));
+					var y_chart_axis = d3.axisLeft().scale(y_chart).ticks(5).tickPadding(5).tickFormat(d3.format(".2s"));
 		
 					const color_choices = ["steelblue", "firebrick", "goldenrod", "MediumAquaMarine"]
 		
@@ -667,6 +681,12 @@ class MapPlot {
 					updateChartData(data_graph, "ca", [chart_margin.left, chart_margin.top])
 					updateChartLegend(chart_svg, choices, [svg_chart_width - 20, 0])
 					updateChartData(data_graph, "tx", [svg_chart_width / 2 + chart_margin.left + 10, chart_margin.top])
+
+					chart.append("text")
+					.style("text-anchor", "middle")
+					.attr("transform", "translate(" + (-chart_margin.left + 20) + ", " + (svg_chart_height/2) +") " + "rotate(-90)")
+					.style("font-size", "20px")
+					.text("Number of stops");
 		
 					//------------------------------- SLIDER ----------------------------------//
 		
@@ -870,7 +890,6 @@ class MapPlot {
 					})
 
 					map1.makeColorbar(map_svg, color_scale, [70, 50], [20, svg_height * 2/3],".1f");
-
 
 					map_button.on("click", () => {
 
