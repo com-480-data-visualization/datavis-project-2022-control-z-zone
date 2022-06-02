@@ -228,7 +228,7 @@ class ScatterPlot {
 					.attr("class","y_axis")
 					.attr("transform", "translate(" + x_shift + ", " + 0 + ")")
 					.transition()
-					.duration(100)
+					.duration(20)
 					.call(axis_y);
 			
 			
@@ -236,10 +236,9 @@ class ScatterPlot {
 				.attr("class","x_axis")
 				.attr("transform", "translate(" + x_shift + ", " + svg_hit_height + ")")
 				.transition()
-				.duration(100)
+				.duration(20)
 				.call(axis_x);
 			
-
 			this.svg.append('line')
 				.style("stroke", "black")
 				.style("stroke-width", 0.5)
@@ -250,6 +249,12 @@ class ScatterPlot {
 				.attr("x2", svg_hit_width / 2)
 				.attr("y2", 0)
 				.attr("transform", "translate(" + x_shift + ", " + 0 + ")");
+
+
+			this.svg.append("text")
+					.style("text-anchor", "middle")
+					.attr("transform", "translate(" +0 + ", " + 0 + ")")
+					.text("Date");
 
 			function updatePlotData(date) {
 
@@ -282,7 +287,7 @@ class ScatterPlot {
 				map_hit
 			  	.data(data_ca)
 				.transition()
-				.duration(480)
+				.duration(300)
 				.attr("cx", d => pointX_to_svgX(d.x|| 0) ) // position, rescaled
 				.attr("cy", d => pointY_to_svgY(d.y|| 0))
 				.attr("r", d => d.r * scale_factor)
@@ -330,7 +335,7 @@ class ScatterPlot {
 
 				update(x.invert(currentValue));
 
-				currentValue = currentValue + (targetValue/100);
+				currentValue = currentValue + (targetValue/50);
 
 				if (currentValue > targetValue) {
 					moving_b = false;
