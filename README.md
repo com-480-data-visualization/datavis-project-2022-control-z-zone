@@ -17,6 +17,12 @@ In our turn, we too want to help ameliorate policing and we will do so in our vi
 
 [Stanford Open Policing Project](https://openpolicing.stanford.edu/data/), 100 million traffic stops in the USA.
 
+[Data Census gouv](https://data.census.gov/cedsci/table?q=California\%20ethnicity\%20by\%20county&g=0100000US&tid=DECENNIALPL2020.P2), proportion of ethnicities per county.
+
+[US county gender](https://www.kaggle.com/datasets/headsortails/covid19-us-county-jhu-data-demographics?select=us_county.csv}{https://www.kaggle.com/datasets/us\_county.csv), proportion of genders per county.
+
+[Data after processing](https://drive.google.com/drive/folders/1KLRz1u3J8LqiPp10Lt3V_TuCJL9h8w4c?usp=sharing), implemented by our team.
+
 ## Problematic
 
 We want to investigate a potential variation in racial bias in police stops from 2009 to
@@ -78,7 +84,7 @@ In the process book, you will find:
 
 ### Screencast
 
-[Link to Screencast video]()
+[Link to Screencast video](screencast.zip)
 The video showcases what one is able to do with the visualizations we implemented on our website.
 
 
