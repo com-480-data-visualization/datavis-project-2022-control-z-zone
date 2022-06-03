@@ -84,7 +84,7 @@ In the process book, you will find:
 
 ### Screencast
 
-[Link to Screencast video](screencast.zip)
+[Link to Screencast video](./reports/Milestone3/screencast.zip)
 The video showcases what one is able to do with the visualizations we implemented on our website.
 
 
