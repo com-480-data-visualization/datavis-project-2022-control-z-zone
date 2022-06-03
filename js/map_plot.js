@@ -824,7 +824,7 @@ class MapPlot {
 		
 					function buttonColor(button, value, color="#39A9DB") {
 						if (value) {
-							button.style("background-color", color).style("border", "2px solid black")
+							button.style("background-color", color).style("border", "4px solid black").style("opacity", 0.8)
 						} else {
 							button.style("background-color", "#39A9DB").style("border", "")
 						}

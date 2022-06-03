@@ -86,11 +86,11 @@ class ScatterPlot {
 			//const y_value_range = [0, d3.max(data_ca, d => d.y)];
 			const y_value_range = [0, 40];
 
-			const x_shift = svg_hit_width * 1/4
+			const x_shift = svg_hit_width * 0.35
 
 			const pointX_to_svgX = d3.scaleLinear()
 			 	.domain(x_value_range)
-			 	.range([0, svg_hit_width / 2]);
+			 	.range([0, svg_hit_height]);
 
 			const pointY_to_svgY = d3.scaleLinear()
 			 	.domain(y_value_range)
@@ -197,7 +197,7 @@ class ScatterPlot {
 				.enter()
 				.append("text")
 				.classed("legend", true)
-				.attr("x", svg_hit_width * 0.865)
+				.attr("x", svg_hit_width * 0.96)
 				.attr("y", function(d, i){ return 17 + i*(size+5);})
 				.text(function(d, i) {return d})
 				.style("font-size", "10px")
@@ -246,7 +246,7 @@ class ScatterPlot {
 				.style("stroke-dasharray", ("3, 3"))
 				.attr("x1", 0)
 				.attr("y1", svg_hit_height)
-				.attr("x2", svg_hit_width / 2)
+				.attr("x2", svg_hit_height)
 				.attr("y2", 0)
 				.attr("transform", "translate(" + x_shift + ", " + 0 + ")");
 
