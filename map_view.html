@@ -26,12 +26,17 @@
 
 
 <div class="box">
-	<title_plot>Map view ethnicity</title_plot>
-		<p>
-			It will be possible to visualize the respective number of police arrest of Black, White and Hispanic persons in the different counties of California and Texas. With the help of a cursor it will be possible to observe the evolution of the number of arrests between 2009 and 2016.
-		</p>
+	<br><title_plot>Relative number of state police stops by race and gender</title_plot> <br>
+		<div id="map-view-top">
+			<p>
+				Here is the map of the USA. To be able to see the number of stops by county, you have to click on two states. 
+				The states that can be clicked on are the ones in red, which means that the data are processed. Once you have clicked you will visualize
+				the number of police stops by ethnicity, normalized by the population of this ethnicity in the county.
+			</p>
+		</div>
 	<section class="usa_map">
 		<div id ="map_div" >
+			<br>
 			<div id="button_container" style="visibility: hidden;">
 				<button id ="map_btn" style = "background-color: #88b7cf; color: rgb(255,255,255); border-radius: 4px !important" >USA Map view</button>
 				<div class="space"></div>
@@ -76,6 +81,7 @@
 
 				 </style>
 			  </div>
+			  <br>
 			<svg id="map-plot" viewBox="0 0 1020 400" width="100%">
 				<style>
 
@@ -145,21 +151,59 @@
 				</style>
 			</svg>
 		</div>
-		<div id="line-text">
+		<div id="line-text" hidden="hidden">
 			<p>
-				1) A lot of arrest at the border of the texas<br>
-				2) Black and hispanic lot of arrest two hypthesis --> maybe bias by small population, maybe racial bias <br>
-				3) Hispanic arrest at the border of Texas <br>
-				4) difference in relative arrest number between California and texas <br>
-				5) part of california with a lot of arrest is also the Yosemite (ski resort) --> bias ? <br>
+				In this comparison analysis tool it is possible to select whether you want to view a 
+				comparison based on race or gender and select correponding ethnicity or gender of your choice. Hovering
+				with your mouse will display the county name together with the number of stops for
+				that particular category (selected race or gender) and the corresponding stop ratio defined as the <b>number of stops for the category
+				divided by the number of inhabitants of that category</b>, per county. When the relative stop ratio
+				is higher for one ethnicity than the others, we can consider a bias toward that ethnicity. <br>
+				<br>
+				Although, we noticed an unwanted pattern in some counties where the stop ratio exceeds 1, meaning
+				that there are more people stopped than people who live there for a given category. This can be explained by
+				the number of tourists or simply travellers that come to that county.
+				For example, in the Sierra and Alpine counties in California we observe a very high relative
+				ratios for every category (above 2). This is due to the fact that those counties are very famous for
+				their sky stations or mountain activities and attract a great number of tourists every year who are naturally not
+				counted in the county population. It is important to note that this doesn’t constitute a
+				bias towards any ethnicity since the ratio, although high, is similar in both those counties.
+				Comparing California and Texas, we can see relatively <b>higher ratios in Texas</b> overall
+				than in California indicating generaly more frequent police stops. Another observable
+				phenomenon we can observe is the relative ratio of stops near the border with Mexico
+				in South-West Texas is also high for each ethnicities, due to control at borders, we can’t
+				observe any clear bias at borders, indeed relative stops ratios are increasing there for all
+				categories of populations. <br>
+				<br>
+				For gender however, we observe a constantly <b>higher relative ratio of stops for
+				males than females</b>. This remains the case from 2009 to 2016 and is true for both
+				California and Texas. <br>
+				<br>
+				Finally, when selecting Asian or Black populations, we seem to observe higher stop ratios
+				for these populations compared to White and Hispanic people. This could represent a
+				bias of police stops towards Asians and Blacks. But, this could also be due to the fact that
+				both of these ethnicities appear in much lesser proportion in the states of California and
+				Texas, provoking a bias in our results due to arrest of non-inhabitants which inflates the
+				ratio disproportionately.<br>
+
+			</p>
+		</div> <br>
+		<div id="line-chart"></div> <br>
+		<div id="line-text-below" hidden="hidden">
+			<p>
+				On the left hand side, you can see the total number of stops for each ethnicity in California as a function of the year. Similarly on the right,
+				you can see the total number of stops by ethnicity for Texas. We can see that the number of police stops for the time range 2009-2016 remains quite constant
+				for blacks and asians / pacific islanders in both states. <br>
+				<br>
+				However, we observe two different trends for white and hispanics, both in California and in Texas.
+				For California, the number of stops for those two ethnicities decrease steadily from 2010 to 2016. Then we see a sharp drop for 2016 with almost 1 million
+				less stops for whites and 700k for hispanics. There can be multiple reasons for this, one of them being that the data we used is police stops of the state patrol and a change in policy might have led
+				to traffic stops being done with a different police authority instead.
+				For Texas, the number of hispanics stopped remains quite constant, but we see a steady decrease of the number of whites stopped from 2009-2015 where
+				it remains constant at around 800k.
 			</p>
 		</div>
-		<div id="line-chart"></div>
 	</section>
-	<p>
-		1) Decreasing arrest number in California <br>
-		2) Texas decrease then increase since 2015
-	</p>
 </div>
 
 <footer></footer>

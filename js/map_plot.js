@@ -185,17 +185,6 @@ class MapPlot {
 		var gender_button = d3.select("#gender_btn")
 		var play_button = d3.select("#play-button")
 		var map_button = d3.select("#map_btn")
-
-		race_button.style("background-color", "#39A9DB").style("border", "2px solid black")
-
-		selection_button.selectAll('myOptions')
-		    	.data(choices)
-				.enter()
-		  		.append('option')
-				.classed("selector", true)
-				.text(function (d) { return d; })
-				.attr("value", function (d) {return d; })
-				.exit().remove()
 				
 		Promise.all([map_promise_usa]).then((results) => {
 
@@ -260,11 +249,15 @@ class MapPlot {
 							d3.select(this).style("stroke-width", "3px")
 		
 							if (num_selected == 2) {
-	
-								setTimeout(() => clearUsa(), 500)	
-								setTimeout(() => createDualGraph(map_promises, map_svg), 500)		
+
+								setTimeout(() => clearUsa(), 500)
+								setTimeout(() => createDualGraph(map_promises, map_svg), 500)
+								setTimeout(() => {
+									d3.select("#map-view-top").attr("hidden", "hidden")
+									d3.select("#line-text").attr("hidden", null)
+									d3.select("#line-text-below").attr("hidden", null)
+								}, 550)
 							}
-		
 						}
 					}
 				}	
@@ -365,12 +358,24 @@ class MapPlot {
 					let data_graph_race = results[4];
 					let data_graph_gender = results[5];
 		
-					var data_map = data_race
-					var data_graph = data_graph_race
+					var data_map = (race) ? data_race : data_gender
+					var data_graph = (race) ? data_graph_race : data_graph_gender
 		
 					var counties_id_stops = {}
 					var dates = [...new Set(data_map.map(x=> x.year))].sort() //get all dates
 					var state_choices = [...new Set(data_graph.map(x=> x.state))]
+
+					buttonColor(gender_button, gender)
+					buttonColor(race_button, race)
+
+					selection_button.selectAll('myOptions')
+							.data(choices)
+							.enter()
+							.append('option')
+							.classed("selector", true)
+							.text(function (d) { return d; })
+							.attr("value", function (d) {return d; })
+							.exit().remove()
 		
 					var domain_min = 0.0
 					var domain_max = 0.0
@@ -389,14 +394,12 @@ class MapPlot {
 					}
 		
 					function buildCountyInfo(data, selection=choices[0]) {
-		
+						
 						counties_id_stops = {}
 		
 						if (race) {
 		
 							const df = data.filter(x => (x.year == dates[0]) && x.subject_race == selection)
-			
-							//domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
 			
 							//const df_domain =  df.map(x => Math.log10(x.nb_arrest))
 							const df_domain =  df.map(x => x.relative)
@@ -410,13 +413,12 @@ class MapPlot {
 						} else {
 			
 							const df = data.filter(x => (x.year == dates[0]) && x.subject_sex == selection)
-			
-							//domain_max = Math.ceil(Math.max.apply(Math, df.map(x => x.relative_arrest)))
 							
 							//const df_domain =  df.map(x => Math.log10(x.nb_arrest))
 							const df_domain =  df.map(x => x.relative)
 							domain_min = Math.floor(Math.min.apply(Math, df_domain))
-							domain_max = Math.ceil(Math.max.apply(Math, df_domain))
+							//domain_max = Math.ceil(Math.max.apply(Math, df_domain))
+							domain_max = 2.5
 			
 							df.forEach((row) => {
 								counties_id_stops[row.county_name] = getCountiesInfo(row)
@@ -460,7 +462,7 @@ class MapPlot {
 							setMapInfos(county)
 						});
 					}
-		
+					
 					buildMap(data_map, choices[0])
 		
 					// Order of creating groups decides what is on top
@@ -846,7 +848,7 @@ class MapPlot {
 							.selectAll('option')
 							.remove()
 							
-							selection_button.selectAll('myOptions')
+						selection_button.selectAll('myOptions')
 							.data(choices)
 							.enter()
 							.append('option')
@@ -893,9 +895,16 @@ class MapPlot {
 
 					map_button.on("click", () => {
 
-						usa_view = true
-						states_selected = {}
-						num_selected = 0
+						usa_view = true;
+						states_selected = {};
+						num_selected = 0;
+
+						buttonColor(gender_button, gender)
+						buttonColor(race_button, race)
+
+						selection_button
+							.selectAll('option')
+							.remove()
 
 						setVisibilityButtons()
 
@@ -910,6 +919,10 @@ class MapPlot {
 						})
 
 						d3.selectAll("text").remove()
+
+						d3.select("#map-view-top").attr("hidden", null)
+						d3.select("#line-text").attr("hidden", "hidden")
+						d3.select("#line-text-below").attr("hidden", "hidden")
 
 						map_container_usa.selectAll(".state")
 							.transition()
