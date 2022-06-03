@@ -33,8 +33,8 @@ stops bias
 * Measure Hit rate (the percent of searches that find contraband
 
 ## Team members
-* Coralie Grobel, 
-* Nicolas Delamaide, 
+* Coralie Grobel, 270513
+* Nicolas Delamaide, 271789
 * Clément Chaffard, 274777
 
 ## Link to Website
