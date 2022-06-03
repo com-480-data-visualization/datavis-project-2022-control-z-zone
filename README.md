@@ -74,7 +74,7 @@ In this milestone, you will find:
 
 ## Milestone 3
 
-[Link to Process Book](./reports/ProcessBook.pdf)
+[Link to Process Book](./reports/Milestone3/ProcessBook.pdf)
 
 In the process book, you will find:
 * A description of the path we took to obtain the final result
