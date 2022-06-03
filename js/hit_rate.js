@@ -86,7 +86,7 @@ class ScatterPlot {
 			//const y_value_range = [0, d3.max(data_ca, d => d.y)];
 			const y_value_range = [0, 40];
 
-			const x_shift = svg_hit_width * 0.35
+			const x_shift = svg_hit_width * 0.345
 
 			const pointX_to_svgX = d3.scaleLinear()
 			 	.domain(x_value_range)
