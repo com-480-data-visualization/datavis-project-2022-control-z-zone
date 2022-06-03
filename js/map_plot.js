@@ -255,7 +255,12 @@ class MapPlot {
 								setTimeout(() => {
 									d3.select("#map-view-top").attr("hidden", "hidden")
 									d3.select("#line-text").attr("hidden", null)
-									d3.select("#line-text-below").attr("hidden", null)
+									if (race) {
+										d3.select("#line-text-race").attr("hidden", null)
+									} else {
+										d3.select("#line-text-gender").attr("hidden", null)
+									}
+									
 								}, 550)
 							}
 						}
@@ -855,6 +860,15 @@ class MapPlot {
 							.classed("selector", true)
 							.text(function (d) { return d; })
 							.attr("value", function (d) {return d; })
+
+						
+						if (race) {
+							d3.select("#line-text-race").attr("hidden", null)
+							d3.select("#line-text-gender").attr("hidden", "hidden")
+						} else {
+							d3.select("#line-text-race").attr("hidden", "hidden")
+							d3.select("#line-text-gender").attr("hidden", null)
+						}
 		
 						changeMap(selection_button.property("value"))
 		
@@ -922,7 +936,8 @@ class MapPlot {
 
 						d3.select("#map-view-top").attr("hidden", null)
 						d3.select("#line-text").attr("hidden", "hidden")
-						d3.select("#line-text-below").attr("hidden", "hidden")
+						d3.select("#line-text-race").attr("hidden", "hidden")
+						d3.select("#line-text-gender").attr("hidden", "hidden")
 
 						map_container_usa.selectAll(".state")
 							.transition()
